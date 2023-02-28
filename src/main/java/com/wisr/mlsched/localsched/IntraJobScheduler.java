@@ -30,6 +30,7 @@ public abstract class IntraJobScheduler {
 	protected double mJobStartTime; // Job start time
 	protected int mTotalExpectedIterations; // Total number of iterations job is expected to run
 	protected double mTimePerIteration; // Amount of time for a single iteration of job on 1 GPU
+	protected int mIterGranularity; // Number of iterations to schedule at once
 	protected int mMaxParallelism; // Represents max GPUs job can request
 	private int mRandomSeed; // Random seed for loss curve
 	private LossFunction mLossCurve; // Representation of loss curve
@@ -101,7 +102,12 @@ public abstract class IntraJobScheduler {
 	 * @param mTotalIterationsRemaining the mTotalIterationsRemaining to set
 	 */
 	public void setmTotalIterationsRemaining(int mTotalIterationsRemaining) {
-		this.mTotalIterationsRemaining = mTotalIterationsRemaining;
+		if (mTotalIterationsRemaining < 0) {
+			this.mTotalIterationsRemaining = 0;
+		}
+		else {
+			this.mTotalIterationsRemaining = mTotalIterationsRemaining;
+		}
 	}
 	
 	public double getLastResourceAssignment() {
@@ -140,6 +146,12 @@ public abstract class IntraJobScheduler {
 		this.mTotalExpectedIterations = mTotalExpectedIterations;
 	}
 
+	public void setmIterGranularity(int mIterGranularity) {
+		this.mIterGranularity = mIterGranularity;
+	}
+
+
+	// Aakash: Call astra sim here
 	public void startIteration() {
 		sLog.log(Level.INFO, "Starting iteration for job " + Integer.toString(mJobId));
 		mCurrentIterationGPUs = new HashSet<GPU>(mNextIterationGPUs);
@@ -153,8 +165,9 @@ public abstract class IntraJobScheduler {
 				+ " Score: " + Double.toString(getPlacementSlowdown(mCurrentIterationGPUs))
 				+ " Number_jobs_running: " + Integer.toString(Cluster.getInstance().getRunningJobs().size()));*/
 		ClusterEventQueue.getInstance().enqueueEvent(
-				new EndIterationEvent(Simulation.getSimulationTime() + mTimePerIteration / getJobSpeedup(), this));
-		mGpuTime = mGpuTime + (mTimePerIteration/getJobSpeedup())*mCurrentIterationGPUs.size();
+				new EndIterationEvent(Simulation.getSimulationTime() + (mTimePerIteration / getJobSpeedup() * mIterGranularity), this));
+		// Aakash: augment this
+		mGpuTime = mGpuTime + (mTimePerIteration/getJobSpeedup())*mCurrentIterationGPUs.size() * mIterGranularity;
 		Iterator<GPU> gpuIter = mCurrentIterationGPUs.iterator();
 		mNextIterationExpectedGPUs = new HashSet<GPU>();
 		while(gpuIter.hasNext()) {
@@ -166,11 +179,14 @@ public abstract class IntraJobScheduler {
 	}
 
 	public void endIteration() {
-		sLog.log(Level.ALL, "End iteration for job " + Integer.toString(mJobId));
-		setmTotalIterationsRemaining(getmTotalIterationsRemaining() - 1);
-		sLog.info("Iterations Remaning: " + Integer.toString(getmTotalIterationsRemaining()));
-		System.out.println("End iteration for job " + Integer.toString(mJobId) + " remaining iterations=" 
-			    + Integer.toString(getmTotalIterationsRemaining()) + " Time:" + Simulation.getSimulationTime());
+		setmTotalIterationsRemaining(getmTotalIterationsRemaining() - mIterGranularity);
+		int itr_remain = getmTotalIterationsRemaining();
+		if (itr_remain % 10000 == 0) {
+			sLog.log(Level.ALL, "End iteration for job " + Integer.toString(mJobId));
+			sLog.info("Iterations Remaining: " + Integer.toString(itr_remain));
+			System.out.println("End iteration for job " + Integer.toString(mJobId) + " remaining iterations="
+					+ Integer.toString(getmTotalIterationsRemaining()) + " Time:" + Simulation.getSimulationTime());
+		}
 		oldRatio = getCurrentEstimate()/getIdealEstimate();
 		themisTs = getCurrentEstimate();
 		if (getmTotalIterationsRemaining() == 0) {
@@ -297,6 +313,8 @@ public abstract class IntraJobScheduler {
 		return mJobGroupId;
 	}
 
+
+	// Aakash: change here
 	public double getPlacementSlowdown(Set<GPU> gpus) {
 		HashSet<Integer> map = new HashSet<Integer>();
 		Iterator<GPU> gpuIter = gpus.iterator();

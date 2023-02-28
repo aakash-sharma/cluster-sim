@@ -24,6 +24,7 @@ public class Cluster {
 	private List<IntraJobScheduler> mRunningJobs; // List of running jobs in cluster
 	private InterJobScheduler mScheduler; // Instance of inter-job scheduler
 	private String mPolicy; // Policy of Cluster
+	private int mIterGranularity; // Number of iterations to be scheduled policy
 	private double mLeaseTime; // Lease time policy for GPUs within cluster
 	private double mFairnessThreshold; // To consider jobs having 1+fairnessThreshold for GPU allocation
 	private double mEpsilon; // Fraction of jobs to consider having good loss potential
@@ -49,6 +50,7 @@ public class Cluster {
 		mPolicy = config.getPolicy();
 		mLeaseTime = config.getLeaseTime();
 		mFairnessThreshold = config.getFairnessThreshold();
+		mIterGranularity = config.getIterGranularity();
 		mEpsilon = config.getEpsilon();
 		mScheduler = InterJobSchedulerFactory.createInstance(mPolicy);
 		if (config.getUseConfig()) {
@@ -119,6 +121,7 @@ public class Cluster {
 	 */
 	public void addJob(IntraJobScheduler job) {
 		sLog.info("Adding job " + Integer.toString(job.getJobId()) + " to cluster");
+		job.setmIterGranularity(mIterGranularity);
 		mRunningJobs.add(job);
 		JobGroupManager.getInstance().trackJob(job);
 	}

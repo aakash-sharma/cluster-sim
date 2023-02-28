@@ -52,12 +52,13 @@ public class ConfigUtils {
 		int machines = Integer.parseInt(getAttributeValue(config, "machines_per_rack"));
 		int slots = Integer.parseInt(getAttributeValue(config, "slots_per_machine"));
 		int gpus = Integer.parseInt(getAttributeValue(config, "gpus_per_slot"));
+		int iter_granularity = Integer.parseInt(getAttributeValue(config, "iteration_granularity"));
 		double lease_time = Double.parseDouble(getAttributeValue(config, "lease_time"));
 		double fairness_threshold = Double.parseDouble(getAttributeValue(config, "fairness_threshold"));
 		double epsilon = Double.parseDouble(getAttributeValue(config, "epsilon"));
 		boolean shouldUseConfig = Boolean.parseBoolean(getAttributeValue(config, "should_use_config"));
 		String policy = getClusterPolicy(config);
-		return new ClusterConfiguration(racks, machines, slots, gpus, policy, lease_time, 
+		return new ClusterConfiguration(racks, machines, slots, gpus, iter_granularity, policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig);
 	}
 	

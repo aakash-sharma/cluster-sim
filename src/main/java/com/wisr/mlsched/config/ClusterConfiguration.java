@@ -8,6 +8,7 @@ public class ClusterConfiguration {
 	private int mMachinesPerRack;
 	private int mSlotsPerMachine;
 	private int mGPUsPerSlot;
+	private int mIterGranularity;
 	private String mPolicy;
 	private double mLeaseTime;
 	private double mFairnessThreshold;
@@ -15,12 +16,13 @@ public class ClusterConfiguration {
 	private boolean mUseConfig;
 	
 	public ClusterConfiguration(int racks, int machines_per_rack,
-			int slots_per_machine, int gpus_per_slot, String policy, double lease,
-			double fairness_threshold, double epsilon, boolean useConfig) {
+                                int slots_per_machine, int gpus_per_slot, int iter_granularity, String policy, double lease,
+                                double fairness_threshold, double epsilon, boolean useConfig) {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
 		mGPUsPerSlot = gpus_per_slot;
+		mIterGranularity = iter_granularity;
 		mPolicy = policy;
 		mLeaseTime = lease;
 		mFairnessThreshold = fairness_threshold;
@@ -50,6 +52,10 @@ public class ClusterConfiguration {
 
 	public int getGPUsPerSlot() {
 		return mGPUsPerSlot;
+	}
+
+	public int getIterGranularity() {
+		return mIterGranularity;
 	}
 
 	public String getPolicy() {
