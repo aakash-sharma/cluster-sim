@@ -25,11 +25,11 @@ public class JobGroupEvaluationEvent extends ClusterEvent {
 		super.handleEvent();
 		List<IntraJobScheduler> jobs = JobGroupManager.getInstance().getJobsInGroup(mJobGroupId);
 		Collections.sort(jobs, new JobIterationComparator()); // sort in ascending order of iterations
-		int max_iterations = jobs.get(jobs.size()-1).getmTotalExpectedIterations();
+		long max_iterations = jobs.get(jobs.size()-1).getmTotalExpectedIterations();
 		if(jobs.size() == 1) {
 			return;
 		}
-		int iteration_step = max_iterations/(int)(Math.log10(jobs.size())/Math.log10(2));
+		long iteration_step = max_iterations/(int)(Math.log10(jobs.size())/Math.log10(2));
 		int index = 0;
 		int count = 1;
 		while(index < jobs.size()-1) {
@@ -42,13 +42,13 @@ public class JobGroupEvaluationEvent extends ClusterEvent {
 			count++;
 		}
 	}
-	
+
 	private class JobIterationComparator implements Comparator<IntraJobScheduler> {
 
 		@Override
 		public int compare(IntraJobScheduler arg0, IntraJobScheduler arg1) {
 			if(arg0.getmTotalExpectedIterations() != arg1.getmTotalExpectedIterations()) {
-				return arg0.getmTotalExpectedIterations() - arg1.getmTotalExpectedIterations();
+				return (int)(arg0.getmTotalExpectedIterations() - arg1.getmTotalExpectedIterations());
 			}
 			return arg0.getJobId() - arg1.getJobId();
 		}

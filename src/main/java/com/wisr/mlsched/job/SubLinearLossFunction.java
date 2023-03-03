@@ -3,12 +3,12 @@ package com.wisr.mlsched.job;
 import java.util.Random;
 
 public class SubLinearLossFunction implements LossFunction {
-  public int numIterations;
+  public long numIterations;
   public double valueBegin;
   public double valueEnd;
   public double a, b, c, d;
 
-  private SubLinearLossFunction(int numIterations, double valueBegin, double valueEnd,
+  private SubLinearLossFunction(long numIterations, double valueBegin, double valueEnd,
                            double a, double b, double c, double d) {
     this.numIterations = numIterations;
     this.valueBegin = valueBegin;
@@ -19,7 +19,7 @@ public class SubLinearLossFunction implements LossFunction {
     this.d = d;
   }
 
-  public static SubLinearLossFunction getRandomSublinearFunction(int numIterations, int seed) {
+  public static SubLinearLossFunction getRandomSublinearFunction(long numIterations, int seed) {
     double tValueBegin = 1.0;
     double tValueEnd = 0.0;
     Random r = new Random(seed);
@@ -32,13 +32,13 @@ public class SubLinearLossFunction implements LossFunction {
         tA, tB, tC, tD);
   }
 
-  public double getValue(int iteration) {
+  public double getValue(long iteration) {
     double value = a*iteration*iteration + b*iteration + c;
     value = 1/value + d;
     return value;
   }
 
-  public double getSlope(int iteration) {
+  public double getSlope(long iteration) {
     double value = a*iteration*iteration + b*iteration + c;
     value = value*value;
     value = -1/value;
@@ -46,7 +46,7 @@ public class SubLinearLossFunction implements LossFunction {
     return value;
   }
 
-  public double getDeltaValue(int iteration) {
+  public double getDeltaValue(long iteration) {
     return getValue(iteration) - getValue(iteration+1);
   }
 }

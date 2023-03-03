@@ -28,7 +28,7 @@ public abstract class IntraJobScheduler {
 	private int mJobGroupId; // Unique identifier for job group to which this job belongs
 	private int mJobId; // Unique identifier for this job
 	protected double mJobStartTime; // Job start time
-	protected int mTotalExpectedIterations; // Total number of iterations job is expected to run
+	protected long mTotalExpectedIterations; // Total number of iterations job is expected to run
 	protected double mTimePerIteration; // Amount of time for a single iteration of job on 1 GPU
 	protected int mIterGranularity; // Number of iterations to schedule at once
 	protected int mMaxParallelism; // Represents max GPUs job can request
@@ -42,7 +42,7 @@ public abstract class IntraJobScheduler {
 	
 	// State management for job
 	private boolean mIsLeader; // Whether this job is the leader in it's job group
-	protected int mTotalIterationsRemaining; // Number of iterations of job remaining
+	protected long mTotalIterationsRemaining; // Number of iterations of job remaining
 	protected Set<GPU> mCurrentIterationGPUs; // GPUs for current iteration
 	private Set<GPU> mNextIterationExpectedGPUs; // GPUs we expect from current iteration to be used for next iteration
 	protected Set<GPU> mNextIterationGPUs; // GPUs allocated for next iteration
@@ -85,7 +85,7 @@ public abstract class IntraJobScheduler {
 	 * @param is_leader
 	 * @param iterations
 	 */
-	public void setRole(boolean is_leader, int iterations) { 
+	public void setRole(boolean is_leader, long iterations) {
 		mIsLeader = is_leader;
 		mTotalIterationsRemaining = iterations;
 		mTotalExpectedIterations = iterations;
@@ -94,14 +94,14 @@ public abstract class IntraJobScheduler {
 	/**
 	 * @return the mTotalIterationsRemaining
 	 */
-	public int getmTotalIterationsRemaining() {
+	public long getmTotalIterationsRemaining() {
 		return mTotalIterationsRemaining;
 	}
 
 	/**
 	 * @param mTotalIterationsRemaining the mTotalIterationsRemaining to set
 	 */
-	public void setmTotalIterationsRemaining(int mTotalIterationsRemaining) {
+	public void setmTotalIterationsRemaining(long mTotalIterationsRemaining) {
 		if (mTotalIterationsRemaining < 0) {
 			this.mTotalIterationsRemaining = 0;
 		}
@@ -135,14 +135,14 @@ public abstract class IntraJobScheduler {
 	/**
 	 * @return the mTotalExpectedIterations
 	 */
-	public int getmTotalExpectedIterations() {
+	public long getmTotalExpectedIterations() {
 		return mTotalExpectedIterations;
 	}
 
 	/**
 	 * @param mTotalExpectedIterations the mTotalExpectedIterations to set
 	 */
-	public void setmTotalExpectedIterations(int mTotalExpectedIterations) {
+	public void setmTotalExpectedIterations(long mTotalExpectedIterations) {
 		this.mTotalExpectedIterations = mTotalExpectedIterations;
 	}
 
@@ -180,12 +180,12 @@ public abstract class IntraJobScheduler {
 
 	public void endIteration() {
 		setmTotalIterationsRemaining(getmTotalIterationsRemaining() - mIterGranularity);
-		int itr_remain = getmTotalIterationsRemaining();
+		long itr_remain = getmTotalIterationsRemaining();
 		if (itr_remain % 10000 == 0) {
 			sLog.log(Level.ALL, "End iteration for job " + Integer.toString(mJobId));
-			sLog.info("Iterations Remaining: " + Integer.toString(itr_remain));
+			sLog.info("Iterations Remaining: " + Long.toString(itr_remain));
 			System.out.println("End iteration for job " + Integer.toString(mJobId) + " remaining iterations="
-					+ Integer.toString(getmTotalIterationsRemaining()) + " Time:" + Simulation.getSimulationTime());
+					+ Long.toString(getmTotalIterationsRemaining()) + " Time:" + Simulation.getSimulationTime());
 		}
 		oldRatio = getCurrentEstimate()/getIdealEstimate();
 		themisTs = getCurrentEstimate();
@@ -277,7 +277,7 @@ public abstract class IntraJobScheduler {
 		return mLossCurve.getSlope(getmTotalExpectedIterations() - getmTotalIterationsRemaining());
 	}
 	
-	public double getLoss(int iteration) {
+	public double getLoss(long iteration) {
 		return mLossCurve.getValue(iteration);
 	}
 
@@ -427,7 +427,8 @@ public abstract class IntraJobScheduler {
 	private void initFromConfig(JSONObject config) {
 		mJobGroupId = Integer.parseInt(ConfigUtils.getAttributeValue(config, "job_group_id"));
 		mJobId = Integer.parseInt(ConfigUtils.getAttributeValue(config, "job_id"));
-		setmTotalExpectedIterations(Integer.parseInt(ConfigUtils.getAttributeValue(config, "total_iterations")));
+		//System.out.println(ConfigUtils.getAttributeValue(config, "total_iterations"));
+		setmTotalExpectedIterations(Long.parseLong(ConfigUtils.getAttributeValue(config, "total_iterations")));
 		mTimePerIteration = Double.parseDouble(ConfigUtils.getAttributeValue(config, "time_per_iteration"));
 		mMaxParallelism = Integer.parseInt(ConfigUtils.getAttributeValue(config, "max_parallelism"));
 		mRandomSeed = Integer.parseInt(ConfigUtils.getAttributeValue(config, "random_seed"));

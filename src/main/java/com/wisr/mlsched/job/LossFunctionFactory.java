@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class LossFunctionFactory {
 	private static Logger sLog = Logger.getLogger(LossFunctionFactory.class.getSimpleName());
 	public static LossFunction createInstance(String lossFunctionType, 
-			int numIterations, int seed) {
+			long numIterations, int seed) {
 		switch(lossFunctionType) {
 			case "sublinear":
 				return SubLinearLossFunction.getRandomSublinearFunction(numIterations, seed);
