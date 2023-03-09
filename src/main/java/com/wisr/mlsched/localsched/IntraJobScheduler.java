@@ -7,6 +7,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.File;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
 
 import com.wisr.mlsched.ClusterEventQueue;
 import com.wisr.mlsched.Simulation;
@@ -37,6 +44,8 @@ public abstract class IntraJobScheduler {
 	private double mCrossSlotSlowdown; // Slowdown due to network b/w GPUs across slots
 	private double mCrossMachineSlowdown; // Slowdown due to network b/w GPUs across machines
 	private double mCrossRackSlowdown; // Slowdown due to network b/w GPUs across slots
+	private String mUserName; // User of the job
+	private String mModelName; // Model name of the job
 
 	private final double CHECKPOINTING_OVERHEAD_PER_GPU = 0.0; // 6 seconds overhead
 	
@@ -53,7 +62,8 @@ public abstract class IntraJobScheduler {
 	private static Logger sLog; // Instance of logger
 	private double mGpuTime;
 	private double queueDelay; // State to maintain with admission control
-	private boolean mIsQueued; // Every job starts with getting queued 
+	private boolean mIsQueued; // Every job starts with getting queued
+
 
 	public IntraJobScheduler(JSONObject config) {
 		initFromConfig(config);
@@ -313,16 +323,125 @@ public abstract class IntraJobScheduler {
 		return mJobGroupId;
 	}
 
+	protected void astra_sim(Set<GPU> gpus, int dims) {
+		String[] dimensions = {
+			"PP",
+			"P",
+			"N",
+			"T"
+		}; // pod-to-pod, within pod, within node, tile-to-tile
 
-	// Aakash: change here
-	public double getPlacementSlowdown(Set<GPU> gpus) {
+		JSONObject jsonObject = new JSONObject();
+		JSONArray topologiesPerDim = new JSONArray();
+		JSONArray dimensionType = new JSONArray();
+		JSONArray unitsCount = new JSONArray();
+		JSONArray linksCount = new JSONArray();
+		JSONArray linkLatency = new JSONArray();
+		JSONArray linkBW = new JSONArray();
+		JSONArray nicLatency= new JSONArray();
+		JSONArray routerLatency = new JSONArray();
+		JSONArray hbmLatency = new JSONArray();
+		JSONArray hbmBW = new JSONArray();
+		JSONArray hbmScale = new JSONArray();
+
+		for (int i =0; i < dims; i++) {
+			topologiesPerDim.add("Switch");
+			dimensionType.add(dimensions[i]);
+			unitsCount.add(gpus.size());
+			linksCount.add(2);
+			linkLatency.add(50);
+			linkBW.add(100);
+			nicLatency.add(0);
+			routerLatency.add(0);
+			hbmLatency.add(500);
+			hbmBW.add(370);
+			hbmScale.add(0);
+		}
+
+		jsonObject.put("topology-name", "Hierarchical");
+		jsonObject.put("dimensions-count", dims);
+		jsonObject.put("topologies-per-dim", topologiesPerDim);
+		jsonObject.put("dimension-type", dimensionType);
+		jsonObject.put("units-count", unitsCount);
+		jsonObject.put("links-count", linksCount);
+		jsonObject.put("link-latency", linkLatency);
+		jsonObject.put("link-bandwidth", linkBW);
+		jsonObject.put("nic-latency", nicLatency);
+		jsonObject.put("router-latency", routerLatency);
+		jsonObject.put("hbm-latency", hbmLatency);
+		jsonObject.put("hbm-bandwidth", hbmBW);
+		jsonObject.put("hbm-scale", hbmScale);
+
+		try {
+			FileWriter file = new FileWriter("astra-sim_inputs/network/" + mJobId +".json");
+			file.write(jsonObject.toJSONString());
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("astra-sim_inputs/system/" + mJobId +".txt"));
+			writer.write("scheduling-policy: LIFO\n");
+			writer.append("endpoint-delay: 10\n");
+			writer.append("active-chunks-per-dimension: 1\n");
+			writer.append("endpoint-delay: 10\n");
+			writer.append("preferred-dataset-splits: 1\n");
+			writer.append("boost-mode: 0\n");
+			writer.append("all-reduce-implementation: doubleBinaryTree\n");
+			writer.append("all-gather-implementation: ring\n");
+			writer.append("reduce-scatter-implementation: ring\n");
+			writer.append("all-to-all-implementation: oneDirect\n");
+			writer.append("collective-optimization: localBWAware\n");
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		List<String> cmd = new ArrayList<String>();
+
+		cmd.add("/Users/aakashsharma/work/astra-sim/build/astra_analytical/build/AnalyticalAstra/bin/AnalyticalAstra");
+		cmd.add("--network-configuration=/Users/aakashsharma/work/mltiply/astra-sim_inputs/network/" + mJobId + ".json");
+		cmd.add("--system-configuration=/Users/aakashsharma/work/mltiply/astra-sim_inputs/system/" + mJobId +".txt");
+		cmd.add("--workload-configuration=/Users/aakashsharma/work/mltiply/astra-sim_inputs/workload/Resnet50_DataParallel.txt");
+		cmd.add("--path=/Users/aakashsharma/work/mltiply/astra-sim_inputs/results");
+		cmd.add("--run-name=" + mJobId + "_" + dimensions[dims-1]);
+
+		ProcessBuilder pb = new ProcessBuilder(cmd);
+		pb.directory(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs")); //Set current directory
+		pb.redirectError(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs/results/err.log")); //Log errors in specified log file.
+		pb.redirectOutput(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs/results/out.log")); //Log errors in specified log file.
+		/*
+		ProcessBuilder pb = new ProcessBuilder("ls", "/Users/aakashsharma/work/astra-sim/build/astra_analytical/build/AnalyticalAstra/bin/AnalyticalAstra");
+		pb.directory(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs")); //Set current directory
+		pb.redirectError(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs/results/err.log")); //Log errors in specified log file.
+		pb.redirectOutput(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs/results/out.log")); //Log errors in specified log file.
+		*/
+
+		try {
+			Process process = pb.start();
+			int exitVal = process.waitFor();
+			if (exitVal != 0) {
+				System.out.println("Abnormal Behaviour! Something bad happened with astra sim.");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public double getPlacementSlowdown_astra(Set<GPU> gpus) {
 		HashSet<Integer> map = new HashSet<Integer>();
 		Iterator<GPU> gpuIter = gpus.iterator();
 		// Check if across racks
 		while (gpuIter.hasNext()) {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getRackId());
+			//System.out.println("GPU location" + gpu.getLocation().getPrettyString());
 			if (map.size() > 1) {
+				astra_sim(gpus,1);
 				return mCrossRackSlowdown;
 			}
 		}
@@ -333,6 +452,7 @@ public abstract class IntraJobScheduler {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getMachineId());
 			if (map.size() > 1) {
+				astra_sim(gpus, 1);
 				return mCrossMachineSlowdown;
 			}
 		}
@@ -343,6 +463,51 @@ public abstract class IntraJobScheduler {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getSlotId());
 			if (map.size() > 1) {
+				astra_sim(gpus, 1);
+				return mCrossSlotSlowdown;
+			}
+		}
+		return 1.0;
+	}
+
+
+	public double getPlacementSlowdown(Set<GPU> gpus) {
+		HashSet<Integer> map = new HashSet<Integer>();
+		Iterator<GPU> gpuIter = gpus.iterator();
+		// Check if across racks
+		while (gpuIter.hasNext()) {
+			GPU gpu = gpuIter.next();
+			map.add(gpu.getLocation().getRackId());
+			//System.out.println("GPU location" + gpu.getLocation().getPrettyString());
+			if (map.size() > 1) {
+				System.out.println("Slowdown: rack");
+				System.out.println("Rack: " + gpu.getLocation().getRackId());
+				return mCrossRackSlowdown;
+			}
+		}
+		// Check if across machines
+		map = new HashSet<Integer>();
+		gpuIter = gpus.iterator();
+		while (gpuIter.hasNext()) {
+			GPU gpu = gpuIter.next();
+			map.add(gpu.getLocation().getMachineId());
+			System.out.println("GPU location" + gpu.getLocation().getPrettyString());
+			System.out.println("map: " + map);
+			if (map.size() > 1) {
+				System.out.println("Slowdown: machine");
+				System.out.println("Rack: " + gpu.getLocation().getRackId());
+				return mCrossMachineSlowdown;
+			}
+		}
+		// Check if across slots
+		map = new HashSet<Integer>();
+		gpuIter = gpus.iterator();
+		while (gpuIter.hasNext()) {
+			GPU gpu = gpuIter.next();
+			map.add(gpu.getLocation().getSlotId());
+			System.out.println("GPU location" + gpu.getLocation().getPrettyString());
+			if (map.size() > 1) {
+				System.out.println("Slowdown: slot");
 				return mCrossSlotSlowdown;
 			}
 		}
@@ -427,7 +592,8 @@ public abstract class IntraJobScheduler {
 	private void initFromConfig(JSONObject config) {
 		mJobGroupId = Integer.parseInt(ConfigUtils.getAttributeValue(config, "job_group_id"));
 		mJobId = Integer.parseInt(ConfigUtils.getAttributeValue(config, "job_id"));
-		//System.out.println(ConfigUtils.getAttributeValue(config, "total_iterations"));
+		mUserName = ConfigUtils.getAttributeValue(config, "user");
+		mModelName = ConfigUtils.getAttributeValue(config, "model");
 		setmTotalExpectedIterations(Long.parseLong(ConfigUtils.getAttributeValue(config, "total_iterations")));
 		mTimePerIteration = Double.parseDouble(ConfigUtils.getAttributeValue(config, "time_per_iteration"));
 		mMaxParallelism = Integer.parseInt(ConfigUtils.getAttributeValue(config, "max_parallelism"));
