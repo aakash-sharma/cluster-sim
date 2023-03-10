@@ -5,15 +5,19 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.HashMap;
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.File;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
-import java.util.Scanner;
 
 
 import com.wisr.mlsched.ClusterEventQueue;
@@ -66,7 +70,7 @@ public abstract class IntraJobScheduler {
 	private double mGpuTime;
 	private double queueDelay; // State to maintain with admission control
 	private boolean mIsQueued; // Every job starts with getting queued
-
+	private Map<Set<GPU>, Double> mSlowdown;
 
 	public IntraJobScheduler(JSONObject config) {
 		initFromConfig(config);
@@ -83,6 +87,7 @@ public abstract class IntraJobScheduler {
 		mGpuTime = 0;
 		mTimeLastResourceAssignment = Simulation.getSimulationTime()-1;
 		mIsLeader = true; // By default, everyone is a leader unless told otherwise
+		mSlowdown = new HashMap<>();
 		JobStatistics.getInstance().recordJobStart(mJobId, Simulation.getSimulationTime(), mMaxParallelism);
 		List<GPU> availableResources = getResourcesAvailableInCluster();
 		if (!availableResources.isEmpty()) {
@@ -330,13 +335,16 @@ public abstract class IntraJobScheduler {
 		return mJobGroupId;
 	}
 
-	protected void astra_sim(Set<GPU> gpus, int dims) {
+	protected double astra_sim(Set<GPU> gpus, int dim) {
 		String[] dimensions = {
 			"PP",
 			"P",
 			"N",
 			"T"
 		}; // pod-to-pod, within pod, within node, tile-to-tile
+
+		double computeTime = 0;
+		double commTime = 0;
 
 		JSONObject jsonObject = new JSONObject();
 		JSONArray topologiesPerDim = new JSONArray();
@@ -351,22 +359,29 @@ public abstract class IntraJobScheduler {
 		JSONArray hbmBW = new JSONArray();
 		JSONArray hbmScale = new JSONArray();
 
-		for (int i =0; i < dims; i++) {
+		//for (int i =0; i < dims; i++) {
+		if (dim == 0) {
 			topologiesPerDim.add("Switch");
-			dimensionType.add(dimensions[i]);
-			unitsCount.add(gpus.size());
-			linksCount.add(2);
-			linkLatency.add(50);
-			linkBW.add(100);
-			nicLatency.add(0);
-			routerLatency.add(0);
-			hbmLatency.add(500);
-			hbmBW.add(370);
-			hbmScale.add(0);
 		}
+		else {
+			topologiesPerDim.add("Ring");
+		}
+		//dimensionType.add(dimensions[i]);
+		dimensionType.add(dimensions[dim]);
+		unitsCount.add(gpus.size());
+		linksCount.add(2);
+		linkLatency.add(50);
+		linkBW.add(100);
+		nicLatency.add(0);
+		routerLatency.add(0);
+		hbmLatency.add(500);
+		hbmBW.add(370);
+		hbmScale.add(0);
+		//}
 
 		jsonObject.put("topology-name", "Hierarchical");
-		jsonObject.put("dimensions-count", dims);
+		//jsonObject.put("dimensions-count", dims);
+		jsonObject.put("dimensions-count", 1);
 		jsonObject.put("topologies-per-dim", topologiesPerDim);
 		jsonObject.put("dimension-type", dimensionType);
 		jsonObject.put("units-count", unitsCount);
@@ -383,11 +398,7 @@ public abstract class IntraJobScheduler {
 			FileWriter file = new FileWriter(mAstraSimPath + "/network/" + mJobId +".json");
 			file.write(jsonObject.toJSONString());
 			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(mAstraSimPath + "/system/" + mJobId +".txt"));
 			writer.write("scheduling-policy: LIFO\n");
 			writer.append("endpoint-delay: 10\n");
@@ -401,36 +412,38 @@ public abstract class IntraJobScheduler {
 			writer.append("all-to-all-implementation: oneDirect\n");
 			writer.append("collective-optimization: localBWAware\n");
 			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		List<String> cmd = new ArrayList<String>();
+			List<String> cmd = new ArrayList<String>();
+			cmd.add(mAstraSimBinPath);
+			cmd.add("--network-configuration=" + mAstraSimPath + "/network/" + mJobId + ".json");
+			cmd.add("--system-configuration=" + mAstraSimPath + "/system/" + mJobId +".txt");
+			cmd.add("--workload-configuration=" + mAstraSimPath + "/workload/Resnet50_DataParallel.txt");
+			cmd.add("--path=" + mAstraSimPath + "/results");
+			cmd.add("--run-name=" + mJobId + "_" + dimensions[dim]);
+			//cmd.add("--run-name=" + mJobId + "_" + dimensions[dims-1]);
 
-		cmd.add(mAstraSimBinPath);
-		cmd.add("--network-configuration=" + mAstraSimPath + "/network/" + mJobId + ".json");
-		cmd.add("--system-configuration=" + mAstraSimPath + "/system/" + mJobId +".txt");
-		cmd.add("--workload-configuration=" + mAstraSimPath + "/workload/Resnet50_DataParallel.txt");
-		cmd.add("--path=" + mAstraSimPath + "/results");
-		cmd.add("--run-name=" + mJobId + "_" + dimensions[dims-1]);
+			ProcessBuilder pb = new ProcessBuilder(cmd);
+			pb.directory(new File(mAstraSimPath + "/results")); //Set current directory
+			pb.redirectError(new File(mAstraSimPath + "/results/err.log")); //Log errors in specified log file.
+			pb.redirectOutput(new File(mAstraSimPath + "/results/out.log")); //Log errors in specified log file.
 
-		ProcessBuilder pb = new ProcessBuilder(cmd);
-		pb.directory(new File(mAstraSimPath + "/results")); //Set current directory
-		pb.redirectError(new File(mAstraSimPath + "/results/err.log")); //Log errors in specified log file.
-		pb.redirectOutput(new File(mAstraSimPath + "/results/out.log")); //Log errors in specified log file.
-		/*
-		ProcessBuilder pb = new ProcessBuilder("ls", "/Users/aakashsharma/work/astra-sim/build/astra_analytical/build/AnalyticalAstra/bin/AnalyticalAstra");
-		pb.directory(new File("" + mAstraSimPath + "")); //Set current directory
-		pb.redirectError(new File("" + mAstraSimPath + "/results/err.log")); //Log errors in specified log file.
-		pb.redirectOutput(new File("" + mAstraSimPath + "/results/out.log")); //Log errors in specified log file.
-		*/
-
-		try {
 			Process process = pb.start();
 			int exitVal = process.waitFor();
 			if (exitVal != 0) {
 				System.out.println("Abnormal Behaviour! Something bad happened with astra sim.");
 			}
+
+			BufferedReader reader = new BufferedReader(new FileReader(mAstraSimPath + "/resultsEndToEnd.csv"));
+			reader.readLine();
+
+			String line = reader.readLine();
+			String [] vals = line.split(",");
+
+			computeTime = Float.parseFloat(vals[12]);
+			commTime = Float.parseFloat(vals[13]);
+
+			System.out.println("AAAA " + computeTime/ (commTime+ computeTime));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -438,7 +451,7 @@ public abstract class IntraJobScheduler {
 			e.printStackTrace();
 		}
 
-
+		return computeTime/ (commTime+ computeTime);
 	}
 
 	public double getPlacementSlowdown_astra(Set<GPU> gpus) {
@@ -450,8 +463,7 @@ public abstract class IntraJobScheduler {
 			map.add(gpu.getLocation().getRackId());
 			//System.out.println("GPU location" + gpu.getLocation().getPrettyString());
 			if (map.size() > 1) {
-				astra_sim(gpus,1);
-				return mCrossRackSlowdown;
+				return astra_sim(gpus,0);
 			}
 		}
 		// Check if across machines
@@ -461,8 +473,7 @@ public abstract class IntraJobScheduler {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getMachineId());
 			if (map.size() > 1) {
-				astra_sim(gpus, 1);
-				return mCrossMachineSlowdown;
+				return astra_sim(gpus, 1);
 			}
 		}
 		// Check if across slots
@@ -472,8 +483,7 @@ public abstract class IntraJobScheduler {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getSlotId());
 			if (map.size() > 1) {
-				astra_sim(gpus, 1);
-				return mCrossSlotSlowdown;
+				return astra_sim(gpus, 2);
 			}
 		}
 		return 1.0;
@@ -482,11 +492,15 @@ public abstract class IntraJobScheduler {
 
 	public double getPlacementSlowdown(Set<GPU> gpus) {
 
-		if (true)
-		{
-			return getPlacementSlowdown_astra(gpus);
+		double slowdown = 1.0;
+		if (!mSlowdown.containsKey(gpus)) {
+			slowdown = getPlacementSlowdown_astra(gpus);
+			mSlowdown.put(gpus, slowdown);
 		}
-		HashSet<Integer> map = new HashSet<Integer>();
+
+		return slowdown;
+
+		/*
 		Iterator<GPU> gpuIter = gpus.iterator();
 		// Check if across racks
 		while (gpuIter.hasNext()) {
@@ -526,6 +540,7 @@ public abstract class IntraJobScheduler {
 			}
 		}
 		return 1.0;
+		 */
 	}
 
 	public double getQueueDelay() {
