@@ -32,6 +32,8 @@ public class Cluster {
 
 	private static Cluster sInstance = null; // Singleton Instance of Cluster
 	private static Logger sLog; // Instance of logger
+	private String mAstraSimPath; // Astra sim path
+	private String mAstraSimBinPath; // Astra sim binary path
 
 	/**
 	 * Creates an instance of the required cluster from the given configuration.
@@ -53,6 +55,8 @@ public class Cluster {
 		mIterGranularity = config.getIterGranularity();
 		mEpsilon = config.getEpsilon();
 		mScheduler = InterJobSchedulerFactory.createInstance(mPolicy);
+		mAstraSimPath = config.getmAstraSimPath();
+		mAstraSimBinPath = config.getmAstraSimBinPath();
 		if (config.getUseConfig()) {
 			for (int i = 0; i < config.getRacks(); i++) {
 				for (int j = 0; j < config.getMachinesPerRack(); j++) {
@@ -122,6 +126,7 @@ public class Cluster {
 	public void addJob(IntraJobScheduler job) {
 		sLog.info("Adding job " + Integer.toString(job.getJobId()) + " to cluster");
 		job.setmIterGranularity(mIterGranularity);
+		job.setmAstraSimPath(mAstraSimPath, mAstraSimBinPath);
 		mRunningJobs.add(job);
 		JobGroupManager.getInstance().trackJob(job);
 	}

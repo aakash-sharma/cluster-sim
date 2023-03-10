@@ -58,8 +58,10 @@ public class ConfigUtils {
 		double epsilon = Double.parseDouble(getAttributeValue(config, "epsilon"));
 		boolean shouldUseConfig = Boolean.parseBoolean(getAttributeValue(config, "should_use_config"));
 		String policy = getClusterPolicy(config);
+		String astra_sim_path = getAttributeValue(config, "astra_sim_path");
+		String astra_sim_bin_path = getAttributeValue(config, "astra_sim_bin_path");
 		return new ClusterConfiguration(racks, machines, slots, gpus, iter_granularity, policy, lease_time,
-				fairness_threshold, epsilon, shouldUseConfig);
+				fairness_threshold, epsilon, shouldUseConfig, astra_sim_path, astra_sim_bin_path);
 	}
 	
 	/**

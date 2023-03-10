@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.File;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
+import java.util.Scanner;
 
 
 import com.wisr.mlsched.ClusterEventQueue;
@@ -46,6 +47,8 @@ public abstract class IntraJobScheduler {
 	private double mCrossRackSlowdown; // Slowdown due to network b/w GPUs across slots
 	private String mUserName; // User of the job
 	private String mModelName; // Model name of the job
+	private String mAstraSimPath;
+	private String mAstraSimBinPath;
 
 	private final double CHECKPOINTING_OVERHEAD_PER_GPU = 0.0; // 6 seconds overhead
 	
@@ -160,6 +163,10 @@ public abstract class IntraJobScheduler {
 		this.mIterGranularity = mIterGranularity;
 	}
 
+	public void setmAstraSimPath(String astra_sim_path, String astra_sim_bin_path) {
+		this.mAstraSimPath = astra_sim_path;
+		this.mAstraSimBinPath = astra_sim_bin_path;
+	}
 
 	// Aakash: Call astra sim here
 	public void startIteration() {
@@ -373,7 +380,7 @@ public abstract class IntraJobScheduler {
 		jsonObject.put("hbm-scale", hbmScale);
 
 		try {
-			FileWriter file = new FileWriter("astra-sim_inputs/network/" + mJobId +".json");
+			FileWriter file = new FileWriter(mAstraSimPath + "/network/" + mJobId +".json");
 			file.write(jsonObject.toJSONString());
 			file.close();
 		} catch (IOException e) {
@@ -381,7 +388,7 @@ public abstract class IntraJobScheduler {
 		}
 
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("astra-sim_inputs/system/" + mJobId +".txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(mAstraSimPath + "/system/" + mJobId +".txt"));
 			writer.write("scheduling-policy: LIFO\n");
 			writer.append("endpoint-delay: 10\n");
 			writer.append("active-chunks-per-dimension: 1\n");
@@ -400,22 +407,22 @@ public abstract class IntraJobScheduler {
 
 		List<String> cmd = new ArrayList<String>();
 
-		cmd.add("/Users/aakashsharma/work/astra-sim/build/astra_analytical/build/AnalyticalAstra/bin/AnalyticalAstra");
-		cmd.add("--network-configuration=/Users/aakashsharma/work/mltiply/astra-sim_inputs/network/" + mJobId + ".json");
-		cmd.add("--system-configuration=/Users/aakashsharma/work/mltiply/astra-sim_inputs/system/" + mJobId +".txt");
-		cmd.add("--workload-configuration=/Users/aakashsharma/work/mltiply/astra-sim_inputs/workload/Resnet50_DataParallel.txt");
-		cmd.add("--path=/Users/aakashsharma/work/mltiply/astra-sim_inputs/results");
+		cmd.add(mAstraSimBinPath);
+		cmd.add("--network-configuration=" + mAstraSimPath + "/network/" + mJobId + ".json");
+		cmd.add("--system-configuration=" + mAstraSimPath + "/system/" + mJobId +".txt");
+		cmd.add("--workload-configuration=" + mAstraSimPath + "/workload/Resnet50_DataParallel.txt");
+		cmd.add("--path=" + mAstraSimPath + "/results");
 		cmd.add("--run-name=" + mJobId + "_" + dimensions[dims-1]);
 
 		ProcessBuilder pb = new ProcessBuilder(cmd);
-		pb.directory(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs")); //Set current directory
-		pb.redirectError(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs/results/err.log")); //Log errors in specified log file.
-		pb.redirectOutput(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs/results/out.log")); //Log errors in specified log file.
+		pb.directory(new File(mAstraSimPath + "/results")); //Set current directory
+		pb.redirectError(new File(mAstraSimPath + "/results/err.log")); //Log errors in specified log file.
+		pb.redirectOutput(new File(mAstraSimPath + "/results/out.log")); //Log errors in specified log file.
 		/*
 		ProcessBuilder pb = new ProcessBuilder("ls", "/Users/aakashsharma/work/astra-sim/build/astra_analytical/build/AnalyticalAstra/bin/AnalyticalAstra");
-		pb.directory(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs")); //Set current directory
-		pb.redirectError(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs/results/err.log")); //Log errors in specified log file.
-		pb.redirectOutput(new File("/Users/aakashsharma/work/mltiply/astra-sim_inputs/results/out.log")); //Log errors in specified log file.
+		pb.directory(new File("" + mAstraSimPath + "")); //Set current directory
+		pb.redirectError(new File("" + mAstraSimPath + "/results/err.log")); //Log errors in specified log file.
+		pb.redirectOutput(new File("" + mAstraSimPath + "/results/out.log")); //Log errors in specified log file.
 		*/
 
 		try {
@@ -430,6 +437,8 @@ public abstract class IntraJobScheduler {
 		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
+
 	}
 
 	public double getPlacementSlowdown_astra(Set<GPU> gpus) {
@@ -472,6 +481,11 @@ public abstract class IntraJobScheduler {
 
 
 	public double getPlacementSlowdown(Set<GPU> gpus) {
+
+		if (true)
+		{
+			return getPlacementSlowdown_astra(gpus);
+		}
 		HashSet<Integer> map = new HashSet<Integer>();
 		Iterator<GPU> gpuIter = gpus.iterator();
 		// Check if across racks
