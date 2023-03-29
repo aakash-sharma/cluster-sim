@@ -362,17 +362,20 @@ public abstract class IntraJobScheduler {
 		//for (int i =0; i < dims; i++) {
 		if (dim == 0) {
 			topologiesPerDim.add("Switch");
+			linkLatency.add(1700);
+			linkBW.add(25);
+			nicLatency.add(100);
 		}
-		else {
+		if (dim >= 1) {
 			topologiesPerDim.add("Ring");
+			linkLatency.add(700);
+			linkBW.add(1200);
+			nicLatency.add(0);
 		}
 		//dimensionType.add(dimensions[i]);
 		dimensionType.add(dimensions[dim]);
 		unitsCount.add(gpus.size());
 		linksCount.add(2);
-		linkLatency.add(50);
-		linkBW.add(100);
-		nicLatency.add(0);
 		routerLatency.add(0);
 		hbmLatency.add(500);
 		hbmBW.add(370);
@@ -442,7 +445,10 @@ public abstract class IntraJobScheduler {
 			computeTime = Float.parseFloat(vals[12]);
 			commTime = Float.parseFloat(vals[13]);
 
-			System.out.println("AAAA " + computeTime/ (commTime+ computeTime));
+			System.out.println("A " + dim);
+			System.out.println("AA " + computeTime);
+			System.out.println("AAA " + commTime);
+			System.out.println("AAAA " + computeTime/ (commTime + computeTime));
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -14,8 +14,8 @@ import org.json.simple.JSONObject;
 public class Simulation {
 	
 	private static double mTime;
-	//private static final Level mLogLevel = Level.ALL;
-	private static final Level mLogLevel = Level.OFF;
+	private static final Level mLogLevel = Level.ALL;
+	//private static final Level mLogLevel = Level.OFF;
 	private static boolean admissionControl = false;
 	
 	public static void main(String args[]) {
@@ -35,7 +35,9 @@ public class Simulation {
 		Cluster.createCluster(clusterConfig);
 		
 		ClusterEventQueue eventQueue = ClusterEventQueue.getInstance();
-		
+
+		// AS: change to account for arrival time
+
 		for(Object object : workloadConfig) {
 			JSONObject config = (JSONObject) object;
 			eventQueue.enqueueEvent(new JobArrivalEvent
