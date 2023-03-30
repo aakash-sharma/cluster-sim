@@ -69,12 +69,14 @@ public abstract class IntraJobScheduler {
 	private static Logger sLog; // Instance of logger
 	private double mGpuTime;
 	private double queueDelay; // State to maintain with admission control
+	private double mJobArrivalTime; // Arrival time of the job
 	private boolean mIsQueued; // Every job starts with getting queued
 	private Map<Set<GPU>, Double> mSlowdown;
 
 	public IntraJobScheduler(JSONObject config) {
 		initFromConfig(config);
 		mJobStartTime = Simulation.getSimulationTime();
+		mJobArrivalTime = ConfigUtils.getJobStartTime(config);
 		sLog = Logger.getLogger(Cluster.class.getSimpleName());
 		sLog.setLevel(Simulation.getLogLevel());
 		sLog.info("Starting job " + Integer.toString(mJobId));
@@ -85,7 +87,7 @@ public abstract class IntraJobScheduler {
 		oldRatio = Double.POSITIVE_INFINITY;
 		themisTs = Double.POSITIVE_INFINITY;
 		mGpuTime = 0;
-		mTimeLastResourceAssignment = Simulation.getSimulationTime()-1;
+		mTimeLastResourceAssignment = Simulation.getSimulationTime();
 		mIsLeader = true; // By default, everyone is a leader unless told otherwise
 		mSlowdown = new HashMap<>();
 		JobStatistics.getInstance().recordJobStart(mJobId, Simulation.getSimulationTime(), mMaxParallelism);
@@ -94,7 +96,7 @@ public abstract class IntraJobScheduler {
 			ClusterEventQueue.getInstance()
 					.enqueueEvent(new ResourceAvailableEvent(Simulation.getSimulationTime(), availableResources));
 		}
-		queueDelay = 0;
+		queueDelay = mJobStartTime - mJobArrivalTime;
 		mIsQueued = true;
 	}
 	
@@ -312,6 +314,7 @@ public abstract class IntraJobScheduler {
 	
 	public void notifyResourceAvailable() {
 		mIsWaiting = false;
+		queueDelay += Simulation.getSimulationTime() - mTimeLastResourceAssignment;
 		mTimeLastResourceAssignment = Simulation.getSimulationTime();
 	}
 	

@@ -195,6 +195,7 @@ public class JobStatistics {
 		//printFairnessIndex();
 		//printLosses();
 		//printContentions();
+		printQueueDelay();
 		printFinishTimeFairness();
 		if (Simulation.isAdmissionControlEnabled()) {
 			printQueueDelay();
@@ -204,7 +205,8 @@ public class JobStatistics {
 	private void printQueueDelay() {
 		for(Integer key : mJobTime.keySet()) {
 			System.out.println("Queue Delay Job " + Integer.toString(key) + ": " + Double.toString(mJobTime.get(key).getQueueDelay()));
-		}	
+		}
+
 	}
 	
 	private void printGpuTime() {
