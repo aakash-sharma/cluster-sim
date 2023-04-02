@@ -47,7 +47,7 @@ public class TiresiasIntraJobScheduler extends IntraJobScheduler {
 	
 	public void startIteration() {
 		super.startIteration();
-		mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup());
+		mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
 	}
 
 }
