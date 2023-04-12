@@ -12,9 +12,9 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 
 	protected boolean mConsolidate;
 
-	public TiresiasInterJobScheduler(boolean consolidate, ClusterConfiguration config){
+	public TiresiasInterJobScheduler(ClusterConfiguration config){
 		super(config);
-		mConsolidate = consolidate;
+		mConsolidate = config.getmConsolidate();
 
 	}
 	public TiresiasInterJobScheduler(){

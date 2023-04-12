@@ -20,7 +20,7 @@ public class InterJobSchedulerFactory {
 			case "SLAQ":
 				return new SLAQInterJobScheduler();
 			case "Tiresias":
-				return new TiresiasInterJobScheduler(true, config);
+				return new TiresiasInterJobScheduler(config);
 			case "SJF":
 				return new SJFInterJobScheduler();
 			case "Optimus":

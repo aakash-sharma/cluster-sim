@@ -14,12 +14,13 @@ public class ClusterConfiguration {
 	private double mFairnessThreshold;
 	private double mEpsilon;
 	private boolean mUseConfig;
+	private boolean mConsolidate;
 	private String mAstraSimPath;
 	private String mAstraSimBinPath;
 
 	public ClusterConfiguration(int racks, int machines_per_rack,
                                 int slots_per_machine, int gpus_per_slot, int iter_granularity, String policy, double lease,
-                                double fairness_threshold, double epsilon, boolean useConfig, String astra_sim_path, String astra_sim_bin_path) {
+                                double fairness_threshold, double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path, String astra_sim_bin_path) {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
@@ -29,6 +30,7 @@ public class ClusterConfiguration {
 		mLeaseTime = lease;
 		mFairnessThreshold = fairness_threshold;
 		mEpsilon = epsilon;
+		mConsolidate = consolidate;
 		mUseConfig = useConfig;
 		mAstraSimPath = astra_sim_path;
 		mAstraSimBinPath = astra_sim_bin_path;
@@ -76,7 +78,6 @@ public class ClusterConfiguration {
 	public String getmAstraSimPath() {
 		return mAstraSimPath;
 	}
-	public String getmAstraSimBinPath() {
-		return mAstraSimBinPath;
-	}
+	public String getmAstraSimBinPath() { return mAstraSimBinPath; }
+	public boolean getmConsolidate() { return mConsolidate; }
 }
