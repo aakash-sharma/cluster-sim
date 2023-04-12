@@ -54,7 +54,7 @@ public class Cluster {
 		mFairnessThreshold = config.getFairnessThreshold();
 		mIterGranularity = config.getIterGranularity();
 		mEpsilon = config.getEpsilon();
-		mScheduler = InterJobSchedulerFactory.createInstance(mPolicy);
+		mScheduler = InterJobSchedulerFactory.createInstance(config);
 		mAstraSimPath = config.getmAstraSimPath();
 		mAstraSimBinPath = config.getmAstraSimBinPath();
 		if (config.getUseConfig()) {

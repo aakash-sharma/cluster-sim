@@ -44,7 +44,25 @@ public class TiresiasIntraJobScheduler extends IntraJobScheduler {
 		bidList.add(new Bid(offeredGPUs, -1*bidValue, this));
 		return bidList;
 	}
-	
+
+	public List<Bid> prepareMultiBid(List<GPU> offeredGPUs) {
+		// implemnt func to find max locality of the gpus.
+
+		if (getGPUsAvailableForNextIteration().size() >= mMaxParallelism) {
+			// Already have enough GPUs. No need to bid
+			return null;
+		}
+
+		List<Bid> bidList = new ArrayList<Bid>();
+		// Added negative of GPUService since we want job with min value to win
+		double bidValue = mGPUServiceForJob;
+		sLog.info("JobGroup:" + Integer.toString(getJobGroupId())
+				+ " Job:" + Integer.toString(getJobId()) +
+				" Bid:" + Double.toString(bidValue));
+		bidList.add(new Bid(offeredGPUs, -1*bidValue, this));
+		return bidList;
+	}
+
 	public void startIteration() {
 		super.startIteration();
 		mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;

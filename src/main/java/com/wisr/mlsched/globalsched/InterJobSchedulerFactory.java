@@ -1,5 +1,7 @@
 package com.wisr.mlsched.globalsched;
 
+import com.wisr.mlsched.config.ClusterConfiguration;
+
 import java.util.logging.Logger;
 
 /**
@@ -8,7 +10,8 @@ import java.util.logging.Logger;
 public class InterJobSchedulerFactory {
 	private static Logger sLog = Logger.getLogger(InterJobSchedulerFactory.class.getSimpleName());
 	
-	public static InterJobScheduler createInstance(String policy) {
+	public static InterJobScheduler createInstance(ClusterConfiguration config) {
+		String policy = config.getPolicy();
 		switch(policy) {
 			case "Themis":
 				return new ThemisInterJobScheduler();
@@ -17,7 +20,7 @@ public class InterJobSchedulerFactory {
 			case "SLAQ":
 				return new SLAQInterJobScheduler();
 			case "Tiresias":
-				return new TiresiasInterJobScheduler();
+				return new TiresiasInterJobScheduler(true, config);
 			case "SJF":
 				return new SJFInterJobScheduler();
 			case "Optimus":

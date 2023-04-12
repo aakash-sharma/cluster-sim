@@ -599,6 +599,10 @@ public abstract class IntraJobScheduler {
 	}
 
 	public abstract List<Bid> prepareBid(List<GPU> offeredGPUs);
+	public List<Bid> prepareMultiBid(List<GPU> offeredGPUs) {
+		List<Bid> bids = null;
+		return bids;
+	}
 
 	private List<GPU> relinquishAllResources() {
 		List<GPU> gpus = Cluster.getInstance().getGPUsInCluster();

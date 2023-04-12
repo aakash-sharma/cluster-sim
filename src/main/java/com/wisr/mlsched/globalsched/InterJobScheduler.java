@@ -8,6 +8,7 @@ import java.util.Random;
 
 import com.wisr.mlsched.ClusterEventQueue;
 import com.wisr.mlsched.Simulation;
+import com.wisr.mlsched.config.ClusterConfiguration;
 import com.wisr.mlsched.events.StartIterationEvent;
 import com.wisr.mlsched.job.Bid;
 import com.wisr.mlsched.localsched.IntraJobScheduler;
@@ -20,10 +21,18 @@ import com.wisr.mlsched.resources.GPU;
 public abstract class InterJobScheduler {
 	
 	protected Random mRand;
+	protected ClusterConfiguration mConfig;
 	public InterJobScheduler() {
 		mRand = new Random(0); // seed to make it deterministic
 	}
-	public abstract void onResourceAvailable(List<GPU> gpu_set);
+	public InterJobScheduler(ClusterConfiguration config) {
+		mRand = new Random(0); // seed to make it deterministic
+		mConfig = config;
+	}
+	public void onResourceAvailable(List<GPU> gpu_set) {
+
+
+	}
 	
 	protected void startWaitingJobs() {
 		List<IntraJobScheduler> jobs = Cluster.getInstance().getRunningJobs();
@@ -70,7 +79,61 @@ public abstract class InterJobScheduler {
 		}
 		startWaitingJobs();
 	}
-	
+
+	protected void multiGPUResourceAllocator(List<GPU> gpu_set) {
+		if(Cluster.getInstance().getRunningJobs().size() == 0) {
+			// Means no jobs are running, hence nothing to do
+			return;
+		}
+		List<GPU> gpuList = new ArrayList<GPU>();
+
+		for(GPU gpu : gpu_set) {
+			// Put this GPU up for auction by getting bids from jobs
+			if (gpu.isLeased()) {
+				// Already leased.
+				continue;
+			}
+			gpuList.add(gpu);
+		}
+
+		List<Bid> bids = new ArrayList<Bid>();
+		List<IntraJobScheduler> jobs = Cluster.getInstance().getRunningJobs();
+		for(IntraJobScheduler job : jobs) {
+			int gpuDemand = job.getMaxParallelism();
+			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, gpuDemand);
+
+			if (gpuAllocation == null){
+				continue;
+			}
+
+			List<Bid> bidsFromJob = job.prepareMultiBid(gpuAllocation);
+			if(bidsFromJob != null && !bidsFromJob.isEmpty()) {
+				bids.addAll(bidsFromJob);
+			}
+		}
+		if(bids.size() == 0) {
+			// No bids. All jobs must be running at full capacity
+			return;
+		}
+
+		Collections.sort(bids, new PerGPUBidComparator());
+
+		for( Bid bid : bids) {
+			/*
+			Bid winningBid = bids.get(0); // Select the winner
+			winningBid.getJob().notifyResourceAssignment(gpuList);
+			gpu.assignGPU(Cluster.getInstance().getLeaseTime(), winningBid.getJob());
+			*/
+
+			//gpus = bid.
+		}
+		startWaitingJobs();
+	}
+
+	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, int gpuDemand){
+		return null;
+	}
+
 	protected class PerGPUBidComparator implements Comparator<Bid> {
 
 		@Override
