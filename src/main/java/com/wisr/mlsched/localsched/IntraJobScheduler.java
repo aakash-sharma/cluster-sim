@@ -189,7 +189,8 @@ public abstract class IntraJobScheduler {
 				+ " Score: " + Double.toString(getPlacementSlowdown(mCurrentIterationGPUs))
 				+ " Number_jobs_running: " + Integer.toString(Cluster.getInstance().getRunningJobs().size()));*/
 		ClusterEventQueue.getInstance().enqueueEvent(
-				new EndIterationEvent(Simulation.getSimulationTime() + (mTimePerIteration / getJobSpeedup() * mIterGranularity), this));
+				new EndIterationEvent(Simulation.getSimulationTime() + (mTimePerIteration / getJobSpeedup() *
+						mIterGranularity), this));
 		// Aakash: augment this
 		mGpuTime += mTimePerIteration / getJobSpeedup() * mCurrentIterationGPUs.size() * mIterGranularity;
 		Iterator<GPU> gpuIter = mCurrentIterationGPUs.iterator();
@@ -203,8 +204,8 @@ public abstract class IntraJobScheduler {
 	}
 
 	public void endIteration() {
-		setmTotalIterationsRemaining(getmTotalIterationsRemaining() - mIterGranularity);
 		long itr_remain = getmTotalIterationsRemaining();
+		setmTotalIterationsRemaining(itr_remain - mIterGranularity);
 		if (itr_remain % 10000 == 0) {
 			sLog.log(Level.ALL, "End iteration for job " + Integer.toString(mJobId));
 			sLog.info("Iterations Remaining: " + Long.toString(itr_remain));
@@ -245,11 +246,12 @@ public abstract class IntraJobScheduler {
 		// check if this iteration can finish within the least lease end time
 		while(true) {
 			boolean converged = true;
-			double timeForIteration = mTimePerIteration*getPlacementSlowdown(mNextIterationGPUs)/mNextIterationGPUs.size();
+			double timeForIterations = mTimePerIteration * mIterGranularity *
+					getPlacementSlowdown(mNextIterationGPUs)/mNextIterationGPUs.size();
 			Iterator<GPU> it = mNextIterationGPUs.iterator();
 			while(it.hasNext()) {
 				GPU gpu = it.next();
-				if(Simulation.getSimulationTime() + timeForIteration > gpu.getLeaseEnd()) {
+				if(Simulation.getSimulationTime() + timeForIterations > gpu.getLeaseEnd()) {
 					// cannot use this GPU anymore
 					//System.out.println("Cannot use this GPU anymore " + Integer.toString(mJobId));
 					mNextIterationExpectedGPUs.remove(gpu);
