@@ -197,7 +197,8 @@ public abstract class IntraJobScheduler {
 		mNextIterationExpectedGPUs = new HashSet<GPU>();
 		while(gpuIter.hasNext()) {
 			GPU gpu = gpuIter.next();
-			if(gpu.getLeaseEnd() > Simulation.getSimulationTime() + mTimePerIteration / getJobSpeedup()) {
+			if(gpu.getLeaseEnd() > Simulation.getSimulationTime() +
+					(mTimePerIteration * mIterGranularity / getJobSpeedup())) {
 				mNextIterationExpectedGPUs.add(gpu);
 			}
 		}

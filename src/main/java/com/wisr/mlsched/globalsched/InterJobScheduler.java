@@ -99,11 +99,17 @@ public abstract class InterJobScheduler {
 		List<Bid> bids = new ArrayList<Bid>();
 		List<IntraJobScheduler> jobs = Cluster.getInstance().getRunningJobs();
 		for(IntraJobScheduler job : jobs) {
-			int gpuDemand = job.getMaxParallelism();
+			int gpuDemand = job.getMaxParallelism() - job.getGPUsAvailableForNextIteration().size();
 			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, gpuDemand);
 
-			if (gpuAllocation == null){
+			if (gpuAllocation.isEmpty()){
 				continue;
+			}
+
+			System.out.println("Allocated GPUs");
+			for (GPU gpu: gpuAllocation){
+				System.out.println(gpu.getLocation().getGPUId() + " " + gpu.getLocation().getMachineId() + " " +
+						gpu.getLocation().getRackId() + "\n");
 			}
 
 			List<Bid> bidsFromJob = job.prepareMultiBid(gpuAllocation);
@@ -118,15 +124,40 @@ public abstract class InterJobScheduler {
 
 		Collections.sort(bids, new PerGPUBidComparator());
 
-		for( Bid bid : bids) {
-			/*
-			Bid winningBid = bids.get(0); // Select the winner
-			winningBid.getJob().notifyResourceAssignment(gpuList);
-			gpu.assignGPU(Cluster.getInstance().getLeaseTime(), winningBid.getJob());
-			*/
+		Bid bid = bids.get(0); // Select the winner
+		bid.getJob().notifyResourceAssignment(bid.getGPUList());
 
-			//gpus = bid.
+		for (GPU gpu : bid.getGPUList())
+			gpu.assignGPU(Cluster.getInstance().getLeaseTime(), bid.getJob());
+
+		int gpusLeft = gpu_set.size() - bid.getGPUList().size();
+
+		for (int i = 1; i < bids.size(); i++) {
+
+			if (gpusLeft <= 0)
+				break;
+
+			boolean flag = false;
+			bid = bids.get(i); // Select the winner
+
+			for (GPU gpu : bid.getGPUList()) {
+				if (gpu.isLeased()){
+					flag = true;
+					break;
+				}
+			}
+
+			if (flag)
+				continue;
+
+			bid.getJob().notifyResourceAssignment(bid.getGPUList());
+
+			for (GPU gpu : bid.getGPUList())
+				gpu.assignGPU(Cluster.getInstance().getLeaseTime(), bid.getJob());
+
+			gpusLeft -= bid.getGPUList().size();
 		}
+
 		startWaitingJobs();
 	}
 

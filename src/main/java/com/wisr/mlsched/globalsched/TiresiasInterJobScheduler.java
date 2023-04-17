@@ -34,11 +34,12 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 	@Override
 	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, int gpuDemand) {
 
-		if (gpuDemand > gpuList.size()){
-			return null;
+		List<GPU> allocatedGpus = new ArrayList<GPU>();
+
+		if (gpuDemand <=0){
+			return allocatedGpus;
 		}
 
-		List<GPU> allocatedGpus = new ArrayList<GPU>();
 		Integer allocatedRack = -1;
 		Integer allocatedMachine = -1;
 		Integer gpusRack = gpuList.size() + 1;
