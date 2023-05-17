@@ -107,10 +107,6 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 		allocatedRack = -1;
 
 		for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
-			//Map.Entry<Integer, Integer> entry = (Map.Entry) integer; // problem here
-			//Object key = entry.getKey();
-			//Integer gpus = (Integer) rackMap.get(key);
-
 			Integer rack = entry.getKey();
 			Integer gpus = entry.getValue();
 			if (gpus >= gpuDemand && gpus < minGPUAllocation) {
