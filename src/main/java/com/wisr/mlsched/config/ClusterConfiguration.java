@@ -17,10 +17,16 @@ public class ClusterConfiguration {
 	private boolean mConsolidate;
 	private String mAstraSimPath;
 	private String mAstraSimBinPath;
+	private String[] mTopoPerDim;
+	private String[] mDimType;
+	private int[] mLinkCount;
+	private long[] mLinkLatency;
+	private int[] mLinkBandwidth;
 
-	public ClusterConfiguration(int racks, int machines_per_rack,
-                                int slots_per_machine, int gpus_per_slot, int iter_granularity, String policy, double lease,
-                                double fairness_threshold, double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path, String astra_sim_bin_path) {
+	public ClusterConfiguration(int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
+								int iter_granularity, String policy, double lease, double fairness_threshold,
+								double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path,
+								String astra_sim_bin_path) {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
@@ -35,7 +41,32 @@ public class ClusterConfiguration {
 		mAstraSimPath = astra_sim_path;
 		mAstraSimBinPath = astra_sim_bin_path;
 	}
-	
+
+	public ClusterConfiguration(int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
+								int iter_granularity, String policy, double lease, double fairness_threshold,
+								double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path,
+								String astra_sim_bin_path, String[] topo_per_dim, String[] dim_type, int[] link_count,
+								long[] link_latency, int[] link_bandwidth) {
+		mRacks = racks;
+		mMachinesPerRack = machines_per_rack;
+		mSlotsPerMachine = slots_per_machine;
+		mGPUsPerSlot = gpus_per_slot;
+		mIterGranularity = iter_granularity;
+		mPolicy = policy;
+		mLeaseTime = lease;
+		mFairnessThreshold = fairness_threshold;
+		mEpsilon = epsilon;
+		mConsolidate = consolidate;
+		mUseConfig = useConfig;
+		mAstraSimPath = astra_sim_path;
+		mAstraSimBinPath = astra_sim_bin_path;
+		mTopoPerDim = topo_per_dim;
+		mDimType = dim_type;
+		mLinkCount = link_count;
+		mLinkLatency = link_latency;
+		mLinkBandwidth = link_bandwidth;
+	}
+
 	public boolean getUseConfig() {
 		return mUseConfig;
 	}
@@ -79,5 +110,25 @@ public class ClusterConfiguration {
 		return mAstraSimPath;
 	}
 	public String getmAstraSimBinPath() { return mAstraSimBinPath; }
+
 	public boolean getmConsolidate() { return mConsolidate; }
+
+	public String[] getmTopoPerDim(){
+		return mTopoPerDim;
+	}
+
+	public String[] getmDimType() {
+		return mDimType;
+	}
+
+	public int[] getmLinkBandwidth() {
+		return mLinkBandwidth;
+	}
+
+	public long[] getmLinkLatency() {
+		return mLinkLatency;
+	}
+	public int[] getmLinkCount() {
+		return mLinkCount;
+	}
 }

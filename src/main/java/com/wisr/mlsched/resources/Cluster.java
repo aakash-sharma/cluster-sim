@@ -35,6 +35,7 @@ public class Cluster {
 	private String mAstraSimPath; // Astra sim path
 	private String mAstraSimBinPath; // Astra sim binary path
 
+
 	/**
 	 * Creates an instance of the required cluster from the given configuration.
 	 * This methods creates GPU objects and initializes the running jobs and
@@ -100,6 +101,11 @@ public class Cluster {
 		return sInstance;
 	}
 
+	public static Cluster createCluster(JSONObject config, JSONObject networkConfig) {
+		ClusterConfiguration clusterConfig = ConfigUtils.getClusterConfig(config, networkConfig);
+		sInstance = new Cluster(clusterConfig);
+		return sInstance;
+	}
 	/**
 	 * Get the set of GPUs in the cluster.
 	 * 

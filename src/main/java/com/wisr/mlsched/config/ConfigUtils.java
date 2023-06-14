@@ -2,6 +2,8 @@ package com.wisr.mlsched.config;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Vector;
 
 import com.wisr.mlsched.localsched.IntraJobScheduler;
 import com.wisr.mlsched.localsched.IntraJobSchedulerFactory;
@@ -41,7 +43,21 @@ public class ConfigUtils {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Get network configuration JSON from workload configuration file
+	 * @param configFile
+	 * @return JSONArray containing details are all workloads
+	 */
+	public static JSONObject getNetworkConfigs(String networkFile) {
+		JSONParser parser = new JSONParser();
+		try {
+			return (JSONObject) parser.parse(new FileReader(networkFile));
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	/**
 	 * Return a cluster configuration object from the given JSON configuration
 	 * @param config
@@ -61,8 +77,109 @@ public class ConfigUtils {
 		boolean consolidate = Boolean.parseBoolean(getAttributeValue(config, "consolidate"));
 		String astra_sim_path = getAttributeValue(config, "astra_sim_path");
 		String astra_sim_bin_path = getAttributeValue(config, "astra_sim_bin_path");
+
 		return new ClusterConfiguration(racks, machines, slots, gpus, iter_granularity, policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path);
+
+	}
+	public static ClusterConfiguration getClusterConfig(JSONObject config,
+				JSONObject networkConfig) {
+		int racks = Integer.parseInt(getAttributeValue(config, "racks_in_cluster"));
+		int iter_granularity = Integer.parseInt(getAttributeValue(config, "iteration_granularity"));
+		double lease_time = Double.parseDouble(getAttributeValue(config, "lease_time"));
+		double fairness_threshold = Double.parseDouble(getAttributeValue(config, "fairness_threshold"));
+		double epsilon = Double.parseDouble(getAttributeValue(config, "epsilon"));
+		boolean shouldUseConfig = Boolean.parseBoolean(getAttributeValue(config, "should_use_config"));
+		String policy = getClusterPolicy(config);
+		boolean consolidate = Boolean.parseBoolean(getAttributeValue(config, "consolidate"));
+		String astra_sim_path = getAttributeValue(config, "astra_sim_path");
+		String astra_sim_bin_path = getAttributeValue(config, "astra_sim_bin_path");
+		int slots = 1;
+		int machines = 1;
+		int gpus = 1;
+
+		int dims = ((Long) networkConfig.get("dimensions-count")).intValue();
+		JSONArray topo_per_dim_js = (JSONArray) networkConfig.get("topologies-per-dim");
+		JSONArray dim_type_js = (JSONArray) networkConfig.get("dimension-type");
+		JSONArray unit_count_js = (JSONArray) networkConfig.get("units-count");
+		JSONArray links_count_js = (JSONArray) networkConfig.get("links-count");
+		JSONArray link_latency_js = (JSONArray) networkConfig.get("link-latency");
+		JSONArray link_bandwidth_js = (JSONArray) networkConfig.get("link-bandwidth");
+		JSONArray nic_latency_js = (JSONArray) networkConfig.get("nic-latency");
+
+		Iterator<String> st_itr = topo_per_dim_js.iterator();
+		String topo_per_dim[] = new String[dims];
+		int i = 0;
+		while(st_itr.hasNext()) {
+			topo_per_dim[i] = st_itr.next();
+			i += 1;
+		}
+
+		Iterator<Long> int_itr = unit_count_js.iterator();
+		int unit_count[] = new int[dims];
+		i = 0;
+		while(int_itr.hasNext()) {
+			unit_count[i] = (int_itr.next()).intValue();
+			i += 1;
+		}
+
+		int_itr = links_count_js.iterator();
+		int link_count[] = new int[dims];
+		i = 0;
+		while(int_itr.hasNext()) {
+			link_count[i] = (int_itr.next()).intValue();
+			link_count[i] /= unit_count[i];
+			i += 1;
+		}
+
+		st_itr = dim_type_js.iterator();
+		String dim_type[] = new String[dims];
+		i = 0;
+		while(st_itr.hasNext()) {
+			dim_type[i] = st_itr.next();
+			if (dim_type[i] == "T") {
+				gpus *= unit_count[i];
+			}
+			if (dim_type[i] == "N") {
+				slots *= unit_count[i];
+			}
+			if (dim_type[i] == "P") {
+				machines = unit_count[i];
+			}
+			if (dim_type[i] == "PP") {
+				racks = unit_count[i];
+			}
+			i += 1;
+		}
+
+		int_itr = link_latency_js.iterator();
+		long link_latency[] = new long[dims];
+		i = 0;
+		while(int_itr.hasNext()) {
+			link_latency[i] = int_itr.next();
+			i += 1;
+		}
+
+		int_itr = link_bandwidth_js.iterator();
+		int link_bandwidth[] = new int[dims];
+		i = 0;
+		while(int_itr.hasNext()) {
+			link_bandwidth[i] = (int_itr.next()).intValue();
+			i += 1;
+		}
+
+		int_itr = nic_latency_js.iterator();
+		float nic_latency[] = new float[dims];
+		i = 0;
+		while(int_itr.hasNext()) {
+			nic_latency[i] = int_itr.next();
+			i += 1;
+		}
+
+		return new ClusterConfiguration(racks, machines, slots, gpus, iter_granularity, policy, lease_time,
+				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
+				topo_per_dim, dim_type, link_count, link_latency, link_bandwidth);
+
 	}
 	
 	/**

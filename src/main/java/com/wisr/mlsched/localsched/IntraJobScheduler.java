@@ -1,12 +1,7 @@
 package com.wisr.mlsched.localsched;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.Set;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.HashMap;
@@ -32,8 +27,6 @@ import com.wisr.mlsched.job.LossFunction;
 import com.wisr.mlsched.job.LossFunctionFactory;
 import com.wisr.mlsched.resources.Cluster;
 import com.wisr.mlsched.resources.GPU;
-
-import org.json.simple.JSONObject;
 
 public abstract class IntraJobScheduler {
 	// List of Job configurations
@@ -71,7 +64,8 @@ public abstract class IntraJobScheduler {
 	private double queueDelay; // State to maintain with admission control
 	private double mJobArrivalTime; // Arrival time of the job
 	private boolean mIsQueued; // Every job starts with getting queued
-	private Map<Set<GPU>, Double> mSlowdown;
+	//private Map<Set<GPU>, Double> mSlowdown;
+	private Map<Vector<Integer>, Double> mSlowdown;
 
 	public IntraJobScheduler(JSONObject config) {
 		initFromConfig(config);
@@ -341,16 +335,25 @@ public abstract class IntraJobScheduler {
 		return mJobGroupId;
 	}
 
-	protected double astra_sim(Set<GPU> gpus, int dim) {
-		String[] dimensions = {
-			"PP",
-			"P",
-			"N",
-			"T"
-		}; // pod-to-pod, within pod, within node, tile-to-tile
+	protected double astra_sim(Set<GPU> gpus, Vector<Integer> dimVec) {
+
+		String[] topoPerDim = Cluster.getInstance().getConfiguration().getmTopoPerDim();
+		String[] mDimType = Cluster.getInstance().getConfiguration().getmDimType();
+		int[] mLinkCount = Cluster.getInstance().getConfiguration().getmLinkCount();
+		long[] mLinkLatency = Cluster.getInstance().getConfiguration().getmLinkLatency();
+		int[] mLinkBandwidth = Cluster.getInstance().getConfiguration().getmLinkBandwidth();
 
 		double computeTime = 0;
 		double commTime = 0;
+		double computeScale = 1;
+
+		if (mModelName == "VGG") {
+			computeScale = 0.25;
+		}
+
+		if (mModelName == null) {
+			mModelName = "ResNet50";
+		}
 
 		JSONObject jsonObject = new JSONObject();
 		JSONArray topologiesPerDim = new JSONArray();
@@ -359,40 +362,34 @@ public abstract class IntraJobScheduler {
 		JSONArray linksCount = new JSONArray();
 		JSONArray linkLatency = new JSONArray();
 		JSONArray linkBW = new JSONArray();
-		JSONArray nicLatency= new JSONArray();
+		JSONArray nicLatency = new JSONArray();
 		JSONArray routerLatency = new JSONArray();
 		JSONArray hbmLatency = new JSONArray();
 		JSONArray hbmBW = new JSONArray();
 		JSONArray hbmScale = new JSONArray();
 
-		//for (int i =0; i < dims; i++) {
-		if (dim == 0) {
-			topologiesPerDim.add("Switch");
-			linkLatency.add(1700);
-			linkBW.add(25);
-			nicLatency.add(100);
-		}
-		if (dim >= 1) {
-			topologiesPerDim.add("Ring");
-			linkLatency.add(700);
-			linkBW.add(1200);
+		for (int idx = 0; idx < dimVec.size(); idx++)
+		{
+			topologiesPerDim.add(topoPerDim[idx]);
+			dimensionType.add(mDimType[idx]);
+			linkLatency.add(mLinkLatency[idx]);
+			linkBW.add(mLinkBandwidth[idx]);
+
+			unitsCount.add(dimVec.get(idx));
+			//int links = mLinkCount[idx] / dimVec.get(idx);
+			linksCount.add(mLinkCount[idx] * dimVec.get(idx));
+
 			nicLatency.add(0);
+			routerLatency.add(0);
+			hbmLatency.add(500);
+			hbmBW.add(370);
+			hbmScale.add(0);
 		}
-		//dimensionType.add(dimensions[i]);
-		dimensionType.add(dimensions[dim]);
-		unitsCount.add(gpus.size());
-		linksCount.add(2);
-		routerLatency.add(0);
-		hbmLatency.add(500);
-		hbmBW.add(370);
-		hbmScale.add(0);
-		//}
 
 		jsonObject.put("topology-name", "Hierarchical");
-		//jsonObject.put("dimensions-count", dims);
-		jsonObject.put("dimensions-count", 1);
 		jsonObject.put("topologies-per-dim", topologiesPerDim);
 		jsonObject.put("dimension-type", dimensionType);
+		jsonObject.put("dimensions-count", dimVec.size());
 		jsonObject.put("units-count", unitsCount);
 		jsonObject.put("links-count", linksCount);
 		jsonObject.put("link-latency", linkLatency);
@@ -407,7 +404,11 @@ public abstract class IntraJobScheduler {
 			FileWriter file = new FileWriter(mAstraSimPath + "/network/" + mJobId +".json");
 			file.write(jsonObject.toJSONString());
 			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
+		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(mAstraSimPath + "/system/" + mJobId +".txt"));
 			writer.write("scheduling-policy: LIFO\n");
 			writer.append("endpoint-delay: 10\n");
@@ -415,24 +416,40 @@ public abstract class IntraJobScheduler {
 			writer.append("endpoint-delay: 10\n");
 			writer.append("preferred-dataset-splits: 1\n");
 			writer.append("boost-mode: 0\n");
-			writer.append("all-reduce-implementation: doubleBinaryTree\n");
-			writer.append("all-gather-implementation: ring\n");
-			writer.append("reduce-scatter-implementation: ring\n");
+			writer.append("all-reduce-implementation: doubleBinaryTree");
+			for (int idx = 1; idx < dimVec.size(); idx++) {
+				writer.append("_doubleBinaryTree");
+			}
+			writer.append("\n");
+			writer.append("all-gather-implementation: ring");
+			for (int idx = 1; idx < dimVec.size(); idx++) {
+				writer.append("_ring");
+			}
+			writer.append("\n");
+			writer.append("reduce-scatter-implementation: ring");
+			for (int idx = 1; idx < dimVec.size(); idx++) {
+				writer.append("_ring");
+			}
+			writer.append("\n");
 			writer.append("all-to-all-implementation: oneDirect\n");
 			writer.append("collective-optimization: localBWAware\n");
 			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 			List<String> cmd = new ArrayList<String>();
 			cmd.add(mAstraSimBinPath);
 			cmd.add("--network-configuration=" + mAstraSimPath + "/network/" + mJobId + ".json");
 			cmd.add("--system-configuration=" + mAstraSimPath + "/system/" + mJobId +".txt");
-			cmd.add("--workload-configuration=" + mAstraSimPath + "/workload/Resnet50_DataParallel.txt");
-			cmd.add("--path=" + mAstraSimPath + "/results");
-			cmd.add("--run-name=" + mJobId + "_" + dimensions[dim]);
-			//cmd.add("--run-name=" + mJobId + "_" + dimensions[dims-1]);
+			cmd.add("--workload-configuration=" + mAstraSimPath + "/workload/" + mModelName + ".txt");
+			cmd.add("--path=" + mAstraSimPath + "/results/");
+			cmd.add("--run-name=" + mJobId);
+			cmd.add("--compute-scale=" + String.valueOf(computeScale));
 
+		try {
 			ProcessBuilder pb = new ProcessBuilder(cmd);
-			pb.directory(new File(mAstraSimPath + "/results")); //Set current directory
+			pb.directory(new File(mAstraSimPath + "/results/")); //Set current directory
 			pb.redirectError(new File(mAstraSimPath + "/results/err.log")); //Log errors in specified log file.
 			pb.redirectOutput(new File(mAstraSimPath + "/results/out.log")); //Log errors in specified log file.
 
@@ -440,119 +457,123 @@ public abstract class IntraJobScheduler {
 			int exitVal = process.waitFor();
 			if (exitVal != 0) {
 				System.out.println("Abnormal Behaviour! Something bad happened with astra sim.");
+				System.out.println("Ran command: " + cmd);
+				System.out.println("Printing stack trace:");
+				StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+				for (int i = 1; i < elements.length; i++) {
+					StackTraceElement s = elements[i];
+					System.out.println("\tat " + s.getClassName() + "." + s.getMethodName()
+							+ "(" + s.getFileName() + ":" + s.getLineNumber() + ")");
+				}
+				System.exit(-1);
 			}
 
 			BufferedReader reader = new BufferedReader(new FileReader(mAstraSimPath + "/resultsEndToEnd.csv"));
 			reader.readLine();
 
 			String line = reader.readLine();
-			String [] vals = line.split(",");
+			String[] vals = line.split(",");
 
 			computeTime = Float.parseFloat(vals[12]);
 			commTime = Float.parseFloat(vals[13]);
 
-			System.out.println("A " + dim);
+			//System.out.println("A " + dim);
 			System.out.println("AA " + computeTime);
 			System.out.println("AAA " + commTime);
-			System.out.println("AAAA " + computeTime/ (commTime + computeTime));
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		catch (InterruptedException e) {
+			System.out.println("AAAA " + computeTime / (commTime + computeTime));
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		return computeTime/ (commTime+ computeTime);
+		return computeTime/ (commTime + computeTime);
 	}
 
 	public double getPlacementSlowdown_astra(Set<GPU> gpus) {
 		HashSet<Integer> map = new HashSet<Integer>();
+		Vector<Integer> dimVec = new Vector<Integer>();
 		Iterator<GPU> gpuIter = gpus.iterator();
-		// Check if across racks
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getRackId());
-			//System.out.println("GPU location" + gpu.getLocation().getPrettyString());
-			if (map.size() > 1) {
-				return astra_sim(gpus,0);
-			}
-		}
-		// Check if across machines
-		map = new HashSet<Integer>();
-		gpuIter = gpus.iterator();
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getMachineId());
-			if (map.size() > 1) {
-				return astra_sim(gpus, 1);
-			}
-		}
+
 		// Check if across slots
 		map = new HashSet<Integer>();
 		gpuIter = gpus.iterator();
 		while (gpuIter.hasNext()) {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getSlotId());
+			/*
 			if (map.size() > 1) {
 				return astra_sim(gpus, 2);
-			}
+			}*/
 		}
-		return 1.0;
-	}
+		dimVec.add(map.size());
 
+		// Check if across machines
+		map = new HashSet<Integer>();
+		gpuIter = gpus.iterator();
+		while (gpuIter.hasNext()) {
+			GPU gpu = gpuIter.next();
+			map.add(gpu.getLocation().getMachineId());
+			/*
+			if (map.size() > 1) {
+				return astra_sim(gpus, 1);
+			}*/
+		}
+		dimVec.add(map.size());
+
+		// Check if across racks
+		while (gpuIter.hasNext()) {
+			GPU gpu = gpuIter.next();
+			map.add(gpu.getLocation().getRackId());
+			//System.out.println("GPU location" + gpu.getLocation().getPrettyString());
+			/*
+			if (map.size() > 1) {
+				return astra_sim(gpus,0);
+			}*/
+		}
+		dimVec.add(map.size());
+		return astra_sim(gpus, dimVec);
+	}
 
 	public double getPlacementSlowdown(Set<GPU> gpus) {
 
-		double slowdown = 1.0;
-		if (!mSlowdown.containsKey(gpus)) {
-			slowdown = getPlacementSlowdown_astra(gpus);
-			mSlowdown.put(gpus, slowdown);
+		if (gpus.isEmpty())
+		{
+			return Double.MAX_VALUE;
 		}
 
-		return slowdown;
-
-		/*
+		HashSet<Integer> map = new HashSet<Integer>();
+		Vector<Integer> dimVec = new Vector<Integer>();
 		Iterator<GPU> gpuIter = gpus.iterator();
+
+		// Check if across slots
+		while (gpuIter.hasNext()) {
+			GPU gpu = gpuIter.next();
+			map.add(gpu.getLocation().getSlotId());
+		}
+		dimVec.add(map.size());
+
+		// Check if across machines
+		while (gpuIter.hasNext()) {
+			GPU gpu = gpuIter.next();
+			map.add(gpu.getLocation().getMachineId());
+		}
+		dimVec.add(map.size());
+
 		// Check if across racks
 		while (gpuIter.hasNext()) {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getRackId());
-			//System.out.println("GPU location" + gpu.getLocation().getPrettyString());
-			if (map.size() > 1) {
-				System.out.println("Slowdown: rack");
-				System.out.println("Rack: " + gpu.getLocation().getRackId());
-				return mCrossRackSlowdown;
-			}
 		}
-		// Check if across machines
-		map = new HashSet<Integer>();
-		gpuIter = gpus.iterator();
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getMachineId());
-			System.out.println("GPU location" + gpu.getLocation().getPrettyString());
-			System.out.println("map: " + map);
-			if (map.size() > 1) {
-				System.out.println("Slowdown: machine");
-				System.out.println("Rack: " + gpu.getLocation().getRackId());
-				return mCrossMachineSlowdown;
-			}
+		dimVec.add(map.size());
+
+		double slowdown = 1.0;
+
+		if (!mSlowdown.containsKey(dimVec)) {
+			//slowdown = getPlacementSlowdown_astra(gpus);
+			slowdown = astra_sim(gpus, dimVec);
+			mSlowdown.put(dimVec, slowdown);
 		}
-		// Check if across slots
-		map = new HashSet<Integer>();
-		gpuIter = gpus.iterator();
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getSlotId());
-			System.out.println("GPU location" + gpu.getLocation().getPrettyString());
-			if (map.size() > 1) {
-				System.out.println("Slowdown: slot");
-				return mCrossSlotSlowdown;
-			}
-		}
-		return 1.0;
-		 */
+
+		return slowdown;
 	}
 
 	public double getQueueDelay() {

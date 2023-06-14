@@ -21,19 +21,28 @@ public class Simulation {
 	public static void main(String args[]) {
 		String cluster_config_file = args[0];
 		String workload_config_file = args[1];
+
 		Logger log = Logger.getLogger(Simulation.class.getSimpleName());
 		log.setLevel(mLogLevel);
 		
 		// Get the configurations
 		JSONObject clusterConfig = ConfigUtils.getClusterConfig(cluster_config_file);
 		JSONArray workloadConfig = ConfigUtils.getWorkloadConfigs(workload_config_file);
+		JSONObject networkConfig = null;
+
 		log.info("Starting Simulation");
 		// Initialize simulator time
 		mTime = 0;
 		
 		// Initialize cluster
-		Cluster.createCluster(clusterConfig);
-		
+		if (args.length > 2) {
+			String network_config_file = args[2];
+			networkConfig = ConfigUtils.getNetworkConfigs(network_config_file);
+			Cluster.createCluster(clusterConfig, networkConfig);
+		}
+		else {
+			Cluster.createCluster(clusterConfig);
+		}
 		ClusterEventQueue eventQueue = ClusterEventQueue.getInstance();
 
 		// AS: change to account for arrival time
