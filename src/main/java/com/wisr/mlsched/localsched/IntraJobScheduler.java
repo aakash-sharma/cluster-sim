@@ -347,12 +347,17 @@ public abstract class IntraJobScheduler {
 		double commTime = 0;
 		double computeScale = 1;
 
-		if (mModelName == "VGG") {
-			computeScale = 0.25;
-		}
 
 		if (mModelName == null) {
 			mModelName = "ResNet50";
+		}
+
+		if (mModelName == "ResNet50") {
+			computeScale = 4500;
+		}
+
+		if (mModelName == "VGG") {
+			computeScale = 1.2;
 		}
 
 		JSONObject jsonObject = new JSONObject();
