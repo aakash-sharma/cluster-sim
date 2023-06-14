@@ -241,7 +241,7 @@ public abstract class IntraJobScheduler {
 		// check if this iteration can finish within the least lease end time
 		while(true) {
 			boolean converged = true;
-			double timeForIterations = mTimePerIteration * mIterGranularity *
+			double timeForIterations = mTimePerIteration * mIterGranularity /
 					getPlacementSlowdown(mNextIterationGPUs)/mNextIterationGPUs.size();
 			Iterator<GPU> it = mNextIterationGPUs.iterator();
 			while(it.hasNext()) {
@@ -376,7 +376,6 @@ public abstract class IntraJobScheduler {
 			linkBW.add(mLinkBandwidth[idx]);
 
 			unitsCount.add(dimVec.get(idx));
-			//int links = mLinkCount[idx] / dimVec.get(idx);
 			linksCount.add(mLinkCount[idx] * dimVec.get(idx));
 
 			nicLatency.add(0);
@@ -468,7 +467,7 @@ public abstract class IntraJobScheduler {
 				System.exit(-1);
 			}
 
-			BufferedReader reader = new BufferedReader(new FileReader(mAstraSimPath + "/resultsEndToEnd.csv"));
+			BufferedReader reader = new BufferedReader(new FileReader(mAstraSimPath + "/results/EndToEnd.csv"));
 			reader.readLine();
 
 			String line = reader.readLine();
@@ -537,7 +536,7 @@ public abstract class IntraJobScheduler {
 
 		if (gpus.isEmpty())
 		{
-			return Double.MAX_VALUE;
+			return Double.MIN_VALUE;
 		}
 
 		HashSet<Integer> map = new HashSet<Integer>();
