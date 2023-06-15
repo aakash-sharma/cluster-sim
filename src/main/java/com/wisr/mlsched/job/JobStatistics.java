@@ -1,10 +1,13 @@
 package com.wisr.mlsched.job;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.TreeMap;
+import java.io.IOException;
+import java.util.*;
+import java.io.File;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.FileOutputStream;
 
 import com.wisr.mlsched.ClusterEventQueue;
 import com.wisr.mlsched.Simulation;
@@ -22,6 +25,8 @@ public class JobStatistics {
 	private List<Double> mFinishTimeFairness; // List of Ts/Ti for leader jobs
 	private List<ContentionValue> mContention; // List of contention numbers over time
 	private TreeMap<Double,Integer> mGPUContention; // Map of contention over time
+	private XSSFWorkbook mWorkbook;
+	Map<Integer, Vector<Double>> mSimResults;
 	private static int lastContention = 0;
 	
 	/**
@@ -34,6 +39,8 @@ public class JobStatistics {
 		mFinishTimeFairness = new ArrayList<Double>();
 		mContention = new ArrayList<ContentionValue>();
 		mGPUContention = new TreeMap<Double, Integer>();
+		mWorkbook = new XSSFWorkbook();
+		mSimResults = new TreeMap<Integer, Vector<Double>>();
 		ClusterEventQueue.getInstance().enqueueEvent(new 
 				JobStatisticEvent(Simulation.getSimulationTime() + 1));
 	}
@@ -189,6 +196,9 @@ public class JobStatistics {
 	 * Print out individual JCTs, average JCT, and makespan
 	 */
 	public void printStats() {
+		for(Integer key : mJobTime.keySet()) {
+			mSimResults.put(key, new Vector<Double>());
+		}
 		printJCT();
 		printMakespan();
 		printGpuTime();
@@ -197,23 +207,62 @@ public class JobStatistics {
 		//printContentions();
 		printQueueDelay();
 		printFinishTimeFairness();
-		if (Simulation.isAdmissionControlEnabled()) {
-			printQueueDelay();
+
+		XSSFSheet sheet1 = mWorkbook.createSheet(" Sim-stats ");
+		XSSFRow row;
+		int rowid = 0;
+		int cellid = 0;
+		String[] headers = {"JobId", "JCT", "GPU-time", "Queue-delay"};
+		row = sheet1.createRow(rowid++);
+
+		for (String str : headers) {
+			Cell cell = row.createCell(cellid++);
+			cell.setCellValue(str);
 		}
+
+		for(Integer key : mJobTime.keySet()) {
+
+			row = sheet1.createRow(rowid++);
+			Vector<Double> values = mSimResults.get(key);
+			cellid = 0;
+			Cell cell = row.createCell(cellid++);
+			cell.setCellValue(key);
+
+			for (Double val : values) {
+				cell = row.createCell(cellid++);
+				cell.setCellValue(val);
+			}
+		}
+
+		try {
+			FileOutputStream out = new FileOutputStream(new File("results.xlsx"));
+			mWorkbook.write(out);
+			out.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private void printQueueDelay() {
+		double queue_delay = 0.0;
 		for(Integer key : mJobTime.keySet()) {
-			System.out.println("Queue Delay Job " + Integer.toString(key) + ": " + Double.toString(mJobTime.get(key).getQueueDelay()));
+			queue_delay = mJobTime.get(key).getQueueDelay();
+			mSimResults.get(key).add(queue_delay);
+			System.out.println("Queue Delay Job " + Integer.toString(key) + ": " + Double.toString(queue_delay));
 		}
 
 	}
 	
 	private void printGpuTime() {
 		double total_time = 0.0;
+		double gpu_time = 0.0;
 		for(Integer key : mJobTime.keySet()) {
-			System.out.println("GPU Time Job " + Integer.toString(key) + ": " + Double.toString(mJobTime.get(key).getGpuTime()));
-			total_time += mJobTime.get(key).getGpuTime();
+			gpu_time = mJobTime.get(key).getGpuTime();
+			System.out.println("GPU Time Job " + Integer.toString(key) + ": " + Double.toString(gpu_time));
+			mSimResults.get(key).add(gpu_time);
+			total_time += gpu_time;
 		}
 		System.out.println("Total GPU Time: " + total_time);
 	}
@@ -237,10 +286,13 @@ public class JobStatistics {
 	
 	private void printJCT() {
 		double total_jct = 0.0;
+		double jct = 0.0;
 		for(Integer key : mJobTime.keySet()) {
-			total_jct += mJobTime.get(key).getJobTime();
-			System.out.println("Job " + Integer.toString(key) + " ran for time: " + 
-					Double.toString(mJobTime.get(key).getJobTime()));
+			jct = mJobTime.get(key).getJobTime();
+			total_jct += jct;
+			mSimResults.get(key).add(jct);
+			System.out.println("Job " + Integer.toString(key) + " ran for time: " +
+					Double.toString(jct));
 		}
 		double avg_jct = total_jct/mJobTime.keySet().size();
 		System.out.println("Average JCT: " + Double.toString(avg_jct));
