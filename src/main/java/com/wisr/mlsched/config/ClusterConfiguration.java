@@ -17,6 +17,7 @@ public class ClusterConfiguration {
 	private boolean mConsolidate;
 	private String mAstraSimPath;
 	private String mAstraSimBinPath;
+	private String mTopoName;
 	private String[] mTopoPerDim;
 	private String[] mDimType;
 	private int[] mLinkCount;
@@ -45,8 +46,8 @@ public class ClusterConfiguration {
 	public ClusterConfiguration(int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
 								int iter_granularity, String policy, double lease, double fairness_threshold,
 								double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path,
-								String astra_sim_bin_path, String[] topo_per_dim, String[] dim_type, int[] link_count,
-								long[] link_latency, int[] link_bandwidth) {
+								String astra_sim_bin_path, String topo_name, String[] topo_per_dim, String[] dim_type,
+								int[] link_count, long[] link_latency, int[] link_bandwidth) {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
@@ -65,6 +66,7 @@ public class ClusterConfiguration {
 		mLinkCount = link_count;
 		mLinkLatency = link_latency;
 		mLinkBandwidth = link_bandwidth;
+		mTopoName = topo_name;
 	}
 
 	public boolean getUseConfig() {
@@ -112,6 +114,10 @@ public class ClusterConfiguration {
 	public String getmAstraSimBinPath() { return mAstraSimBinPath; }
 
 	public boolean getmConsolidate() { return mConsolidate; }
+
+	public String getmTopoName(){
+		return mTopoName;
+	}
 
 	public String[] getmTopoPerDim(){
 		return mTopoPerDim;

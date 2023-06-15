@@ -196,36 +196,46 @@ public class JobStatistics {
 	 * Print out individual JCTs, average JCT, and makespan
 	 */
 	public void printStats() {
+		double makespan = 0.0;
 		for(Integer key : mJobTime.keySet()) {
 			mSimResults.put(key, new Vector<Double>());
 		}
 		printJCT();
-		printMakespan();
 		printGpuTime();
 		//printFairnessIndex();
 		//printLosses();
 		//printContentions();
 		printQueueDelay();
 		printFinishTimeFairness();
+		makespan = printMakespan();
 
 		XSSFSheet sheet1 = mWorkbook.createSheet(" Sim-stats ");
 		XSSFRow row;
 		int rowid = 0;
 		int cellid = 0;
-		String[] headers = {"JobId", "JCT", "GPU-time", "Queue-delay"};
+		Cell cell;
+		String[] headers = {"JobId", "JCT", "GPU-time", "Queue-delay", "makespan"};
 		row = sheet1.createRow(rowid++);
 
 		for (String str : headers) {
-			Cell cell = row.createCell(cellid++);
+			cell = row.createCell(cellid++);
 			cell.setCellValue(str);
 		}
+		row = sheet1.createRow(rowid++);
+		for (int i = 0; i < headers.length-1; i++) {
+			cell = row.createCell(cellid++);
+			cell.setCellValue("");
+		}
+
+		cell = row.createCell(headers.length-1);
+		cell.setCellValue(makespan);
 
 		for(Integer key : mJobTime.keySet()) {
 
 			row = sheet1.createRow(rowid++);
 			Vector<Double> values = mSimResults.get(key);
 			cellid = 0;
-			Cell cell = row.createCell(cellid++);
+			cell = row.createCell(cellid++);
 			cell.setCellValue(key);
 
 			for (Double val : values) {
@@ -234,8 +244,12 @@ public class JobStatistics {
 			}
 		}
 
+		String policy = Cluster.getInstance().getConfiguration().getPolicy();
+		String topo_name = Cluster.getInstance().getConfiguration().getmTopoName();
+
 		try {
-			FileOutputStream out = new FileOutputStream(new File("results.xlsx"));
+			FileOutputStream out = new FileOutputStream(new File("results/results_" + policy + "_" + topo_name
+					+ ".xlsx"));
 			mWorkbook.write(out);
 			out.close();
 		}
@@ -298,9 +312,11 @@ public class JobStatistics {
 		System.out.println("Average JCT: " + Double.toString(avg_jct));
 	}
 	
-	private void printMakespan() {
+	private double printMakespan() {
 		double earliest_start_time = Double.MAX_VALUE;
 		double latest_end_time = Double.MIN_VALUE;
+		double makespan = 0.0;
+
 		for(Integer key : mJobTime.keySet()) {
 			double start_time = mJobTime.get(key).getStartTime();
 			double end_time = mJobTime.get(key).getEndTime();
@@ -311,7 +327,10 @@ public class JobStatistics {
 				latest_end_time = end_time;
 			}
 		}
-		System.out.println("Makespan: " + Double.toString(latest_end_time-earliest_start_time));
+
+		makespan = latest_end_time-earliest_start_time;
+		System.out.println("Makespan: " + Double.toString(makespan));
+		return makespan;
 	}
 	
 	private void printFairnessIndex() {

@@ -99,6 +99,7 @@ public class ConfigUtils {
 		int gpus = 1;
 
 		int dims = ((Long) networkConfig.get("dimensions-count")).intValue();
+		String topo_name = (String) networkConfig.get("topology-name");
 		JSONArray topo_per_dim_js = (JSONArray) networkConfig.get("topologies-per-dim");
 		JSONArray dim_type_js = (JSONArray) networkConfig.get("dimension-type");
 		JSONArray unit_count_js = (JSONArray) networkConfig.get("units-count");
@@ -178,7 +179,7 @@ public class ConfigUtils {
 
 		return new ClusterConfiguration(racks, machines, slots, gpus, iter_granularity, policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
-				topo_per_dim, dim_type, link_count, link_latency, link_bandwidth);
+				topo_name, topo_per_dim, dim_type, link_count, link_latency, link_bandwidth);
 
 	}
 	
