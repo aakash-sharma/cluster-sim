@@ -84,7 +84,10 @@ public class ConfigUtils {
 	}
 	public static ClusterConfiguration getClusterConfig(JSONObject config,
 				JSONObject networkConfig) {
-		int racks = Integer.parseInt(getAttributeValue(config, "racks_in_cluster"));
+		int racks = 1;
+		int slots = 1;
+		int machines = 1;
+		int gpus = 1;
 		int iter_granularity = Integer.parseInt(getAttributeValue(config, "iteration_granularity"));
 		double lease_time = Double.parseDouble(getAttributeValue(config, "lease_time"));
 		double fairness_threshold = Double.parseDouble(getAttributeValue(config, "fairness_threshold"));
@@ -94,9 +97,6 @@ public class ConfigUtils {
 		boolean consolidate = Boolean.parseBoolean(getAttributeValue(config, "consolidate"));
 		String astra_sim_path = getAttributeValue(config, "astra_sim_path");
 		String astra_sim_bin_path = getAttributeValue(config, "astra_sim_bin_path");
-		int slots = 1;
-		int machines = 1;
-		int gpus = 1;
 
 		int dims = ((Long) networkConfig.get("dimensions-count")).intValue();
 		String topo_name = (String) networkConfig.get("topology-name");
@@ -138,16 +138,16 @@ public class ConfigUtils {
 		i = 0;
 		while(st_itr.hasNext()) {
 			dim_type[i] = st_itr.next();
-			if (dim_type[i] == "T") {
+			if (dim_type[i].equals("T")) {
 				gpus *= unit_count[i];
 			}
-			if (dim_type[i] == "N") {
+			if (dim_type[i].equals("N")) {
 				slots *= unit_count[i];
 			}
-			if (dim_type[i] == "P") {
+			if (dim_type[i].equals("P")) {
 				machines = unit_count[i];
 			}
-			if (dim_type[i] == "PP") {
+			if (dim_type[i].equals("PP")) {
 				racks = unit_count[i];
 			}
 			i += 1;
