@@ -1,0 +1,1 @@
+mvn exec:java -Dexec.mainClass="com.wisr.mlsched.Simulation" -Dexec.args="configuration/cluster/synthetic_tiresias_consolidate.json configuration/jobs/small_debug_model.json configuration/network/Ring_FullyConnected_Ring_2rack.json"
