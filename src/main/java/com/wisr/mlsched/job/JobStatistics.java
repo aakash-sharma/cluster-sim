@@ -197,15 +197,16 @@ public class JobStatistics {
 	 */
 	public void printStats() {
 		double makespan = 0.0;
+		double queue_delay = 0.0;
 		for(Integer key : mJobTime.keySet()) {
 			mSimResults.put(key, new Vector<Double>());
 		}
 		printJCT();
-		printGpuTime();
 		//printFairnessIndex();
 		//printLosses();
 		//printContentions();
-		printQueueDelay();
+		queue_delay = printQueueDelay();
+		printGpuTime();
 		printFinishTimeFairness();
 		makespan = printMakespan();
 
@@ -214,21 +215,24 @@ public class JobStatistics {
 		int rowid = 0;
 		int cellid = 0;
 		Cell cell;
-		String[] headers = {"JobId", "JCT", "GPU-time", "Queue-delay", "makespan"};
+		String[] headers = {"JobId", "JCT", "Queue-delay", "GPU-time", "%Queue-delay", "makespan", "Cumulative-Queue-delay"};
 		row = sheet1.createRow(rowid++);
 
 		for (String str : headers) {
 			cell = row.createCell(cellid++);
 			cell.setCellValue(str);
 		}
-		row = sheet1.createRow(rowid++);
-		for (int i = 0; i < headers.length-1; i++) {
+
+		for(Integer key : mJobTime.keySet()) {
 			cell = row.createCell(cellid++);
 			cell.setCellValue("");
 		}
 
-		cell = row.createCell(headers.length-1);
+		row = sheet1.createRow(rowid++);
+		cell = row.createCell(headers.length-2);
 		cell.setCellValue(makespan);
+		cell = row.createCell(headers.length-1);
+		cell.setCellValue(queue_delay);
 
 		for(Integer key : mJobTime.keySet()) {
 
@@ -242,6 +246,9 @@ public class JobStatistics {
 				cell = row.createCell(cellid++);
 				cell.setCellValue(val);
 			}
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mSimResults.get(key).get(1) / mSimResults.get(key).get(0) * 100);
 		}
 
 		String policy = Cluster.getInstance().getConfiguration().getPolicy();
@@ -259,14 +266,16 @@ public class JobStatistics {
 
 	}
 
-	private void printQueueDelay() {
+	private double printQueueDelay() {
 		double queue_delay = 0.0;
+		double cum_queue_delay = 0.0;
 		for(Integer key : mJobTime.keySet()) {
 			queue_delay = mJobTime.get(key).getQueueDelay();
+			cum_queue_delay += queue_delay;
 			mSimResults.get(key).add(queue_delay);
 			System.out.println("Queue Delay Job " + Integer.toString(key) + ": " + Double.toString(queue_delay));
 		}
-
+		return cum_queue_delay;
 	}
 	
 	private void printGpuTime() {
