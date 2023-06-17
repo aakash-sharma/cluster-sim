@@ -83,7 +83,7 @@ public class ConfigUtils {
 
 	}
 	public static ClusterConfiguration getClusterConfig(JSONObject config,
-				JSONObject networkConfig) {
+				JSONObject networkConfig, String run_name) {
 		int racks = 1;
 		int slots = 1;
 		int machines = 1;
@@ -177,7 +177,7 @@ public class ConfigUtils {
 			i += 1;
 		}
 
-		return new ClusterConfiguration(racks, machines, slots, gpus, iter_granularity, policy, lease_time,
+		return new ClusterConfiguration(run_name, racks, machines, slots, gpus, iter_granularity, policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
 				topo_name, topo_per_dim, dim_type, link_count, link_latency, link_bandwidth);
 

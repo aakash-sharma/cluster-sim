@@ -210,29 +210,18 @@ public class JobStatistics {
 		printFinishTimeFairness();
 		makespan = printMakespan();
 
-		XSSFSheet sheet1 = mWorkbook.createSheet(" Sim-stats ");
+		XSSFSheet sheet1 = mWorkbook.createSheet("job-stats ");
 		XSSFRow row;
 		int rowid = 0;
 		int cellid = 0;
 		Cell cell;
-		String[] headers = {"JobId", "JCT", "Queue-delay", "GPU-time", "%Queue-delay", "makespan", "Cumulative-Queue-delay"};
+		String[] headers = {"JobId", "JCT", "Queue-delay", "GPU-time", "%Queue-delay", "makespan"};
 		row = sheet1.createRow(rowid++);
 
 		for (String str : headers) {
 			cell = row.createCell(cellid++);
 			cell.setCellValue(str);
 		}
-
-		for(Integer key : mJobTime.keySet()) {
-			cell = row.createCell(cellid++);
-			cell.setCellValue("");
-		}
-
-		row = sheet1.createRow(rowid++);
-		cell = row.createCell(headers.length-2);
-		cell.setCellValue(makespan);
-		cell = row.createCell(headers.length-1);
-		cell.setCellValue(queue_delay);
 
 		for(Integer key : mJobTime.keySet()) {
 
@@ -249,14 +238,29 @@ public class JobStatistics {
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mSimResults.get(key).get(1) / mSimResults.get(key).get(0) * 100);
+			cell = row.createCell(cellid++);
+			cell.setCellValue(makespan);
 		}
 
 		String policy = Cluster.getInstance().getConfiguration().getPolicy();
 		String topo_name = Cluster.getInstance().getConfiguration().getmTopoName();
+		String runName = Cluster.getInstance().getConfiguration().getmRunName();
+
+		String PATH = "results/" + runName + "/";
+
+		File directory = new File(PATH);
+		directory.mkdir();
+		/*
+		if (! directory.exists()){
+			directory.mkdir();
+			// If you require it to make the entire directory path including parents,
+			// use directory.mkdirs(); here instead.
+		}
+		*/
+		File file = new File( PATH + "results_" + policy + "_" + topo_name + ".xlsx");
 
 		try {
-			FileOutputStream out = new FileOutputStream(new File("results/results_" + policy + "_" + topo_name
-					+ ".xlsx"));
+			FileOutputStream out = new FileOutputStream(file);
 			mWorkbook.write(out);
 			out.close();
 		}

@@ -38,7 +38,9 @@ public class Simulation {
 		if (args.length > 2) {
 			String network_config_file = args[2];
 			networkConfig = ConfigUtils.getNetworkConfigs(network_config_file);
-			Cluster.createCluster(clusterConfig, networkConfig);
+			String run_name = args[3];
+			Cluster.createCluster(clusterConfig, networkConfig, run_name);
+
 		}
 		else {
 			Cluster.createCluster(clusterConfig);

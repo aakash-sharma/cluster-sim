@@ -23,6 +23,7 @@ public class ClusterConfiguration {
 	private int[] mLinkCount;
 	private long[] mLinkLatency;
 	private int[] mLinkBandwidth;
+	private String mRunName;
 
 	public ClusterConfiguration(int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
 								int iter_granularity, String policy, double lease, double fairness_threshold,
@@ -43,7 +44,7 @@ public class ClusterConfiguration {
 		mAstraSimBinPath = astra_sim_bin_path;
 	}
 
-	public ClusterConfiguration(int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
+	public ClusterConfiguration(String run_name, int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
 								int iter_granularity, String policy, double lease, double fairness_threshold,
 								double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path,
 								String astra_sim_bin_path, String topo_name, String[] topo_per_dim, String[] dim_type,
@@ -67,6 +68,7 @@ public class ClusterConfiguration {
 		mLinkLatency = link_latency;
 		mLinkBandwidth = link_bandwidth;
 		mTopoName = topo_name;
+		mRunName = run_name;
 	}
 
 	public boolean getUseConfig() {
@@ -136,5 +138,8 @@ public class ClusterConfiguration {
 	}
 	public int[] getmLinkCount() {
 		return mLinkCount;
+	}
+	public String getmRunName() {
+		return mRunName;
 	}
 }

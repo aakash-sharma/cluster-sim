@@ -58,6 +58,10 @@ public class Cluster {
 		mScheduler = InterJobSchedulerFactory.createInstance(config);
 		mAstraSimPath = config.getmAstraSimPath();
 		mAstraSimBinPath = config.getmAstraSimBinPath();
+		System.out.println(config.getRacks());
+		System.out.println(config.getMachinesPerRack());
+		System.out.println(config.getSlotsPerMachine());
+		System.out.println(config.getGPUsPerSlot());
 		if (config.getUseConfig()) {
 			for (int i = 0; i < config.getRacks(); i++) {
 				for (int j = 0; j < config.getMachinesPerRack(); j++) {
@@ -101,8 +105,8 @@ public class Cluster {
 		return sInstance;
 	}
 
-	public static Cluster createCluster(JSONObject config, JSONObject networkConfig) {
-		ClusterConfiguration clusterConfig = ConfigUtils.getClusterConfig(config, networkConfig);
+	public static Cluster createCluster(JSONObject config, JSONObject networkConfig, String run_name) {
+		ClusterConfiguration clusterConfig = ConfigUtils.getClusterConfig(config, networkConfig, run_name);
 		sInstance = new Cluster(clusterConfig);
 		return sInstance;
 	}
