@@ -5,58 +5,71 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 num_paths = len(sys.argv) - 1
-paths = []
+jct_colors = ['green', 'red', 'blue']
+q_delay_colors = ['orange', 'cyan', 'purple']
+pct_q_delay_colors = ["black", "brown", "grey"]
 
-for path in sys.argv[1:]:
-    paths.append(path)
+filenames = [file.split("/")[-1] for file in glob.glob(sys.argv[1] + "/*.xlsx")]
+#print(filenames)
+cluster_dfs = []
+schemes = []
 
-path_dfs = []
-
-for path in sys.argv[1:]:
-    filenames= glob.glob(path + "/*.xlsx")
-    print('File names:', filenames)
-    dfs= []
-
-    for file in filenames:
-       print("Reading file = ",file)
-       df = pd.read_excel(file)
+for file in filenames:
+    dfs = []
+    title = file.split(".")[0]
+    for path in sys.argv[1:]:
+       scheme = path.split("/")[-1]
+       print("Reading file = ",path + "/" + file)
+       df = pd.read_excel(path + "/" + file)
        df["%Q-delay"] = df["Queue-delay"] / df["JCT"] * 100
-       title = file.split("/")[2].split(".")[0]
-       df["title"] = title
-       #df = df.astype({'JobId':'int'})
+       df = df.add_suffix("_" + scheme)
+       df = df.rename(columns={"JobId" + "_" + scheme : "JobId"})
        dfs.append(df)
 
-    path_dfs.append(dfs)
+    merged_df = dfs[0]
 
-fig, axs = plt.subplots(len(dfs), figsize=(5, 10))
+    for df in dfs[1:]:
+        merged_df = pd.merge(merged_df, df, on=["JobId"])
+    merged_df["title"] = title
+    cluster_dfs.append(merged_df)
+
+
+fig, axs = plt.subplots(len(cluster_dfs), figsize=(5, 10))
 fig.tight_layout(pad=10)
 
-for j in range(len(paths)):
-    dfs = path_dfs[j]
-    for i in range(len(dfs)):
+for i in range(len(cluster_dfs)):
 
-       title = dfs[i]["title"][0]
-       print(title)
+    title = cluster_dfs[i]["title"][0]
 
-       axs2 = axs[i].twinx()
+    axs2 = axs[i].twinx()
 
-       dfs[i].plot(ax=axs[i], y=["JCT", "Queue-delay"], x="JobId", kind="bar")
-       dfs[i].plot(ax=axs2, y=["%Q-delay"], x="JobId", kind="line", color='green', legend=None)
+    j = 0
+    for path in sys.argv[1:]:
+       scheme = path.split("/")[-1]
 
-       handles1, labels1 = axs[i].get_legend_handles_labels()
-       handles2, labels2 = axs2.get_legend_handles_labels()
-       handles = handles1 + handles2
-       labels = labels1 + labels2
+       cluster_dfs[i].plot(ax=axs[i], y=["JCT" + "_" + scheme, "Queue-delay" + "_" + scheme],
+       x="JobId", kind="bar", color=[jct_colors[j], q_delay_colors[j]])
+       cluster_dfs[i].plot(ax=axs2, y=["%Q-delay" + "_" + scheme], x="JobId", kind="line",
+       color=pct_q_delay_colors[j], legend=None)
+       j += 1
+
+    handles1, labels1 = axs[i].get_legend_handles_labels()
+    handles2, labels2 = axs2.get_legend_handles_labels()
+    handles = handles1 + handles2
+    labels = labels1 + labels2
 
     # Create a single legend with the combined handles and labels
-       axs[i].legend(handles, labels)
+    axs[i].legend(handles, labels)
+    axs[i].set_title(title)
 
-       axs[i].set_title(title)
 
-    #fig.set_label(["JCT", "Queue-delay", "%Q-delay"])
+fig.tight_layout(pad=50)
+fig.subplots_adjust(bottom=1, right=2, top=5)
 
-    fig.tight_layout(pad=50)
-    fig.subplots_adjust(bottom=1, right=2, top=5)
-    fig.savefig(paths[j] + "/results.pdf", format="pdf", bbox_inches="tight")
+for path in sys.argv[1:]:
+   scheme = path.split("/")[-1]
+   schemes.append(scheme)
+schemes = "_".join(schemes)
+fig.savefig("results/results-" + schemes + ".pdf", format="pdf", bbox_inches="tight")
 
 #plt.show()
