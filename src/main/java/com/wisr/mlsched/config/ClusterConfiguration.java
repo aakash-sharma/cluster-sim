@@ -23,6 +23,12 @@ public class ClusterConfiguration {
 	private int[] mLinkCount;
 	private long[] mLinkLatency;
 	private int[] mLinkBandwidth;
+	private String[] mAllReduceImpl;
+	private String[] mAllGatherImpl;
+	private String[] mReduceScatterImpl;
+	private String[] mAllToAllImpl;
+	String mIntraDimSched;
+	String mInterDimSched;
 	private String mRunName;
 
 	public ClusterConfiguration(int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
@@ -48,7 +54,9 @@ public class ClusterConfiguration {
 								int iter_granularity, String policy, double lease, double fairness_threshold,
 								double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path,
 								String astra_sim_bin_path, String topo_name, String[] topo_per_dim, String[] dim_type,
-								int[] link_count, long[] link_latency, int[] link_bandwidth) {
+								int[] link_count, long[] link_latency, int[] link_bandwidth, String[] all_reduce_impl,
+								String[] all_gather_impl, String[] reduce_scatter_impl, String[] all_to_all_impl,
+								String intra_dim_sched,	String inter_dim_sched) {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
@@ -68,6 +76,12 @@ public class ClusterConfiguration {
 		mLinkLatency = link_latency;
 		mLinkBandwidth = link_bandwidth;
 		mTopoName = topo_name;
+		mAllReduceImpl = all_reduce_impl;
+		mAllGatherImpl = all_gather_impl;
+		mReduceScatterImpl = reduce_scatter_impl;
+		mAllToAllImpl = all_to_all_impl;
+		mIntraDimSched = intra_dim_sched;
+		mInterDimSched = inter_dim_sched;
 		mRunName = run_name;
 	}
 
@@ -141,5 +155,23 @@ public class ClusterConfiguration {
 	}
 	public String getmRunName() {
 		return mRunName;
+	}
+	public String[] getmAllReduceImpl(){
+		return mAllReduceImpl;
+	}
+	public String[] getmAllGatherImpl(){
+		return mAllGatherImpl;
+	}
+	public String[] getmReduceScatterImpl(){
+		return mReduceScatterImpl;
+	}
+	public String[] getmAllToAllImpl() {
+		return mAllToAllImpl;
+	}
+	public String getmIntraDimSched(){
+		return mIntraDimSched;
+	}
+	public String getmInterDimSched(){
+		return mInterDimSched;
 	}
 }

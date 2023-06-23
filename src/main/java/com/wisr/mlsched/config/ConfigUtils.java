@@ -4,6 +4,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+
+
 
 import com.wisr.mlsched.localsched.IntraJobScheduler;
 import com.wisr.mlsched.localsched.IntraJobSchedulerFactory;
@@ -46,7 +52,7 @@ public class ConfigUtils {
 
 	/**
 	 * Get network configuration JSON from workload configuration file
-	 * @param configFile
+	 * @param networkFile
 	 * @return JSONArray containing details are all workloads
 	 */
 	public static JSONObject getNetworkConfigs(String networkFile) {
@@ -58,6 +64,7 @@ public class ConfigUtils {
 		}
 		return null;
 	}
+
 	/**
 	 * Return a cluster configuration object from the given JSON configuration
 	 * @param config
@@ -82,8 +89,8 @@ public class ConfigUtils {
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path);
 
 	}
-	public static ClusterConfiguration getClusterConfig(JSONObject config,
-				JSONObject networkConfig, String run_name) {
+	public static ClusterConfiguration getClusterConfig(JSONObject config, JSONObject networkConfig,
+														String system_config_file, String run_name) {
 		int racks = 1;
 		int slots = 1;
 		int machines = 1;
@@ -189,9 +196,54 @@ public class ConfigUtils {
 			i += 1;
 		}
 
+		String[] all_reduce_impl = null;
+		String[] all_gather_impl = null;
+		String[] reduce_scatter_impl = null;
+		String[] all_to_all_impl = null;
+		String intra_dim_sched = null;
+		String inter_dim_sched = null;
+
+		String line = "";
+		String splitBy = ": ";
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(system_config_file));
+			while ((line = br.readLine()) != null)   //returns a Boolean value
+			{
+				String[] sysConfig = line.split(splitBy);
+
+				if (sysConfig[0].equals("all-reduce-implementation")) {
+					all_reduce_impl = sysConfig[1].split("_");
+				}
+				if (sysConfig[0].equals("all-gather-implementation")) {
+					all_gather_impl = sysConfig[1].split("_");
+				}
+				if (sysConfig[0].equals("reduce-scatter-implementation")) {
+					reduce_scatter_impl = sysConfig[1].split("_");
+				}
+				if (sysConfig[0].equals("all-to-all-implementation")) {
+					all_to_all_impl = sysConfig[1].split("_");
+				}
+				if (sysConfig[0].equals("intra-dimension-scheduling")) {
+					intra_dim_sched = sysConfig[1];
+				}
+				if (sysConfig[0].equals("inter-dimension-scheduling")) {
+					inter_dim_sched = sysConfig[1];
+				}
+			}
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		//System.out.println(Arrays.toString(all_reduce_impl));
+		//System.exit(0);
+
 		return new ClusterConfiguration(run_name, racks, machines, slots, gpus, iter_granularity, policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
-				topo_name, topo_per_dim, dim_type, link_count, link_latency, link_bandwidth);
+				topo_name, topo_per_dim, dim_type, link_count, link_latency, link_bandwidth, all_reduce_impl,
+				all_gather_impl, reduce_scatter_impl, all_to_all_impl, intra_dim_sched, inter_dim_sched);
 
 	}
 	

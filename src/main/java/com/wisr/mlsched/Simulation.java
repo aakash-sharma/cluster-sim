@@ -29,6 +29,7 @@ public class Simulation {
 		JSONObject clusterConfig = ConfigUtils.getClusterConfig(cluster_config_file);
 		JSONArray workloadConfig = ConfigUtils.getWorkloadConfigs(workload_config_file);
 		JSONObject networkConfig = null;
+		JSONObject systemConfig = null;
 
 		log.info("Starting Simulation");
 		// Initialize simulator time
@@ -37,9 +38,11 @@ public class Simulation {
 		// Initialize cluster
 		if (args.length > 2) {
 			String network_config_file = args[2];
+			String system_config_file = args[3];
 			networkConfig = ConfigUtils.getNetworkConfigs(network_config_file);
-			String run_name = args[3];
-			Cluster.createCluster(clusterConfig, networkConfig, run_name);
+			//systemConfig = ConfigUtils.getSystemConfigs(system_config_file);
+			String run_name = args[4];
+			Cluster.createCluster(clusterConfig, networkConfig, system_config_file, run_name);
 
 		}
 		else {

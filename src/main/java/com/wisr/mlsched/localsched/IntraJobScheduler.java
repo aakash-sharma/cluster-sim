@@ -342,7 +342,23 @@ public abstract class IntraJobScheduler {
 		int[] mLinkCount = Cluster.getInstance().getConfiguration().getmLinkCount();
 		long[] mLinkLatency = Cluster.getInstance().getConfiguration().getmLinkLatency();
 		int[] mLinkBandwidth = Cluster.getInstance().getConfiguration().getmLinkBandwidth();
+		String[] mAllReduceImpl = Cluster.getInstance().getConfiguration().getmAllReduceImpl();
+		String[] mAllGatherImpl = Cluster.getInstance().getConfiguration().getmAllGatherImpl();
+		String[] mReduceScatterImpl = Cluster.getInstance().getConfiguration().getmReduceScatterImpl();
+		String[] mAllToAllImpl = Cluster.getInstance().getConfiguration().getmAllToAllImpl();
+		String mIntraDimSched = Cluster.getInstance().getConfiguration().getmIntraDimSched();
+		String mInterDimSched = Cluster.getInstance().getConfiguration().getmInterDimSched();
 		String runName = Cluster.getInstance().getConfiguration().getmRunName();
+
+		String PATH = mAstraSimPath + "/runs/" + runName + "/";
+		File directory = new File(PATH);
+		directory.mkdirs();
+		directory = new File(PATH + "network");
+		directory.mkdir();
+		directory = new File(PATH + "system");
+		directory.mkdir();
+		directory = new File(PATH + "workload");
+		directory.mkdir();
 
 		double computeTime = 0;
 		double commTime = 0;
@@ -406,7 +422,7 @@ public abstract class IntraJobScheduler {
 		jsonObject.put("hbm-scale", hbmScale);
 
 		try {
-			FileWriter file = new FileWriter(mAstraSimPath + "/network/" + mJobId +".json");
+			FileWriter file = new FileWriter(PATH + "/network/" + mJobId +".json");
 			file.write(jsonObject.toJSONString());
 			file.close();
 		} catch (IOException e) {
@@ -414,43 +430,72 @@ public abstract class IntraJobScheduler {
 		}
 
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(mAstraSimPath + "/system/" + mJobId +".txt"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(PATH + "/system/" + mJobId +".txt"));
 			writer.write("scheduling-policy: LIFO\n");
 			writer.append("endpoint-delay: 10\n");
 			writer.append("active-chunks-per-dimension: 1\n");
 			writer.append("endpoint-delay: 10\n");
 			writer.append("preferred-dataset-splits: 1\n");
 			writer.append("boost-mode: 0\n");
-			writer.append("all-reduce-implementation: doubleBinaryTree");
+			writer.append("all-reduce-implementation: " + mAllReduceImpl[0]);
 			for (int idx = 1; idx < dimVec.size(); idx++) {
-				writer.append("_doubleBinaryTree");
+				if (idx >= mAllReduceImpl.length) {
+					writer.append("_" + mAllReduceImpl[mAllReduceImpl.length-1]);
+				}
+				else {
+					writer.append("_" + mAllReduceImpl[idx]);
+				}
 			}
 			writer.append("\n");
-			writer.append("all-gather-implementation: ring");
+			writer.append("all-gather-implementation: " + mAllGatherImpl[0]);
 			for (int idx = 1; idx < dimVec.size(); idx++) {
-				writer.append("_ring");
+				if (idx >= mAllGatherImpl.length) {
+					writer.append("_" + mAllGatherImpl[mAllGatherImpl.length-1]);
+				}
+				else {
+					writer.append("_" + mAllGatherImpl[idx]);
+				}
 			}
 			writer.append("\n");
-			writer.append("reduce-scatter-implementation: ring");
+			writer.append("reduce-scatter-implementation: " + mReduceScatterImpl[0]);
 			for (int idx = 1; idx < dimVec.size(); idx++) {
-				writer.append("_ring");
+				if (idx >= mReduceScatterImpl.length) {
+					writer.append("_" + mReduceScatterImpl[mReduceScatterImpl.length-1]);
+				}
+				else {
+					writer.append("_" + mReduceScatterImpl[idx]);
+				}
 			}
 			writer.append("\n");
-			writer.append("all-to-all-implementation: oneDirect\n");
+			writer.append("all-to-all-implementation: " + mAllToAllImpl[0]);
+			for (int idx = 1; idx < dimVec.size(); idx++) {
+				if (idx >= mAllToAllImpl.length) {
+					writer.append("_" + mAllToAllImpl[mAllToAllImpl.length-1]);
+				}
+				else {
+					writer.append("_" + mAllToAllImpl[idx]);
+				}
+			}
+			writer.append("\n");
 			writer.append("collective-optimization: localBWAware\n");
+
+			if (mIntraDimSched != null) {
+				writer.append("intra-dimension-scheduling: " + mIntraDimSched + "\n");
+			}
+			if (mInterDimSched != null) {
+				writer.append("inter-dimension-scheduling: " + mInterDimSched + "\n");
+			}
+
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		List<String> cmd = new ArrayList<String>();
-		String PATH = mAstraSimPath + "/runs/" + runName + "/";
-		File directory = new File(PATH);
-		directory.mkdirs();
 
 		cmd.add(mAstraSimBinPath);
-		cmd.add("--network-configuration=" + mAstraSimPath + "/network/" + mJobId + ".json");
-		cmd.add("--system-configuration=" + mAstraSimPath + "/system/" + mJobId +".txt");
+		cmd.add("--network-configuration=" + PATH + "network/" + mJobId + ".json");
+		cmd.add("--system-configuration=" + PATH + "system/" + mJobId +".txt");
 		cmd.add("--workload-configuration=" + mAstraSimPath + "/workload/" + mModelName + ".txt");
 		cmd.add("--path=" + PATH);
 		cmd.add("--run-name=" + mJobId);
