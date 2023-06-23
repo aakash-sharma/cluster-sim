@@ -136,13 +136,14 @@ public class ConfigUtils {
 		st_itr = dim_type_js.iterator();
 		String dim_type[] = new String[dims];
 		i = 0;
+		Vector<Integer> intra_node_units = new Vector<Integer>();
 		while(st_itr.hasNext()) {
 			dim_type[i] = st_itr.next();
 			if (dim_type[i].equals("T")) {
 				gpus *= unit_count[i];
 			}
 			if (dim_type[i].equals("N")) {
-				slots *= unit_count[i];
+				intra_node_units.add(unit_count[i]);
 			}
 			if (dim_type[i].equals("P")) {
 				machines = unit_count[i];
@@ -151,6 +152,17 @@ public class ConfigUtils {
 				racks = unit_count[i];
 			}
 			i += 1;
+		}
+
+
+		int size = intra_node_units.size();
+		slots *= intra_node_units.remove(size-1);
+		size -= 1;
+
+		while (size > 0)
+		{
+			gpus *= intra_node_units.remove(size-1);
+			size -=1;
 		}
 
 		int_itr = link_latency_js.iterator();
