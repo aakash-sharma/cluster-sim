@@ -342,6 +342,7 @@ public abstract class IntraJobScheduler {
 		int[] mLinkCount = Cluster.getInstance().getConfiguration().getmLinkCount();
 		long[] mLinkLatency = Cluster.getInstance().getConfiguration().getmLinkLatency();
 		int[] mLinkBandwidth = Cluster.getInstance().getConfiguration().getmLinkBandwidth();
+		String runName = Cluster.getInstance().getConfiguration().getmRunName();
 
 		double computeTime = 0;
 		double commTime = 0;
@@ -442,20 +443,24 @@ public abstract class IntraJobScheduler {
 			e.printStackTrace();
 		}
 
-			List<String> cmd = new ArrayList<String>();
-			cmd.add(mAstraSimBinPath);
-			cmd.add("--network-configuration=" + mAstraSimPath + "/network/" + mJobId + ".json");
-			cmd.add("--system-configuration=" + mAstraSimPath + "/system/" + mJobId +".txt");
-			cmd.add("--workload-configuration=" + mAstraSimPath + "/workload/" + mModelName + ".txt");
-			cmd.add("--path=" + mAstraSimPath + "/results/");
-			cmd.add("--run-name=" + mJobId);
-			cmd.add("--compute-scale=" + String.valueOf(computeScale));
+		List<String> cmd = new ArrayList<String>();
+		String PATH = mAstraSimPath + "/runs/" + runName + "/";
+		File directory = new File(PATH);
+		directory.mkdirs();
+
+		cmd.add(mAstraSimBinPath);
+		cmd.add("--network-configuration=" + mAstraSimPath + "/network/" + mJobId + ".json");
+		cmd.add("--system-configuration=" + mAstraSimPath + "/system/" + mJobId +".txt");
+		cmd.add("--workload-configuration=" + mAstraSimPath + "/workload/" + mModelName + ".txt");
+		cmd.add("--path=" + PATH);
+		cmd.add("--run-name=" + mJobId);
+		cmd.add("--compute-scale=" + String.valueOf(computeScale));
 
 		try {
 			ProcessBuilder pb = new ProcessBuilder(cmd);
-			pb.directory(new File(mAstraSimPath + "/results/")); //Set current directory
-			pb.redirectError(new File(mAstraSimPath + "/results/err.log")); //Log errors in specified log file.
-			pb.redirectOutput(new File(mAstraSimPath + "/results/out.log")); //Log errors in specified log file.
+			pb.directory(new File(PATH)); //Set current directory
+			pb.redirectError(new File(PATH + "err.log")); //Log errors in specified log file.
+			pb.redirectOutput(new File(PATH + "out.log")); //Log errors in specified log file.
 
 			Process process = pb.start();
 			int exitVal = process.waitFor();
@@ -472,7 +477,7 @@ public abstract class IntraJobScheduler {
 				System.exit(-1);
 			}
 
-			BufferedReader reader = new BufferedReader(new FileReader(mAstraSimPath + "/results/EndToEnd.csv"));
+			BufferedReader reader = new BufferedReader(new FileReader(PATH + "/results/EndToEnd.csv"));
 			reader.readLine();
 
 			String line = reader.readLine();
