@@ -392,7 +392,7 @@ public abstract class IntraJobScheduler {
 		JSONArray hbmBW = new JSONArray();
 		JSONArray hbmScale = new JSONArray();
 
-		for (int idx = 0; idx < dimVec.size(); idx++)
+		for (int idx = 0; idx < topoPerDim.length; idx++)
 		{
 			topologiesPerDim.add(topoPerDim[idx]);
 			dimensionType.add(mDimType[idx]);
@@ -412,7 +412,7 @@ public abstract class IntraJobScheduler {
 		jsonObject.put("topology-name", "Hierarchical");
 		jsonObject.put("topologies-per-dim", topologiesPerDim);
 		jsonObject.put("dimension-type", dimensionType);
-		jsonObject.put("dimensions-count", dimVec.size());
+		jsonObject.put("dimensions-count", topoPerDim.length);
 		jsonObject.put("units-count", unitsCount);
 		jsonObject.put("links-count", linksCount);
 		jsonObject.put("link-latency", linkLatency);
@@ -434,12 +434,12 @@ public abstract class IntraJobScheduler {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(PATH + "/system/" + mJobId +".txt"));
 			writer.write("scheduling-policy: LIFO\n");
-			writer.append("endpoint-delay: 10\n");
+			writer.append("endpoint-delay: 1\n");
 			writer.append("active-chunks-per-dimension: 1\n");
 			writer.append("preferred-dataset-splits: 1\n");
-			writer.append("boost-mode: 0\n");
+			writer.append("boost-mode: 1\n");
 			writer.append("all-reduce-implementation: " + mAllReduceImpl[0]);
-			for (int idx = 1; idx < dimVec.size(); idx++) {
+			for (int idx = 1; idx < topoPerDim.length; idx++) {
 				if (idx >= mAllReduceImpl.length) {
 					writer.append("_" + mAllReduceImpl[mAllReduceImpl.length-1]);
 				}
@@ -449,7 +449,7 @@ public abstract class IntraJobScheduler {
 			}
 			writer.append("\n");
 			writer.append("all-gather-implementation: " + mAllGatherImpl[0]);
-			for (int idx = 1; idx < dimVec.size(); idx++) {
+			for (int idx = 1; idx < topoPerDim.length; idx++) {
 				if (idx >= mAllGatherImpl.length) {
 					writer.append("_" + mAllGatherImpl[mAllGatherImpl.length-1]);
 				}
@@ -459,7 +459,7 @@ public abstract class IntraJobScheduler {
 			}
 			writer.append("\n");
 			writer.append("reduce-scatter-implementation: " + mReduceScatterImpl[0]);
-			for (int idx = 1; idx < dimVec.size(); idx++) {
+			for (int idx = 1; idx < topoPerDim.length; idx++) {
 				if (idx >= mReduceScatterImpl.length) {
 					writer.append("_" + mReduceScatterImpl[mReduceScatterImpl.length-1]);
 				}
@@ -469,7 +469,7 @@ public abstract class IntraJobScheduler {
 			}
 			writer.append("\n");
 			writer.append("all-to-all-implementation: " + mAllToAllImpl[0]);
-			for (int idx = 1; idx < dimVec.size(); idx++) {
+			for (int idx = 1; idx < topoPerDim.length; idx++) {
 				if (idx >= mAllToAllImpl.length) {
 					writer.append("_" + mAllToAllImpl[mAllToAllImpl.length-1]);
 				}
@@ -512,7 +512,7 @@ public abstract class IntraJobScheduler {
 			int exitVal = process.waitFor();
 			if (exitVal != 0) {
 				System.out.println("Abnormal Behaviour! Something bad happened with astra sim.");
-				System.out.println("Ran command: " + cmd);
+				System.out.println("Ran command: " + String.join(" ", cmd));
 				System.out.println("Printing stack trace:");
 				StackTraceElement[] elements = Thread.currentThread().getStackTrace();
 				for (int i = 1; i < elements.length; i++) {
