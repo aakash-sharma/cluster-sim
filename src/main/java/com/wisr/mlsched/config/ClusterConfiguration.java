@@ -20,7 +20,7 @@ public class ClusterConfiguration {
 	private String mTopoName;
 	private String[] mTopoPerDim;
 	private String[] mDimType;
-	private int[] mLinkCount;
+	private float[] mLinkRatio;
 	private long[] mLinkLatency;
 	private int[] mLinkBandwidth;
 	private String[] mAllReduceImpl;
@@ -54,7 +54,7 @@ public class ClusterConfiguration {
 								int iter_granularity, String policy, double lease, double fairness_threshold,
 								double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path,
 								String astra_sim_bin_path, String topo_name, String[] topo_per_dim, String[] dim_type,
-								int[] link_count, long[] link_latency, int[] link_bandwidth, String[] all_reduce_impl,
+								float[] link_ratio, long[] link_latency, int[] link_bandwidth, String[] all_reduce_impl,
 								String[] all_gather_impl, String[] reduce_scatter_impl, String[] all_to_all_impl,
 								String intra_dim_sched,	String inter_dim_sched) {
 		mRacks = racks;
@@ -72,7 +72,7 @@ public class ClusterConfiguration {
 		mAstraSimBinPath = astra_sim_bin_path;
 		mTopoPerDim = topo_per_dim;
 		mDimType = dim_type;
-		mLinkCount = link_count;
+		mLinkRatio = link_ratio;
 		mLinkLatency = link_latency;
 		mLinkBandwidth = link_bandwidth;
 		mTopoName = topo_name;
@@ -150,8 +150,8 @@ public class ClusterConfiguration {
 	public long[] getmLinkLatency() {
 		return mLinkLatency;
 	}
-	public int[] getmLinkCount() {
-		return mLinkCount;
+	public float[] getmLinkRatio() {
+		return mLinkRatio;
 	}
 	public String getmRunName() {
 		return mRunName;

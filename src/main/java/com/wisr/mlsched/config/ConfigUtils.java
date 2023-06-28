@@ -132,11 +132,11 @@ public class ConfigUtils {
 		}
 
 		int_itr = links_count_js.iterator();
-		int link_count[] = new int[dims];
+		float link_ratio[] = new float[dims];
 		i = 0;
 		while(int_itr.hasNext()) {
-			link_count[i] = (int_itr.next()).intValue();
-			link_count[i] /= unit_count[i];
+			link_ratio[i] = (int_itr.next()).intValue();
+			link_ratio[i] /= unit_count[i];
 			i += 1;
 		}
 
@@ -242,7 +242,7 @@ public class ConfigUtils {
 
 		return new ClusterConfiguration(run_name, racks, machines, slots, gpus, iter_granularity, policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
-				topo_name, topo_per_dim, dim_type, link_count, link_latency, link_bandwidth, all_reduce_impl,
+				topo_name, topo_per_dim, dim_type, link_ratio, link_latency, link_bandwidth, all_reduce_impl,
 				all_gather_impl, reduce_scatter_impl, all_to_all_impl, intra_dim_sched, inter_dim_sched);
 
 	}

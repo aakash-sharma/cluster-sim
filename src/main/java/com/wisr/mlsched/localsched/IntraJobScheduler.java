@@ -339,7 +339,7 @@ public abstract class IntraJobScheduler {
 
 		String[] topoPerDim = Cluster.getInstance().getConfiguration().getmTopoPerDim();
 		String[] mDimType = Cluster.getInstance().getConfiguration().getmDimType();
-		int[] mLinkCount = Cluster.getInstance().getConfiguration().getmLinkCount();
+		float[] mLinkRatio = Cluster.getInstance().getConfiguration().getmLinkRatio();
 		long[] mLinkLatency = Cluster.getInstance().getConfiguration().getmLinkLatency();
 		int[] mLinkBandwidth = Cluster.getInstance().getConfiguration().getmLinkBandwidth();
 		String[] mAllReduceImpl = Cluster.getInstance().getConfiguration().getmAllReduceImpl();
@@ -358,6 +358,8 @@ public abstract class IntraJobScheduler {
 		directory = new File(PATH + "system");
 		directory.mkdir();
 		directory = new File(PATH + "workload");
+		directory.mkdir();
+		directory = new File(PATH + "results");
 		directory.mkdir();
 
 		double computeTime = 0;
@@ -398,7 +400,7 @@ public abstract class IntraJobScheduler {
 			linkBW.add(mLinkBandwidth[idx]);
 
 			unitsCount.add(dimVec.get(idx));
-			linksCount.add(mLinkCount[idx] * dimVec.get(idx));
+			linksCount.add((int) Math.ceil(mLinkRatio[idx] * dimVec.get(idx)));
 
 			nicLatency.add(0);
 			routerLatency.add(0);
@@ -434,7 +436,6 @@ public abstract class IntraJobScheduler {
 			writer.write("scheduling-policy: LIFO\n");
 			writer.append("endpoint-delay: 10\n");
 			writer.append("active-chunks-per-dimension: 1\n");
-			writer.append("endpoint-delay: 10\n");
 			writer.append("preferred-dataset-splits: 1\n");
 			writer.append("boost-mode: 0\n");
 			writer.append("all-reduce-implementation: " + mAllReduceImpl[0]);
@@ -497,7 +498,7 @@ public abstract class IntraJobScheduler {
 		cmd.add("--network-configuration=" + PATH + "network/" + mJobId + ".json");
 		cmd.add("--system-configuration=" + PATH + "system/" + mJobId +".txt");
 		cmd.add("--workload-configuration=" + mAstraSimPath + "/workload/" + mModelName + ".txt");
-		cmd.add("--path=" + PATH);
+		cmd.add("--path=" + PATH + "results/");
 		cmd.add("--run-name=" + mJobId);
 		cmd.add("--compute-scale=" + String.valueOf(computeScale));
 
