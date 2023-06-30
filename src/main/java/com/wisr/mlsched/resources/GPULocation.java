@@ -5,6 +5,8 @@ package com.wisr.mlsched.resources;
  */
 public class GPULocation {
 	private int mGpuId; // Unique GPU ID
+    private int mDim2Id; // Dim2 Dim1 slot within a machine that GPU belongs to
+    private int mDim1Id; // Dim1 Slot within a machine that GPU belongs to
     private int mSlotId; // Slot within a machine that GPU belongs to
     private int mMachineId; // Machine on rack that GPU belongs to
     private int mRackId; // Rack ID within cluster
@@ -16,20 +18,44 @@ public class GPULocation {
      * @param machine_id
      * @param rack_id
      */
-    public GPULocation(int gpu_id, int slot_id, int machine_id, int rack_id) {
+    public GPULocation(int gpu_id, int dim2_id, int dim1_id, int slot_id, int machine_id, int rack_id) {
     	this.mGpuId = gpu_id;
+        this.mDim2Id = dim2_id;
+        this.mDim1Id = dim1_id;
     	this.mSlotId = slot_id;
     	this.mMachineId = machine_id;
     	this.mRackId = rack_id;
     }
-    
+
+    public GPULocation(int dim2_id, int dim1_id, int slot_id, int machine_id, int rack_id) {
+        this.mGpuId = 0;
+        this.mDim2Id = dim2_id;
+        this.mDim1Id = dim1_id;
+        this.mSlotId = slot_id;
+        this.mMachineId = machine_id;
+        this.mRackId = rack_id;
+    }
     /**
      * Returns the GPU ID
      */
     public int getGPUId() {
     	return mGpuId;
     }
-    
+
+    /**
+     * Returns the GPU's dim1 Slot ID
+     */
+    public int getDim1Id() {
+        return mDim1Id;
+    }
+
+    /**
+     * Returns the GPU's dim2 dim1 Slot ID
+     */
+    public int getDim2Id() {
+        return mDim2Id;
+    }
+
     /**
      * Returns the GPU's Slot ID
      */

@@ -58,23 +58,41 @@ public class Cluster {
 		mScheduler = InterJobSchedulerFactory.createInstance(config);
 		mAstraSimPath = config.getmAstraSimPath();
 		mAstraSimBinPath = config.getmAstraSimBinPath();
+		System.out.println("========Network Configs========");
 		System.out.println(config.getRacks());
 		System.out.println(config.getMachinesPerRack());
 		System.out.println(config.getSlotsPerMachine());
+		System.out.println(config.getGPUsDim1());
+		System.out.println(config.getGPUsDim2());
 		System.out.println(config.getGPUsPerSlot());
-		if (config.getUseConfig()) {
-			for (int i = 0; i < config.getRacks(); i++) {
-				for (int j = 0; j < config.getMachinesPerRack(); j++) {
-					for (int k = 0; k < config.getSlotsPerMachine(); k++) {
-						for (int l = 0; l < config.getGPUsPerSlot(); l++) {
-							mGpusInCluster.add(new GPU(new GPULocation(l, k, j, i)));
+		System.out.println("================================");
+		for (int i = 0; i < config.getRacks(); i++) {
+			for (int j = 0; j < config.getMachinesPerRack(); j++) {
+				for (int k = 0; k < config.getSlotsPerMachine(); k++) {
+					if (config.getGPUsDim1() > 0) {
+						for (int l = 0; l < config.getGPUsDim1(); l++) {
+							if (config.getGPUsDim2() > 0) {
+								for (int m = 0; m < config.getGPUsDim2(); m++) {
+									for (int n = 0; n < config.getGPUsPerSlot(); n++) {
+										mGpusInCluster.add(new GPU(new GPULocation(n, m, l, k, j, i)));
+									}
+								}
+							} else {
+								for (int n = 0; n < config.getGPUsPerSlot(); n++) {
+									mGpusInCluster.add(new GPU(new GPULocation(n, -1, l, k, j, i)));
+								}
+							}
+						}
+					}
+					else {
+						for (int n = 0; n < config.getGPUsPerSlot(); n++) {
+							mGpusInCluster.add(new GPU(new GPULocation(n, -1, -1, k, j, i)));
 						}
 					}
 				}
 			}
-		} else {
-			initHeterogenousCluster();
 		}
+
 		System.out.println("Created cluster with " + Integer.toString(mGpusInCluster.size()) + " GPUs and with " + mPolicy
 				+ " policy");
 	}
@@ -207,7 +225,7 @@ public class Cluster {
 		return mConfig;
 	}
 
-	private void initHeterogenousCluster() {
+/*	private void initHeterogenousCluster() {
 		System.out.println("Initialzing heterogenous cluster");
 		for (int rack_id = 0; rack_id < mConfig.getRacks(); rack_id++) {
 			// 6 m/c with 4 GPUs per machine
@@ -229,25 +247,6 @@ public class Cluster {
 				mGpusInCluster.add(new GPU(new GPULocation(0, 0, mc, rack_id)));
 			}
 		}
-		/*for (int rack_id = 2; rack_id < 4; rack_id++) {
-			// 2 m/c with 4 GPUs per machine
-			for (int mc = 0; mc < 2; mc++) {
-				for(int slot=0;slot<2;slot++) {
-					for(int gpu=0;gpu<2;gpu++) {
-						mGpusInCluster.add(new GPU(new GPULocation(gpu, slot, mc, rack_id)));
-					}
-				}
-			}
-			// 2 m/c with 2 GPUs per machine
-			for (int mc = 2; mc < 4; mc++) {
-				for(int gpu=0;gpu<2;gpu++) {
-					mGpusInCluster.add(new GPU(new GPULocation(gpu, 0, mc, rack_id)));
-				}
-			}
-			// 3 m/c with 1 GPU per machine
-			for (int mc = 4; mc < 7; mc++) {
-				mGpusInCluster.add(new GPU(new GPULocation(0, 0, mc, rack_id)));
-			}
-		}*/
-	}
+
+	} */
 }

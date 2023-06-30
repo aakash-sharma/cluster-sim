@@ -8,6 +8,8 @@ public class ClusterConfiguration {
 	private int mMachinesPerRack;
 	private int mSlotsPerMachine;
 	private int mGPUsPerSlot;
+	private int mGPUsDim1;
+	private int mGPUsDim2;
 	private int mIterGranularity;
 	private String mPolicy;
 	private double mLeaseTime;
@@ -50,9 +52,10 @@ public class ClusterConfiguration {
 		mAstraSimBinPath = astra_sim_bin_path;
 	}
 
-	public ClusterConfiguration(String run_name, int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
-								int iter_granularity, String policy, double lease, double fairness_threshold,
-								double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path,
+	public ClusterConfiguration(String run_name, int racks, int machines_per_rack, int slots_per_machine,
+								int gpus_per_slot, int gpusDim1, int gpusDim2, int iter_granularity, String policy,
+								double lease, double fairness_threshold, double epsilon, boolean useConfig,
+								boolean consolidate, String astra_sim_path,
 								String astra_sim_bin_path, String topo_name, String[] topo_per_dim, String[] dim_type,
 								float[] link_ratio, long[] link_latency, int[] link_bandwidth, String[] all_reduce_impl,
 								String[] all_gather_impl, String[] reduce_scatter_impl, String[] all_to_all_impl,
@@ -61,6 +64,8 @@ public class ClusterConfiguration {
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
 		mGPUsPerSlot = gpus_per_slot;
+		mGPUsDim1 = gpusDim1;
+		mGPUsDim2 = gpusDim2;
 		mIterGranularity = iter_granularity;
 		mPolicy = policy;
 		mLeaseTime = lease;
@@ -107,6 +112,14 @@ public class ClusterConfiguration {
 
 	public int getGPUsPerSlot() {
 		return mGPUsPerSlot;
+	}
+
+	public int getGPUsDim1() {
+		return mGPUsDim1;
+	}
+
+	public int getGPUsDim2() {
+		return mGPUsDim2;
 	}
 
 	public int getIterGranularity() {

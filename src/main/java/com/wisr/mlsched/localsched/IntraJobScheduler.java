@@ -391,6 +391,7 @@ public abstract class IntraJobScheduler {
 		JSONArray hbmLatency = new JSONArray();
 		JSONArray hbmBW = new JSONArray();
 		JSONArray hbmScale = new JSONArray();
+		int links = 0;
 
 		for (int idx = 0; idx < topoPerDim.length; idx++)
 		{
@@ -400,7 +401,20 @@ public abstract class IntraJobScheduler {
 			linkBW.add(mLinkBandwidth[idx]);
 
 			unitsCount.add(dimVec.get(idx));
-			linksCount.add((int) Math.ceil(mLinkRatio[idx] * dimVec.get(idx)));
+
+			links = (int) Math.ceil(mLinkRatio[idx] * dimVec.get(idx));
+
+			if (topoPerDim[idx] == "Ring") {
+				if (links % 2 != 0) {
+					links -= 1;
+				}
+			}
+
+			if (topoPerDim[idx] == "FullyConnected") {
+				links += links % (dimVec.get(idx) - 1);
+			}
+
+			linksCount.add(links);
 
 			nicLatency.add(0);
 			routerLatency.add(0);
@@ -599,6 +613,26 @@ public abstract class IntraJobScheduler {
 		Vector<Integer> dimVec = new Vector<Integer>();
 		Iterator<GPU> gpuIter = gpus.iterator();
 
+		// Check if across dim2
+		while (gpuIter.hasNext()) {
+			GPU gpu = gpuIter.next();
+			map.add(gpu.getLocation().getDim2Id());
+		}
+
+		if (map.size() > 0) {
+			dimVec.add(map.size());
+		}
+
+		// Check if across dim1
+		while (gpuIter.hasNext()) {
+			GPU gpu = gpuIter.next();
+			map.add(gpu.getLocation().getDim1Id());
+		}
+
+		if (map.size() > 0) {
+			dimVec.add(map.size());
+		}
+
 		// Check if across slots
 		while (gpuIter.hasNext()) {
 			GPU gpu = gpuIter.next();
@@ -619,6 +653,14 @@ public abstract class IntraJobScheduler {
 			map.add(gpu.getLocation().getRackId());
 		}
 		dimVec.add(map.size());
+
+		int num_gpus = 1;
+
+		for (int num: dimVec) {
+			num_gpus *= num;
+		}
+
+		dimVec.insertElementAt(gpus.size()/num_gpus, 0);
 
 		double slowdown = 1.0;
 

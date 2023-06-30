@@ -91,10 +91,12 @@ public class ConfigUtils {
 	}
 	public static ClusterConfiguration getClusterConfig(JSONObject config, JSONObject networkConfig,
 														String system_config_file, String run_name) {
-		int racks = 1;
 		int slots = 1;
-		int machines = 1;
-		int gpus = 1;
+	    int gpus_dim1 = 0;
+		int gpus_dim2 = 0;
+		int gpus = 0;
+		int racks = Integer.parseInt(getAttributeValue(config, "racks_in_cluster"));
+		int machines = Integer.parseInt(getAttributeValue(config, "machines_per_rack"));
 		int iter_granularity = Integer.parseInt(getAttributeValue(config, "iteration_granularity"));
 		double lease_time = Double.parseDouble(getAttributeValue(config, "lease_time"));
 		double fairness_threshold = Double.parseDouble(getAttributeValue(config, "fairness_threshold"));
@@ -146,6 +148,10 @@ public class ConfigUtils {
 		Vector<Integer> intra_node_units = new Vector<Integer>();
 		while(st_itr.hasNext()) {
 			dim_type[i] = st_itr.next();
+			if (unit_count[i] == 0) {
+				System.out.println("Unit count cant be 0!");
+				System.exit(-1);
+			}
 			if (dim_type[i].equals("T")) {
 				gpus *= unit_count[i];
 			}
@@ -162,14 +168,24 @@ public class ConfigUtils {
 		}
 
 
-		int size = intra_node_units.size();
-		slots *= intra_node_units.remove(size-1);
-		size -= 1;
+		gpus = intra_node_units.remove(0);
 
-		while (size > 0)
+		int size = intra_node_units.size();
+
+		if (size > 0) {
+			slots = intra_node_units.remove(size - 1);
+			size -= 1;
+		}
+
+		if (size > 0)
 		{
-			gpus *= intra_node_units.remove(size-1);
-			size -=1;
+			gpus_dim1 = intra_node_units.remove(size-1);
+			size -= 1;
+		}
+
+		if (size > 0)
+		{
+			gpus_dim2 = intra_node_units.remove(size-1);
 		}
 
 		int_itr = link_latency_js.iterator();
@@ -237,10 +253,17 @@ public class ConfigUtils {
 			e.printStackTrace();
 		}
 
-		//System.out.println(Arrays.toString(all_reduce_impl));
-		//System.exit(0);
+		System.out.println(run_name);
+		System.out.println(racks);
+		System.out.println(machines);
+		System.out.println(slots);
+		System.out.println(gpus_dim1);
+		System.out.println(gpus_dim2);
+		System.out.println(gpus);
 
-		return new ClusterConfiguration(run_name, racks, machines, slots, gpus, iter_granularity, policy, lease_time,
+
+		return new ClusterConfiguration(run_name, racks, machines, slots, gpus, gpus_dim1, gpus_dim2, iter_granularity,
+				policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
 				topo_name, topo_per_dim, dim_type, link_ratio, link_latency, link_bandwidth, all_reduce_impl,
 				all_gather_impl, reduce_scatter_impl, all_to_all_impl, intra_dim_sched, inter_dim_sched);

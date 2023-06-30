@@ -109,7 +109,8 @@ public abstract class InterJobScheduler {
 			System.out.println("Allocated GPUs");
 			for (GPU gpu: gpuAllocation){
 				System.out.println(gpu.getLocation().getGPUId() + " " + gpu.getLocation().getMachineId() + " " +
-						gpu.getLocation().getRackId() + "\n");
+						gpu.getLocation().getRackId() + " " + gpu.getLocation().getSlotId() + " " +
+						gpu.getLocation().getDim1Id() + " " + gpu.getLocation().getDim2Id() + "\n");
 			}
 
 			List<Bid> bidsFromJob = job.prepareMultiBid(gpuAllocation);
