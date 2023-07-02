@@ -267,7 +267,6 @@ public class JobStatistics {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	private double printQueueDelay() {
