@@ -26,6 +26,8 @@ public class IntraJobSchedulerFactory {
 				return new OptimusIntraJobScheduler(workload_config);
 			case "SRSF":
 				return new SRSFIntraJobScheduler(workload_config);
+			case "Dally":
+				return new DallyIntraJobScheduler(workload_config);
 		}
 		sLog.severe("Policy not defined");
 		return null;

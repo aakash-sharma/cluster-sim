@@ -27,6 +27,8 @@ public class InterJobSchedulerFactory {
 				return new OptimusInterJobScheduler();
 			case "SRSF":
 				return new SRSFInterJobScheduler();
+			case "Dally":
+				return new DallyInterJobScheduler(config);
 		}
 		sLog.severe("Policy not defined");
 		return null;
