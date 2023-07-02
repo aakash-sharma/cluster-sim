@@ -200,7 +200,7 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			return allocatedGpus;
 		}
 
-		if (gpuDemand >= 16) {
+		if (gpuDemand > 2) {
 
 			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
 				Integer rack = entry.getKey();
@@ -216,6 +216,7 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 						allocatedDim1, allocatedDim2);
 			}
 		}
+
 		return allocatedGpus;
 	}
 
@@ -228,7 +229,9 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			Integer dim1 = gpu.getLocation().getDim1Id();
 			Integer dim2 = gpu.getLocation().getDim2Id();
 
-			if (rack == allocRack && machine == allocMac && slot == allocSlot && dim1 == allocDim1 && dim2 == allocDim2) {
+			if ((rack == allocRack || allocRack == -1) && (machine == allocMac || allocMac == -1) &&
+					(slot == allocSlot || allocSlot == -1 )	&& (dim1 == allocDim1 || allocDim1 == -1)
+					&& (dim2 == allocDim2 || allocDim2 == -1)) {
 				allocatedGpus.add(gpu);
 				gpuDemand -= 1;
 			}

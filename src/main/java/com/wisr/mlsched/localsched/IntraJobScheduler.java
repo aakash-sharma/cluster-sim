@@ -11,6 +11,8 @@ import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.File;
+
+import org.apache.commons.collections4.map.MultiKeyMap;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
@@ -335,7 +337,7 @@ public abstract class IntraJobScheduler {
 		return mJobGroupId;
 	}
 
-	protected double astra_sim(Set<GPU> gpus, Vector<Integer> dimVec) {
+	protected double astra_sim(Set<GPU> gpus, Vector<Integer> dimVec, Vector<String> dimType) {
 
 		String[] topoPerDim = Cluster.getInstance().getConfiguration().getmTopoPerDim();
 		String[] mDimType = Cluster.getInstance().getConfiguration().getmDimType();
@@ -366,7 +368,6 @@ public abstract class IntraJobScheduler {
 		double commTime = 0;
 		double computeScale = 1;
 
-
 		if (mModelName == null) {
 			mModelName = "ResNet50";
 		}
@@ -393,25 +394,36 @@ public abstract class IntraJobScheduler {
 		JSONArray hbmScale = new JSONArray();
 		int links = 0;
 
-		for (int idx = 0; idx < topoPerDim.length; idx++)
+		int diff = topoPerDim.length - dimVec.size();
+
+		System.out.println("==============astra-sim configs========");
+		System.out.println(String.join(" ", dimType));
+		System.out.println(String.join(" ", topoPerDim));
+		System.out.println(String.join(" ", mDimType));
+		System.out.println(diff);
+
+		//for (int idx = diff; idx < topoPerDim.length; idx++)
+		for (int idx = 0; idx < dimVec.size(); idx++)
 		{
-			topologiesPerDim.add(topoPerDim[idx]);
-			dimensionType.add(mDimType[idx]);
-			linkLatency.add(mLinkLatency[idx]);
-			linkBW.add(mLinkBandwidth[idx]);
+			topologiesPerDim.add(topoPerDim[idx+diff]);
+			dimensionType.add(dimType.get(idx));
+			linkLatency.add(mLinkLatency[idx+diff]);
+			linkBW.add(mLinkBandwidth[idx+diff]);
 
 			unitsCount.add(dimVec.get(idx));
 
-			links = (int) Math.ceil(mLinkRatio[idx] * dimVec.get(idx));
+			links = (int) Math.ceil(mLinkRatio[idx+diff] * dimVec.get(idx));
+			System.out.println(topoPerDim[idx]);
+			System.out.println(links);
 
-			if (topoPerDim[idx] == "Ring") {
+			if (topoPerDim[idx].equals("Ring")) {
 				if (links % 2 != 0) {
-					links -= 1;
+					links += 1;
 				}
 			}
 
-			if (topoPerDim[idx] == "FullyConnected") {
-				links += links % (dimVec.get(idx) - 1);
+			if (topoPerDim[idx].equals("FullyConnected")) {
+				links += links % (dimVec.get(idx-diff) - 1);
 			}
 
 			linksCount.add(links);
@@ -426,7 +438,7 @@ public abstract class IntraJobScheduler {
 		jsonObject.put("topology-name", "Hierarchical");
 		jsonObject.put("topologies-per-dim", topologiesPerDim);
 		jsonObject.put("dimension-type", dimensionType);
-		jsonObject.put("dimensions-count", topoPerDim.length);
+		jsonObject.put("dimensions-count", dimVec.size());
 		jsonObject.put("units-count", unitsCount);
 		jsonObject.put("links-count", linksCount);
 		jsonObject.put("link-latency", linkLatency);
@@ -453,7 +465,8 @@ public abstract class IntraJobScheduler {
 			writer.append("preferred-dataset-splits: 1\n");
 			writer.append("boost-mode: 1\n");
 			writer.append("all-reduce-implementation: " + mAllReduceImpl[0]);
-			for (int idx = 1; idx < topoPerDim.length; idx++) {
+
+			for (int idx = diff + 1; idx < dimVec.size(); idx++) {
 				if (idx >= mAllReduceImpl.length) {
 					writer.append("_" + mAllReduceImpl[mAllReduceImpl.length-1]);
 				}
@@ -463,7 +476,7 @@ public abstract class IntraJobScheduler {
 			}
 			writer.append("\n");
 			writer.append("all-gather-implementation: " + mAllGatherImpl[0]);
-			for (int idx = 1; idx < topoPerDim.length; idx++) {
+			for (int idx = diff + 1; idx < dimVec.size(); idx++) {
 				if (idx >= mAllGatherImpl.length) {
 					writer.append("_" + mAllGatherImpl[mAllGatherImpl.length-1]);
 				}
@@ -473,7 +486,7 @@ public abstract class IntraJobScheduler {
 			}
 			writer.append("\n");
 			writer.append("reduce-scatter-implementation: " + mReduceScatterImpl[0]);
-			for (int idx = 1; idx < topoPerDim.length; idx++) {
+			for (int idx = diff + 1; idx < dimVec.size(); idx++) {
 				if (idx >= mReduceScatterImpl.length) {
 					writer.append("_" + mReduceScatterImpl[mReduceScatterImpl.length-1]);
 				}
@@ -483,7 +496,7 @@ public abstract class IntraJobScheduler {
 			}
 			writer.append("\n");
 			writer.append("all-to-all-implementation: " + mAllToAllImpl[0]);
-			for (int idx = 1; idx < topoPerDim.length; idx++) {
+			for (int idx = diff + 1; idx < dimVec.size(); idx++) {
 				if (idx >= mAllToAllImpl.length) {
 					writer.append("_" + mAllToAllImpl[mAllToAllImpl.length-1]);
 				}
@@ -557,6 +570,7 @@ public abstract class IntraJobScheduler {
 		return computeTime/ (commTime + computeTime);
 	}
 
+/*
 	public double getPlacementSlowdown_astra(Set<GPU> gpus) {
 		HashSet<Integer> map = new HashSet<Integer>();
 		Vector<Integer> dimVec = new Vector<Integer>();
@@ -568,10 +582,6 @@ public abstract class IntraJobScheduler {
 		while (gpuIter.hasNext()) {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getSlotId());
-			/*
-			if (map.size() > 1) {
-				return astra_sim(gpus, 2);
-			}*/
 		}
 		dimVec.add(map.size());
 
@@ -581,10 +591,6 @@ public abstract class IntraJobScheduler {
 		while (gpuIter.hasNext()) {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getMachineId());
-			/*
-			if (map.size() > 1) {
-				return astra_sim(gpus, 1);
-			}*/
 		}
 		dimVec.add(map.size());
 
@@ -593,15 +599,11 @@ public abstract class IntraJobScheduler {
 			GPU gpu = gpuIter.next();
 			map.add(gpu.getLocation().getRackId());
 			//System.out.println("GPU location" + gpu.getLocation().getPrettyString());
-			/*
-			if (map.size() > 1) {
-				return astra_sim(gpus,0);
-			}*/
 		}
 		dimVec.add(map.size());
 		return astra_sim(gpus, dimVec);
 	}
-
+*/
 	public double getPlacementSlowdown(Set<GPU> gpus) {
 
 		if (gpus.isEmpty())
@@ -609,18 +611,25 @@ public abstract class IntraJobScheduler {
 			return Double.MIN_VALUE;
 		}
 
+
+		/*
 		HashSet<Integer> map = new HashSet<Integer>();
 		Vector<Integer> dimVec = new Vector<Integer>();
 		Iterator<GPU> gpuIter = gpus.iterator();
+		int gpu_loc;
 
 		// Check if across dim2
 		while (gpuIter.hasNext()) {
 			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getDim2Id());
+			gpu_loc = gpu.getLocation().getDim2Id();
+			if (gpu_loc != -1) {
+				map.add(gpu_loc);
+			}
 		}
 
 		if (map.size() > 0) {
 			dimVec.add(map.size());
+			map.clear();
 		}
 
 		// Check if across dim1
@@ -631,6 +640,7 @@ public abstract class IntraJobScheduler {
 
 		if (map.size() > 0) {
 			dimVec.add(map.size());
+			map.clear();
 		}
 
 		// Check if across slots
@@ -639,6 +649,7 @@ public abstract class IntraJobScheduler {
 			map.add(gpu.getLocation().getSlotId());
 		}
 		dimVec.add(map.size());
+		map.clear();
 
 		// Check if across machines
 		while (gpuIter.hasNext()) {
@@ -646,6 +657,7 @@ public abstract class IntraJobScheduler {
 			map.add(gpu.getLocation().getMachineId());
 		}
 		dimVec.add(map.size());
+		map.clear();
 
 		// Check if across racks
 		while (gpuIter.hasNext()) {
@@ -653,23 +665,165 @@ public abstract class IntraJobScheduler {
 			map.add(gpu.getLocation().getRackId());
 		}
 		dimVec.add(map.size());
+		map.clear();
+		*/
 
-		int num_gpus = 1;
+		Map<Integer, Integer> rackMap = new HashMap<>();
+		MultiKeyMap machineMap = new MultiKeyMap();
+		MultiKeyMap slotMap = new MultiKeyMap();
+		MultiKeyMap dim1Map = new MultiKeyMap();
+		MultiKeyMap dim2Map = new MultiKeyMap();
 
-		for (int num: dimVec) {
-			num_gpus *= num;
+		for (GPU gpu: gpus) {
+			Integer rack = gpu.getLocation().getRackId();
+			Integer machine = gpu.getLocation().getMachineId();
+			Integer slot = gpu.getLocation().getSlotId();
+			Integer dim1 = gpu.getLocation().getDim1Id();
+			Integer dim2 = gpu.getLocation().getDim2Id();
+
+			Integer count = rackMap.get(rack);
+			rackMap.merge(rack, 1, Integer::sum);
+
+			if (!machineMap.containsKey(rack, machine)) {
+				machineMap.put(rack, machine, 1);
+			}
+			else {
+				count = (Integer) machineMap.get(rack, machine);
+				machineMap.put(rack, machine, count+1);
+			}
+			if (!slotMap.containsKey(rack, machine, slot)) {
+				slotMap.put(rack, machine, slot, 1);
+			}
+			else {
+				count = (Integer) slotMap.get(rack, machine, slot);
+				slotMap.put(rack, machine, slot, count + 1);
+			}
+
+			if (dim1 != -1) {
+				if (!dim1Map.containsKey(rack, machine, slot, dim1)) {
+					dim1Map.put(rack, machine, slot, dim1, 1);
+				}
+				else {
+					count = (Integer) dim1Map.get(rack, machine, slot, dim1);
+					dim1Map.put(rack, machine, slot, dim1, count + 1);
+				}
+			}
+
+			if (dim1 != -1 && dim2 != -1) {
+				if (!dim2Map.containsKey(rack, machine, slot, dim1, dim2)) {
+					dim2Map.put(rack, machine, slot, dim1, dim2, 1);
+				} else {
+					count = (Integer) dim2Map.get(rack, machine, slot, dim1, dim2);
+					dim2Map.put(rack, machine, slot, dim1, dim2, count + 1);
+				}
+			}
 		}
 
-		dimVec.insertElementAt(gpus.size()/num_gpus, 0);
-
+		int num_gpus = gpus.size();
+		Vector<Integer> dimVec = new Vector<Integer>();
+		Vector<String> dimType = new Vector<String>();
 		double slowdown = 1.0;
 
-		if (!mSlowdown.containsKey(dimVec)) {
-			//slowdown = getPlacementSlowdown_astra(gpus);
-			slowdown = astra_sim(gpus, dimVec);
-			mSlowdown.put(dimVec, slowdown);
+		int rack_size = rackMap.size();
+
+		if (rack_size > 1) {
+			dimType.insertElementAt("PP", 0);
+			if (num_gpus % rack_size != 0) {
+				dimVec.insertElementAt(num_gpus, 0);
+				if (mSlowdown.containsKey(dimVec)){
+					return mSlowdown.get(dimVec);
+				}
+				slowdown = astra_sim(gpus, dimVec, dimType);
+				mSlowdown.put(dimVec, slowdown);
+				return slowdown;
+			}
+			else {
+				dimVec.insertElementAt(rackMap.size(), 0);
+			}
+			num_gpus /= rack_size;
 		}
 
+		int machine_size = machineMap.size();
+
+		if (machine_size > 1) {
+			dimType.insertElementAt("P", 0);
+			if (num_gpus % machine_size != 0) {
+				dimVec.insertElementAt(num_gpus, 0);
+				if (mSlowdown.containsKey(dimVec)){
+					return mSlowdown.get(dimVec);
+				}
+				slowdown = astra_sim(gpus, dimVec, dimType);
+				mSlowdown.put(dimVec, slowdown);
+				return slowdown;
+			}
+			else {
+				dimVec.insertElementAt(machineMap.size(), 0);
+			}
+			num_gpus /= machine_size;
+		}
+
+		int slot_size = slotMap.size();
+
+		if (slot_size > 0) {
+			dimType.insertElementAt("N", 0);
+			if (num_gpus % slot_size != 0) {
+				dimVec.insertElementAt(num_gpus, 0);
+				if (mSlowdown.containsKey(dimVec)){
+					return mSlowdown.get(dimVec);
+				}
+				slowdown = astra_sim(gpus, dimVec, dimType);
+				mSlowdown.put(dimVec, slowdown);
+				return slowdown;
+			} else {
+				dimVec.insertElementAt(slotMap.size(), 0);
+			}
+			num_gpus /= slot_size;
+		}
+
+		int dim1_size = dim1Map.size();
+
+		if (dim1_size > 0) {
+			dimType.insertElementAt("N", 0);
+			if (num_gpus % dim1_size != 0) {
+				dimVec.insertElementAt(num_gpus, 0);
+				if (mSlowdown.containsKey(dimVec)){
+					return mSlowdown.get(dimVec);
+				}
+				slowdown = astra_sim(gpus, dimVec, dimType);
+				mSlowdown.put(dimVec, slowdown);
+				return slowdown;
+			} else {
+				dimVec.insertElementAt(dim1Map.size(), 0);
+			}
+			num_gpus /= dim1_size;
+		}
+
+		int dim2_size = dim2Map.size();
+
+		if (dim2_size > 0) {
+			dimType.insertElementAt("N", 0);
+			if (num_gpus % dim2_size != 0) {
+				dimVec.insertElementAt(num_gpus, 0);
+				if (mSlowdown.containsKey(dimVec)){
+					return mSlowdown.get(dimVec);
+				}
+				slowdown = astra_sim(gpus, dimVec, dimType);
+				mSlowdown.put(dimVec, slowdown);
+				return slowdown;
+			} else {
+				dimVec.insertElementAt(dim2Map.size(), 0);
+			}
+			num_gpus /= dim2_size;
+		}
+
+		dimVec.insertElementAt(num_gpus, 0);
+		dimType.insertElementAt("N", 0);
+
+		if (mSlowdown.containsKey(dimVec)){
+			return mSlowdown.get(dimVec);
+		}
+		slowdown = astra_sim(gpus, dimVec, dimType);
+		mSlowdown.put(dimVec, slowdown);
 		return slowdown;
 	}
 

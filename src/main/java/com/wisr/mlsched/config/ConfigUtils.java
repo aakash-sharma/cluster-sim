@@ -117,6 +117,12 @@ public class ConfigUtils {
 		JSONArray link_bandwidth_js = (JSONArray) networkConfig.get("link-bandwidth");
 		JSONArray nic_latency_js = (JSONArray) networkConfig.get("nic-latency");
 
+		if (racks > 1) {
+			dims += 2;
+		} else if (machines > 1) {
+			dims += 1;
+		}
+
 		Iterator<String> st_itr = topo_per_dim_js.iterator();
 		String topo_per_dim[] = new String[dims];
 		int i = 0;
@@ -152,40 +158,24 @@ public class ConfigUtils {
 				System.out.println("Unit count cant be 0!");
 				System.exit(-1);
 			}
-			if (dim_type[i].equals("T")) {
-				gpus *= unit_count[i];
-			}
-			if (dim_type[i].equals("N")) {
+			if (dim_type[i].equals("N") || dim_type[i].equals("T")) {
 				intra_node_units.add(unit_count[i]);
 			}
+
+			/*
 			if (dim_type[i].equals("P")) {
 				machines = unit_count[i];
 			}
 			if (dim_type[i].equals("PP")) {
 				racks = unit_count[i];
 			}
+
+			if (dim_type[i].equals("T")) {
+				gpus *= unit_count[i];
+			}
+			*/
+
 			i += 1;
-		}
-
-
-		gpus = intra_node_units.remove(0);
-
-		int size = intra_node_units.size();
-
-		if (size > 0) {
-			slots = intra_node_units.remove(size - 1);
-			size -= 1;
-		}
-
-		if (size > 0)
-		{
-			gpus_dim1 = intra_node_units.remove(size-1);
-			size -= 1;
-		}
-
-		if (size > 0)
-		{
-			gpus_dim2 = intra_node_units.remove(size-1);
 		}
 
 		int_itr = link_latency_js.iterator();
@@ -210,6 +200,51 @@ public class ConfigUtils {
 		while(int_itr.hasNext()) {
 			nic_latency[i] = int_itr.next();
 			i += 1;
+		}
+
+		if (racks > 1) {
+			topo_per_dim[i] = "Ring";
+			topo_per_dim[i+1] = "Switch";
+			unit_count[i] = machines;
+			unit_count[i+1] = racks;
+			link_ratio[i] = 2;
+			link_ratio[i+1] = 1;
+			dim_type[i] = "P";
+			dim_type[i+1] = "PP";
+			link_latency[i] = 5000000;
+			link_latency[i+1] = 50000000;
+			link_bandwidth[i] = 25;
+			link_bandwidth[i+1] = 10;
+			nic_latency[i] = 0;
+			nic_latency[i+1] = 1000000;
+		} else if (machines > 1) {
+			topo_per_dim[i] = "Ring";
+			unit_count[i] = machines;
+			link_ratio[i] = machines * 2;
+			dim_type[i] = "P";
+			link_latency[i] = 5000000;
+			link_bandwidth[i] = 25;
+			nic_latency[i] = 0;
+		}
+
+		gpus = intra_node_units.remove(0);
+
+		int size = intra_node_units.size();
+
+		if (size > 0) {
+			slots = intra_node_units.remove(size - 1);
+			size -= 1;
+		}
+
+		if (size > 0)
+		{
+			gpus_dim1 = intra_node_units.remove(size-1);
+			size -= 1;
+		}
+
+		if (size > 0)
+		{
+			gpus_dim2 = intra_node_units.remove(size-1);
 		}
 
 		String[] all_reduce_impl = null;
