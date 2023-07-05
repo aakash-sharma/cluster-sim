@@ -39,11 +39,11 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 
 		List<GPU> allocatedGpus = new ArrayList<GPU>();
 
-		if (gpuDemand <= 0){
+		if (gpuDemand <= 0 || gpuList.size() < gpuDemand){
 			return allocatedGpus;
 		}
 
-		System.out.println("Consolidated gpu allocation============");
+		System.out.println("====== Dally Consolidated gpu allocation ======");
 		System.out.println(gpuList.size());
 		System.out.println(gpuDemand);
 
@@ -127,10 +127,8 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		if (gpus >= gpuDemand) {
-			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
-
-			return allocatedGpus;
 		}
 
 		for (Object o : dim1Map.keySet()) {
@@ -152,10 +150,8 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		if (gpus >= gpuDemand){
-			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
-
-			return  allocatedGpus;
 		}
 
 		for (Object o : slotMap.keySet()) {
@@ -175,10 +171,8 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		if (gpus >= gpuDemand){
-			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
-
-			return  allocatedGpus;
 		}
 
 		for (Object o : machineMap.keySet()) {
@@ -196,32 +190,31 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		if (gpus >= gpuDemand){
-			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
-			return allocatedGpus;
 		}
 
-		if (gpuDemand > 2) {
 
-			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
-				Integer rack = entry.getKey();
-				gpus = entry.getValue();
-				if (gpus >= gpuDemand && gpus < minGPUAllocation) {
-					minGPUAllocation = gpus;
-					allocatedRack = rack;
-				}
-			}
-
-			if (gpus >= gpuDemand) {
-				allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
-						allocatedDim1, allocatedDim2);
+		for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
+			Integer rack = entry.getKey();
+			gpus = entry.getValue();
+			if (gpus >= gpuDemand && gpus < minGPUAllocation) {
+				minGPUAllocation = gpus;
+				allocatedRack = rack;
 			}
 		}
 
-		return allocatedGpus;
+		if (gpus >= gpuDemand) {
+			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+					allocatedDim1, allocatedDim2);
+		}
+
+		return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+				allocatedDim1, allocatedDim2);
+
 	}
 
-	private void allocateGPU(List<GPU> allocatedGpus, List<GPU> gpuList, int gpuDemand, int allocRack, int allocMac, int allocSlot,
+	private List<GPU> allocateGPU(List<GPU> allocatedGpus, List<GPU> gpuList, int gpuDemand, int allocRack, int allocMac, int allocSlot,
 								  int allocDim1, int allocDim2) {
 		for (GPU gpu: gpuList) {
 			Integer rack = gpu.getLocation().getRackId();
@@ -241,5 +234,6 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 				break;
 			}
 		}
+		return allocatedGpus;
 	}
 }

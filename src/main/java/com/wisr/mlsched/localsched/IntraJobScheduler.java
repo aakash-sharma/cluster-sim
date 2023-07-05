@@ -173,7 +173,7 @@ public abstract class IntraJobScheduler {
 
 	// Aakash: Call astra sim here
 	public void startIteration() {
-		sLog.log(Level.INFO, "Starting iteration for job " + Integer.toString(mJobId));
+		//sLog.log(Level.INFO, "Starting iteration for job " + Integer.toString(mJobId));
 		mCurrentIterationGPUs = new HashSet<GPU>(mNextIterationGPUs);
 		mNextIterationGPUs = new HashSet<GPU>();
 		mIsWaiting = false;
@@ -305,8 +305,8 @@ public abstract class IntraJobScheduler {
 	}
 
 	public void notifyResourceAssignment(List<GPU> assignment) {
-		sLog.info("Job " + Integer.toString(mJobId) + " got resources"); 
-		System.out.println("Job " + Integer.toString(mJobId) + " got resources " + assignment);
+		//sLog.info("Job " + Integer.toString(mJobId) + " got resources");
+		//System.out.println("Job " + Integer.toString(mJobId) + " got resources " + assignment);
 		mNextIterationGPUs.addAll(assignment);
 		//themisTs = getEstimateAfterAllocation();
 	}
@@ -373,7 +373,7 @@ public abstract class IntraJobScheduler {
 		}
 
 		if (mModelName == "ResNet50") {
-			computeScale = 4500;
+			computeScale = 1;
 		}
 
 		if (mModelName == "VGG") {
@@ -398,8 +398,8 @@ public abstract class IntraJobScheduler {
 
 		System.out.println("==============astra-sim configs========");
 		System.out.println(String.join(" ", dimType));
-		System.out.println(String.join(" ", topoPerDim));
-		System.out.println(String.join(" ", mDimType));
+		//System.out.println(String.join(" ", topoPerDim));
+		//System.out.println(String.join(" ", mDimType));
 		System.out.println(diff);
 
 		//for (int idx = diff; idx < topoPerDim.length; idx++)
@@ -537,9 +537,10 @@ public abstract class IntraJobScheduler {
 
 			Process process = pb.start();
 			int exitVal = process.waitFor();
+			System.out.println("Ran command: " + String.join(" ", cmd));
 			if (exitVal != 0) {
 				System.out.println("Abnormal Behaviour! Something bad happened with astra sim.");
-				System.out.println("Ran command: " + String.join(" ", cmd));
+				//System.out.println("Ran command: " + String.join(" ", cmd));
 				System.out.println("Printing stack trace:");
 				StackTraceElement[] elements = Thread.currentThread().getStackTrace();
 				for (int i = 1; i < elements.length; i++) {
@@ -560,9 +561,11 @@ public abstract class IntraJobScheduler {
 			commTime = Float.parseFloat(vals[13]);
 
 			//System.out.println("A " + dim);
-			System.out.println("AA " + computeTime);
-			System.out.println("AAA " + commTime);
-			System.out.println("AAAA " + computeTime / (commTime + computeTime));
+			System.out.println("===================");
+			System.out.println("compute time: " + computeTime);
+			System.out.println("comm time: " + commTime);
+			System.out.println("Comp time fraction: " + computeTime / (commTime + computeTime));
+			System.out.println("===================");
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}

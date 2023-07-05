@@ -61,8 +61,8 @@ public class ClusterEventQueue {
 		sLog.info("Starting cluster event queue");
 		while(!mEventQueue.isEmpty()) {
 			ClusterEvent event = mEventQueue.pollFirst();
-			sLog.info("Processing event " + event.toString() + " at " + Double.toString(
-					event.getTimestamp()));
+			//sLog.info("Processing event " + event.toString() + " at " + Double.toString(
+			//		event.getTimestamp()));
 			event.handleEvent();
 		}
 	}

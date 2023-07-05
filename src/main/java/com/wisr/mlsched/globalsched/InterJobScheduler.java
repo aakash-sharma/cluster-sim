@@ -166,6 +166,8 @@ public abstract class InterJobScheduler {
 		return null;
 	}
 
+	//protected abstract List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, int gpuDemand);
+
 	protected class PerGPUBidComparator implements Comparator<Bid> {
 
 		@Override

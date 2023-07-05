@@ -257,7 +257,7 @@ public class JobStatistics {
 			// use directory.mkdirs(); here instead.
 		}
 		*/
-		File file = new File( PATH + "results_" + policy + "_" + topo_name + ".xlsx");
+		File file = new File( PATH + "results_" + topo_name + ".xlsx");
 
 		try {
 			FileOutputStream out = new FileOutputStream(file);

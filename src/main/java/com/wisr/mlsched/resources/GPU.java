@@ -51,9 +51,9 @@ public class GPU {
      */
     public void assignGPU(double lease_duration, IntraJobScheduler job) {
     	// TODO: assert that already not leased to another job
-    	sLog.info("Assigning GPU " + mGpuLocation.getPrettyString() + " to job " 
-    			+ Integer.toString(job.getJobId()) + " for lease " 
-    			+ Double.toString(lease_duration));
+    	//sLog.info("Assigning GPU " + mGpuLocation.getPrettyString() + " to job "
+    	//		+ Integer.toString(job.getJobId()) + " for lease "
+        //		+ Double.toString(lease_duration));
     	mLeaseDuration = lease_duration;
     	mLeaseStart = Simulation.getSimulationTime();
     	mJobUsingGPU = job;

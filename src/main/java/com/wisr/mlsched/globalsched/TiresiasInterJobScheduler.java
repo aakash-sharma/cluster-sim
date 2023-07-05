@@ -38,146 +38,37 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 
 		List<GPU> allocatedGpus = new ArrayList<GPU>();
 
-		if (gpuDemand <= 0){
+		if (gpuDemand <= 0) {
 			return allocatedGpus;
 		}
 
-		System.out.println("Consolidated gpu allocation============");
+		System.out.println("====== Tiresias Consolidated gpu allocation ======");
 		System.out.println(gpuList.size());
 		System.out.println(gpuDemand);
 
 		Integer allocatedRack = -1;
 		Integer allocatedMachine = -1;
-		Integer allocatedSlot = -1;
-		Integer allocatedDim1 = -1;
-		Integer allocatedDim2 = -1;
 		Integer minGPUAllocation = gpuList.size() + 1;
 		Integer gpus = 0;
+		Integer rack = -1;
+		Integer machine = -1;
 
 		Map<Integer, Integer> rackMap = new HashMap<>();
 		MultiKeyMap machineMap = new MultiKeyMap();
-		MultiKeyMap slotMap = new MultiKeyMap();
-		MultiKeyMap dim1Map = new MultiKeyMap();
-		MultiKeyMap dim2Map = new MultiKeyMap();
 
-		for (GPU gpu: gpuList) {
-			Integer rack = gpu.getLocation().getRackId();
-			Integer machine = gpu.getLocation().getMachineId();
-			Integer slot = gpu.getLocation().getSlotId();
-			Integer dim1 = gpu.getLocation().getDim1Id();
-			Integer dim2 = gpu.getLocation().getDim2Id();
+		for (GPU gpu : gpuList) {
+			rack = gpu.getLocation().getRackId();
+			machine = gpu.getLocation().getMachineId();
 
 			Integer count = rackMap.get(rack);
 			rackMap.merge(rack, 1, Integer::sum);
 
 			if (!machineMap.containsKey(rack, machine)) {
 				machineMap.put(rack, machine, 1);
-			}
-			else {
+			} else {
 				count = (Integer) machineMap.get(rack, machine);
-				machineMap.put(rack, machine, count+1);
+				machineMap.put(rack, machine, count + 1);
 			}
-			if (!slotMap.containsKey(rack, machine, slot)) {
-				slotMap.put(rack, machine, slot, 1);
-			}
-			else {
-				count = (Integer) slotMap.get(rack, machine, slot);
-				slotMap.put(rack, machine, slot, count + 1);
-			}
-
-			if (dim1 != -1) {
-				if (!dim1Map.containsKey(rack, machine, slot, dim1)) {
-					dim1Map.put(rack, machine, slot, dim1, 1);
-				}
-				else {
-					count = (Integer) dim1Map.get(rack, machine, slot, dim1);
-					dim1Map.put(rack, machine, slot, dim1, count + 1);
-				}
-			}
-
-			if (dim1 != -1 && dim2 != -1) {
-				if (!dim2Map.containsKey(rack, machine, slot, dim1, dim2)) {
-					dim2Map.put(rack, machine, slot, dim1, dim2, 1);
-				} else {
-					count = (Integer) dim2Map.get(rack, machine, slot, dim1, dim2);
-					dim2Map.put(rack, machine, slot, dim1, dim2, count + 1);
-				}
-			}
-		}
-
-		for (Object o : dim2Map.keySet()) {
-			MultiKey key = (MultiKey) o;
-			Object key2 = key.getKey(0);
-			Object key3 = key.getKey(1);
-			Object key4 = key.getKey(2);
-			Object key5 = key.getKey(3);
-			Object key6 = key.getKey(4);
-			gpus = (Integer) dim2Map.get(key);
-
-			// Find the smallest consolidated slots available
-			if (gpus >= gpuDemand && gpus < minGPUAllocation) {
-				minGPUAllocation = gpus;
-				allocatedRack = (Integer) key2;
-				allocatedMachine = (Integer) key3;
-				allocatedSlot = (Integer) key4;
-				allocatedDim1 = (Integer) key5;
-				allocatedDim2 = (Integer) key6;
-			}
-		}
-
-		if (gpus >= gpuDemand) {
-			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
-					allocatedDim1, allocatedDim2);
-
-			return allocatedGpus;
-		}
-
-		for (Object o : dim1Map.keySet()) {
-			MultiKey key = (MultiKey) o;
-			Object key2 = key.getKey(0);
-			Object key3 = key.getKey(1);
-			Object key4 = key.getKey(2);
-			Object key5 = key.getKey(3);
-			gpus = (Integer) dim1Map.get(key);
-
-			// Find the smallest consolidated slots available
-			if (gpus >= gpuDemand && gpus < minGPUAllocation) {
-				minGPUAllocation = gpus;
-				allocatedRack = (Integer) key2;
-				allocatedMachine = (Integer) key3;
-				allocatedSlot = (Integer) key4;
-				allocatedDim1 = (Integer) key5;
-			}
-		}
-
-		if (gpus >= gpuDemand){
-			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
-					allocatedDim1, allocatedDim2);
-
-			return  allocatedGpus;
-		}
-
-		for (Object o : slotMap.keySet()) {
-			MultiKey key = (MultiKey) o;
-			Object key2 = key.getKey(0);
-			Object key3 = key.getKey(1);
-			Object key4 = key.getKey(2);
-			gpus = (Integer) slotMap.get(key);
-
-			// Find the smallest consolidated slots available
-			if (gpus >= gpuDemand && gpus < minGPUAllocation) {
-				minGPUAllocation = gpus;
-				allocatedRack = (Integer) key2;
-				allocatedMachine = (Integer) key3;
-				allocatedSlot = (Integer) key4;
-			}
-		}
-
-		if (gpus >= gpuDemand){
-			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
-					allocatedDim1, allocatedDim2);
-
-			return  allocatedGpus;
 		}
 
 		for (Object o : machineMap.keySet()) {
@@ -194,16 +85,16 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			}
 		}
 
-		if (gpus >= gpuDemand){
-			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
-					allocatedDim1, allocatedDim2);
+		if (gpus >= gpuDemand) {
+			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, -1,
+					-1, -1);
 			return allocatedGpus;
 		}
 
-		if (gpuDemand > 2) {
+		if (gpuDemand > 4) {
 
 			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
-				Integer rack = entry.getKey();
+				rack = entry.getKey();
 				gpus = entry.getValue();
 				if (gpus >= gpuDemand && gpus < minGPUAllocation) {
 					minGPUAllocation = gpus;
@@ -212,8 +103,8 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			}
 
 			if (gpus >= gpuDemand) {
-				allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
-						allocatedDim1, allocatedDim2);
+				allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, -1,
+						-1, -1);
 			}
 		}
 
