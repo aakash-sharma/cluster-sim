@@ -7,6 +7,12 @@
   <version>1.0-SNAPSHOT</version>
   <name>mlsched</name>
   <url>http://maven.apache.org</url>
+  <repositories>
+    <repository>
+      <id>gurobi</id>
+      <url>https://tweetyproject.org/mvn/</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -20,11 +26,43 @@
         <artifactId>json-simple</artifactId>
         <version>1.1.1</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/gurobi/gurobi -->
     <dependency>
         <groupId>com.gurobi</groupId>
-        <artifactId>gurobi-jar</artifactId>
-        <version>8.0.1</version>
+        <artifactId>gurobi</artifactId>
+        <version>10.0.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.1</version>
+    </dependency>
+	<dependency> 
+	  <groupId>org.apache.poi</groupId>
+	  <artifactId>poi</artifactId> 
+	  <version>5.2.0</version> 
+	</dependency> 
+	<dependency> 
+	  <groupId>org.apache.poi</groupId> 
+	  <artifactId>poi-ooxml</artifactId> 
+	  <version>5.2.0</version> 
+	</dependency>
+	<dependency>
+	  <groupId>org.jxls</groupId>
+	  <artifactId>jxls-jexcel</artifactId>
+	  <version>1.0.9</version>
+	</dependency>
+	<dependency>
+		<groupId>org.dhatim</groupId>
+		<artifactId>fastexcel-reader</artifactId>
+		<version>0.15.3</version>
+	</dependency>
+	<dependency>
+		<groupId>org.dhatim</groupId>
+		<artifactId>fastexcel</artifactId>
+		<version>0.15.3</version>
+	</dependency>
   </dependencies>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
