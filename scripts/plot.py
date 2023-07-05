@@ -73,7 +73,7 @@ for i in range(len(cluster_dfs)):
         makespans.append(cluster_dfs[i][j]["makespan"][0])
         titles.append(cluster_scheme + "_" + scheme)
 
-axs[len(cluster_dfs)][0].bar(titles, makespans)
+axs[len(cluster_dfs)][0].bar(titles, makespans, color=['red', 'green', 'blue', 'cyan'])
 axs[len(cluster_dfs)][0].set_xticklabels(titles)
 axs[len(cluster_dfs)][0].set_xticklabels(axs[len(cluster_dfs)][0].get_xticklabels(), rotation=90)
 
