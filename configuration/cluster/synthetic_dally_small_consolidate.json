@@ -1,0 +1,14 @@
+{
+  "lease_time": "20.0", 
+  "racks_in_cluster": "2", 
+  "machines_per_rack": "2", 
+  "epsilon": "1.0", 
+  "gpus_per_slot": "2", 
+  "fairness_threshold": "0.0", 
+  "slots_per_machine": "2", 
+  "cluster_policy": "Dally",
+  "iteration_granularity": "1000",
+  "consolidate": "true",
+  "astra_sim_path": "/Users/aakashsharma/work/mltiply/astra-sim",
+  "astra_sim_bin_path": "/Users/aakashsharma/work/astra-sim/build/astra_analytical/build/AnalyticalAstra/bin/AnalyticalAstra"
+}

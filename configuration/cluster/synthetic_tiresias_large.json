@@ -1,0 +1,11 @@
+{
+  "lease_time": "20.0", 
+  "racks_in_cluster": "8", 
+  "machines_per_rack": "4", 
+  "epsilon": "1.0", 
+  "gpus_per_slot": "4", 
+  "fairness_threshold": "0.0", 
+  "slots_per_machine": "4", 
+  "cluster_policy": "Tiresias",
+  "iteration_granularity": "100"
+}

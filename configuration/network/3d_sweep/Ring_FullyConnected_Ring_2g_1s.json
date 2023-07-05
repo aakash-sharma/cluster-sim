@@ -1,0 +1,15 @@
+{
+  "topology-name": "2g_1s",
+  "topologies-per-dim": ["Ring", "Ring"],
+  "dimension-type": ["N", "N"],
+  "dimensions-count": 2,
+  "units-count": [2, 1],
+  "links-count": [4, 2],
+  "link-latency": [0, 0],
+  "link-bandwidth": [50, 25],
+  "nic-latency": [0, 0],
+  "router-latency": [0, 0],
+  "hbm-latency": [500, 500],
+  "hbm-bandwidth": [370, 370],
+  "hbm-scale": [0, 0]
+}

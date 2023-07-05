@@ -1,0 +1,1 @@
+/Users/aakashsharma/work/astra-sim/themis_inputs/inputs/system/2d_switch_themis_scf.txt

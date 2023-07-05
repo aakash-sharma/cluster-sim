@@ -1,0 +1,1 @@
+/Users/aakashsharma/work/astra-sim/themis_inputs/inputs/system/4d_ring_switch_switch_switch_themis_scf.txt
