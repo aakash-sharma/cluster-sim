@@ -1,1 +1,10 @@
-/Users/aakashsharma/work/astra-sim/inputs/system/3dim_sys_ring.txt
+scheduling-policy: LIFO
+endpoint-delay: 10
+active-chunks-per-dimension: 1
+preferred-dataset-splits: 1
+boost-mode: 1
+all-reduce-implementation: ring_ring
+all-gather-implementation: ring_ring
+reduce-scatter-implementation: ring_ring
+all-to-all-implementation: oneDirect
+collective-optimization: localBWAware
