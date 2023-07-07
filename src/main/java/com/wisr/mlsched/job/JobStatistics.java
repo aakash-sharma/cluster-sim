@@ -245,6 +245,8 @@ public class JobStatistics {
 		String policy = Cluster.getInstance().getConfiguration().getPolicy();
 		String topo_name = Cluster.getInstance().getConfiguration().getmTopoName();
 		String runName = Cluster.getInstance().getConfiguration().getmRunName();
+		Integer racks = Cluster.getInstance().getConfiguration().getRacks();
+		Integer machines = Cluster.getInstance().getConfiguration().getMachinesPerRack();
 
 		String PATH = "results/" + runName + "/";
 
@@ -257,7 +259,8 @@ public class JobStatistics {
 			// use directory.mkdirs(); here instead.
 		}
 		*/
-		File file = new File( PATH + "results_" + topo_name + ".xlsx");
+		File file = new File( PATH + topo_name + "_" + machines.toString() + "m_" + racks.toString() + "r"
+				+  ".xlsx");
 
 		try {
 			FileOutputStream out = new FileOutputStream(file);
