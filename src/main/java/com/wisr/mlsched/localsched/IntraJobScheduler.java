@@ -351,8 +351,12 @@ public abstract class IntraJobScheduler {
 		String mIntraDimSched = Cluster.getInstance().getConfiguration().getmIntraDimSched();
 		String mInterDimSched = Cluster.getInstance().getConfiguration().getmInterDimSched();
 		String runName = Cluster.getInstance().getConfiguration().getmRunName();
+		String topo_name = Cluster.getInstance().getConfiguration().getmTopoName();
+		Integer racks = Cluster.getInstance().getConfiguration().getRacks();
+		Integer machines = Cluster.getInstance().getConfiguration().getMachinesPerRack();
 
-		String PATH = mAstraSimPath + "/runs/" + runName + "/";
+		String PATH = mAstraSimPath + "/runs/" + runName + "_" + topo_name + "_" + machines.toString()
+				+ "m_" + racks.toString() + "r"+ "/";
 		File directory = new File(PATH);
 		directory.mkdirs();
 		directory = new File(PATH + "network");
