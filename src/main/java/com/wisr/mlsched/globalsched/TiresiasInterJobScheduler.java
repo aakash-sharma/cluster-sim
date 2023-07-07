@@ -91,7 +91,7 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			return allocatedGpus;
 		}
 
-		if (gpuDemand > 4) {
+		if (gpuDemand > 8) {
 
 			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
 				rack = entry.getKey();
