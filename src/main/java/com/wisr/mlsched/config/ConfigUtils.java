@@ -89,20 +89,22 @@ public class ConfigUtils {
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path);
 
 	}
-	public static ClusterConfiguration getClusterConfig(JSONObject config, JSONObject networkConfig,
-														String system_config_file, String run_name) {
+	public static ClusterConfiguration getClusterConfig(Integer cluster_racks, Integer cluster_machines,
+														String cluster_policy, JSONObject config,
+														JSONObject networkConfig, String system_config_file,
+														String run_name) {
 		int slots = 1;
 	    int gpus_dim1 = 0;
 		int gpus_dim2 = 0;
 		int gpus = 0;
-		int racks = Integer.parseInt(getAttributeValue(config, "racks_in_cluster"));
-		int machines = Integer.parseInt(getAttributeValue(config, "machines_per_rack"));
+		int racks = cluster_racks;
+		int machines = cluster_machines;
 		int iter_granularity = Integer.parseInt(getAttributeValue(config, "iteration_granularity"));
 		double lease_time = Double.parseDouble(getAttributeValue(config, "lease_time"));
 		double fairness_threshold = Double.parseDouble(getAttributeValue(config, "fairness_threshold"));
 		double epsilon = Double.parseDouble(getAttributeValue(config, "epsilon"));
 		boolean shouldUseConfig = Boolean.parseBoolean(getAttributeValue(config, "should_use_config"));
-		String policy = getClusterPolicy(config);
+		String policy = cluster_policy;
 		boolean consolidate = Boolean.parseBoolean(getAttributeValue(config, "consolidate"));
 		String astra_sim_path = getAttributeValue(config, "astra_sim_path");
 		String astra_sim_bin_path = getAttributeValue(config, "astra_sim_bin_path");

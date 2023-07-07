@@ -19,8 +19,11 @@ public class Simulation {
 	private static boolean admissionControl = false;
 	
 	public static void main(String args[]) {
-		String cluster_config_file = args[0];
-		String workload_config_file = args[1];
+		Integer racks = Integer.parseInt(args[0]);
+		Integer machines = Integer.parseInt(args[1]);
+		String cluster_policy = args[2];
+		String cluster_config_file = args[3];
+		String workload_config_file = args[4];
 
 		Logger log = Logger.getLogger(Simulation.class.getSimpleName());
 		log.setLevel(mLogLevel);
@@ -36,18 +39,13 @@ public class Simulation {
 		mTime = 0;
 		
 		// Initialize cluster
-		if (args.length > 2) {
-			String network_config_file = args[2];
-			String system_config_file = args[3];
-			networkConfig = ConfigUtils.getNetworkConfigs(network_config_file);
-			//systemConfig = ConfigUtils.getSystemConfigs(system_config_file);
-			String run_name = args[4];
-			Cluster.createCluster(clusterConfig, networkConfig, system_config_file, run_name);
+		String network_config_file = args[5];
+		String system_config_file = args[6];
+		networkConfig = ConfigUtils.getNetworkConfigs(network_config_file);
+		//systemConfig = ConfigUtils.getSystemConfigs(system_config_file);
+		String run_name = args[7];
+		Cluster.createCluster(racks, machines, cluster_policy, clusterConfig, networkConfig, system_config_file, run_name);
 
-		}
-		else {
-			Cluster.createCluster(clusterConfig);
-		}
 		ClusterEventQueue eventQueue = ClusterEventQueue.getInstance();
 
 		// AS: change to account for arrival time

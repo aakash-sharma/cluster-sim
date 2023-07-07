@@ -123,9 +123,11 @@ public class Cluster {
 		return sInstance;
 	}
 
-	public static Cluster createCluster(JSONObject config, JSONObject networkConfig, String system_config_file,
+	public static Cluster createCluster(Integer racks, Integer machines, String cluster_policy,
+										JSONObject config, JSONObject networkConfig, String system_config_file,
 										String run_name) {
-		ClusterConfiguration clusterConfig = ConfigUtils.getClusterConfig(config, networkConfig, system_config_file, run_name);
+		ClusterConfiguration clusterConfig = ConfigUtils.getClusterConfig(racks, machines, cluster_policy,
+				config, networkConfig, system_config_file, run_name);
 		sInstance = new Cluster(clusterConfig);
 		return sInstance;
 	}
