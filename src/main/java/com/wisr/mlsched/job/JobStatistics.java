@@ -294,7 +294,7 @@ public class JobStatistics {
 
 		File directory = new File(PATH);
 		directory.mkdir();
-		File file = new File( PATH + topo_name + "_" + machines.toString() + "m_" + racks.toString() + "r"
+		File file = new File( PATH + policy + "_" + topo_name + "_" + machines.toString() + "m_" + racks.toString() + "r"
 				+  ".xlsx");
 
 		try {
