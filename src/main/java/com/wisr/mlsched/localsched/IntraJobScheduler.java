@@ -48,7 +48,7 @@ public abstract class IntraJobScheduler {
 	private String mModelName; // Model name of the job
 	private String mAstraSimPath;
 	private String mAstraSimBinPath;
-
+	private int[] mAllocs;
 	private final double CHECKPOINTING_OVERHEAD_PER_GPU = 0.0; // 6 seconds overhead
 	
 	// State management for job
@@ -86,6 +86,7 @@ public abstract class IntraJobScheduler {
 		mTimeLastResourceAssignment = Simulation.getSimulationTime();
 		mIsLeader = true; // By default, everyone is a leader unless told otherwise
 		mSlowdown = new HashMap<>();
+		mAllocs = new int[6];
 		JobStatistics.getInstance().recordJobStart(mJobId, Simulation.getSimulationTime(), mMaxParallelism);
 		List<GPU> availableResources = getResourcesAvailableInCluster();
 		if (!availableResources.isEmpty()) {
@@ -222,7 +223,13 @@ public abstract class IntraJobScheduler {
 							+ CHECKPOINTING_OVERHEAD_PER_GPU*relinquished_resources.size(), relinquished_resources));
 			Cluster.getInstance().removeJob(this);
 			JobStatistics.getInstance().recordJobEnd(mJobId, Simulation.getSimulationTime(), mJobStartTime,
-					getIdealEstimate(), mIsLeader, mGpuTime, mMaxParallelism, queueDelay);
+					getIdealEstimate(), mIsLeader, mGpuTime, mMaxParallelism, queueDelay, mAllocs);
+			for (int val: mAllocs){
+				System.out.println("Alloc: " + val);
+			}
+			System.out.println("Max JVM memory: " + Runtime.getRuntime().maxMemory());
+			System.out.println("Total JVM memory: " + Runtime.getRuntime().totalMemory());
+			System.out.println("Free JVM memory: " + Runtime.getRuntime().freeMemory());
 			return;
 		}
 		// Job has iterations left
@@ -618,63 +625,6 @@ public abstract class IntraJobScheduler {
 			return Double.MIN_VALUE;
 		}
 
-
-		/*
-		HashSet<Integer> map = new HashSet<Integer>();
-		Vector<Integer> dimVec = new Vector<Integer>();
-		Iterator<GPU> gpuIter = gpus.iterator();
-		int gpu_loc;
-
-		// Check if across dim2
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			gpu_loc = gpu.getLocation().getDim2Id();
-			if (gpu_loc != -1) {
-				map.add(gpu_loc);
-			}
-		}
-
-		if (map.size() > 0) {
-			dimVec.add(map.size());
-			map.clear();
-		}
-
-		// Check if across dim1
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getDim1Id());
-		}
-
-		if (map.size() > 0) {
-			dimVec.add(map.size());
-			map.clear();
-		}
-
-		// Check if across slots
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getSlotId());
-		}
-		dimVec.add(map.size());
-		map.clear();
-
-		// Check if across machines
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getMachineId());
-		}
-		dimVec.add(map.size());
-		map.clear();
-
-		// Check if across racks
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getRackId());
-		}
-		dimVec.add(map.size());
-		map.clear();
-		*/
-
 		Map<Integer, Integer> rackMap = new HashMap<>();
 		MultiKeyMap machineMap = new MultiKeyMap();
 		MultiKeyMap slotMap = new MultiKeyMap();
@@ -730,6 +680,7 @@ public abstract class IntraJobScheduler {
 		Vector<Integer> dimVec = new Vector<Integer>();
 		Vector<String> dimType = new Vector<String>();
 		double slowdown = 1.0;
+		int [] allocs = JobStatistics.getInstance().getAllocs();
 
 		int rack_size = rackMap.size();
 
@@ -742,6 +693,8 @@ public abstract class IntraJobScheduler {
 				}
 				slowdown = astra_sim(gpus, dimVec, dimType);
 				mSlowdown.put(dimVec, slowdown);
+				allocs[5] += 1;
+				mAllocs[5] += 1;
 				return slowdown;
 			}
 			else {
@@ -761,6 +714,8 @@ public abstract class IntraJobScheduler {
 				}
 				slowdown = astra_sim(gpus, dimVec, dimType);
 				mSlowdown.put(dimVec, slowdown);
+				allocs[4] += 1;
+				mAllocs[4] += 1;
 				return slowdown;
 			}
 			else {
@@ -780,6 +735,8 @@ public abstract class IntraJobScheduler {
 				}
 				slowdown = astra_sim(gpus, dimVec, dimType);
 				mSlowdown.put(dimVec, slowdown);
+				allocs[3] += 1;
+				mAllocs[3] += 1;
 				return slowdown;
 			} else {
 				dimVec.insertElementAt(slotMap.size(), 0);
@@ -798,6 +755,8 @@ public abstract class IntraJobScheduler {
 				}
 				slowdown = astra_sim(gpus, dimVec, dimType);
 				mSlowdown.put(dimVec, slowdown);
+				allocs[2] += 1;
+				mAllocs[2] += 1;
 				return slowdown;
 			} else {
 				dimVec.insertElementAt(dim1Map.size(), 0);
@@ -816,6 +775,8 @@ public abstract class IntraJobScheduler {
 				}
 				slowdown = astra_sim(gpus, dimVec, dimType);
 				mSlowdown.put(dimVec, slowdown);
+				allocs[1] += 1;
+				mAllocs[1] += 1;
 				return slowdown;
 			} else {
 				dimVec.insertElementAt(dim2Map.size(), 0);
@@ -831,6 +792,8 @@ public abstract class IntraJobScheduler {
 		}
 		slowdown = astra_sim(gpus, dimVec, dimType);
 		mSlowdown.put(dimVec, slowdown);
+		allocs[0] += 1;
+		mAllocs[0] += 1;
 		return slowdown;
 	}
 

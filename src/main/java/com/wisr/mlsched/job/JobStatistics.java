@@ -19,12 +19,13 @@ import com.wisr.mlsched.resources.Cluster;
 public class JobStatistics {
 	
 	private static JobStatistics sInstance = null; // Holder of singleton
-	private HashMap<Integer, SingleJobStat> mJobTime; // Job start and end time per job
+	private HashMap<Integer, SingleJobStat> mJobStats; // Job start and end time per job
 	private List<FairnessIndex> mFairnessIndices; // List of fairness indices measured over time
 	private List<LossValue> mLossValues; // List of cumulative loss values measured over time
 	private List<Double> mFinishTimeFairness; // List of Ts/Ti for leader jobs
 	private List<ContentionValue> mContention; // List of contention numbers over time
-	private TreeMap<Double,Integer> mGPUContention; // Map of contention over time
+	private TreeMap<Double,Integer> mGPUContention; // Map of contention over time  AS: buggy
+	private int[] mAllocs; // Number of allocations in the cluster
 	private XSSFWorkbook mWorkbook;
 	Map<Integer, Vector<Double>> mSimResults;
 	private static int lastContention = 0;
@@ -33,12 +34,13 @@ public class JobStatistics {
 	 * Private constructor to enforce singleton
 	 */
 	private JobStatistics() {
-		mJobTime = new HashMap<Integer, SingleJobStat>();
+		mJobStats = new HashMap<Integer, SingleJobStat>();
 		mFairnessIndices = new ArrayList<FairnessIndex>();
 		mLossValues = new ArrayList<LossValue>();
 		mFinishTimeFairness = new ArrayList<Double>();
 		mContention = new ArrayList<ContentionValue>();
 		mGPUContention = new TreeMap<Double, Integer>();
+		mAllocs = new int[6];
 		mWorkbook = new XSSFWorkbook();
 		mSimResults = new TreeMap<Integer, Vector<Double>>();
 		ClusterEventQueue.getInstance().enqueueEvent(new 
@@ -61,7 +63,7 @@ public class JobStatistics {
 	 * @param timestamp
 	 */
 	public void recordJobStart(int jobid, double timestamp, int gpu_demand) {
-		mJobTime.put(jobid, new SingleJobStat(timestamp));
+		mJobStats.put(jobid, new SingleJobStat(timestamp));
 		if(mGPUContention.get(timestamp) == null) {
 			mGPUContention.put(timestamp, 0);
 		}
@@ -79,28 +81,40 @@ public class JobStatistics {
 	 * @param timestamp
 	 */
 	public void recordJobEnd(int jobid, double timestamp, double start_time, double ideal_running_time,
-			boolean isLeader, double gpu_time, int gpu_demand, double queue_delay) {
+			boolean isLeader, double gpu_time, int gpu_demand, double queue_delay, int [] allocs) {
 		if(mGPUContention.get(timestamp) == null) {
 			mGPUContention.put(timestamp, 0);
 		}
+
 		if(lastContention <= Cluster.getInstance().getGPUsInCluster().size()) {
 			mGPUContention.put(timestamp, 1);	
 		} else {
 			mGPUContention.put(timestamp, lastContention/Cluster.getInstance().getGPUsInCluster().size());
 		}
 		mGPUContention.put(timestamp, lastContention);
-		mJobTime.get(jobid).setStartTime(start_time);
-		mJobTime.get(jobid).setEndTime(timestamp);
-		mJobTime.get(jobid).setGpuTime(gpu_time);
-		mJobTime.get(jobid).setQueueDelay(queue_delay);
+		mJobStats.get(jobid).setStartTime(start_time);
+		mJobStats.get(jobid).setEndTime(timestamp);
+		mJobStats.get(jobid).setGpuTime(gpu_time);
+		mJobStats.get(jobid).setQueueDelay(queue_delay);
+		mJobStats.get(jobid).setAvgGPUcontention(avg_contention_for_job(jobid));
+		mJobStats.get(jobid).setAllocs(allocs);
 		mFinishTimeFairness.add((timestamp-start_time)/(ideal_running_time*avg_contention_for_job(jobid)));
+		//lastContention -= gpu_demand;
 	}
-	
+
+	public void setAlloc(int alloc, int idx) {
+		mAllocs[idx] = alloc;
+	}
+
+	public int[] getAllocs() {
+		return mAllocs;
+	}
+
 	private double avg_contention_for_job(int jobid) {
 		double numerator = 0.0;
 		double denominator = 0.0;
-		double startTime = mJobTime.get(jobid).getStartTime();
-		double endTime = mJobTime.get(jobid).getEndTime();
+		double startTime = mJobStats.get(jobid).getStartTime();
+		double endTime = mJobStats.get(jobid).getEndTime();
 		
 		double t1 = -1;
 		double t2 = -1;
@@ -131,10 +145,10 @@ public class JobStatistics {
 	public void recordJobStatistics() {
 		mFairnessIndices.add(new FairnessIndex(Simulation.getSimulationTime(), computeJainFairness()));
 		mLossValues.add(new LossValue(Simulation.getSimulationTime(), computeCumulativeLoss()));
-		mContention.add(new ContentionValue(Simulation.getSimulationTime(), computeCurrentContention()));
+		mContention.add(new ContentionValue(Simulation.getSimulationTime(), computeCurrentContention(), mAllocs));
 		if(ClusterEventQueue.getInstance().getNumberEvents() > 0) {
 			ClusterEventQueue.getInstance().enqueueEvent(new 
-					JobStatisticEvent(Simulation.getSimulationTime() + Cluster.getInstance().getLeaseTime()));
+					JobStatisticEvent(Simulation.getSimulationTime() + (Cluster.getInstance().getLeaseTime() * 100000)));
 		}
 	}
 	
@@ -197,25 +211,28 @@ public class JobStatistics {
 	 */
 	public void printStats() {
 		double makespan = 0.0;
-		double queue_delay = 0.0;
-		for(Integer key : mJobTime.keySet()) {
+		for(Integer key : mJobStats.keySet()) {
 			mSimResults.put(key, new Vector<Double>());
 		}
-		printJCT();
-		//printFairnessIndex();
-		//printLosses();
-		//printContentions();
-		queue_delay = printQueueDelay();
-		printGpuTime();
+//		printJCT();
+//		//printFairnessIndex();
+//		//printLosses();
+//		printQueueDelay();
+//		printGpuTime();
+//		printAllocs();
+		makespan = printJobStats();
+		printContentions();
 		printFinishTimeFairness();
-		makespan = printMakespan();
+//		makespan = printMakespan();
 
 		XSSFSheet sheet1 = mWorkbook.createSheet("job-stats ");
+		XSSFSheet sheet2 = mWorkbook.createSheet("cluster-stats");
 		XSSFRow row;
 		int rowid = 0;
 		int cellid = 0;
 		Cell cell;
-		String[] headers = {"JobId", "JCT", "Queue-delay", "GPU-time", "%Queue-delay", "makespan"};
+		String[] headers = {"JobId", "JCT", "Queue-delay", "GPU-time", "Avg GPU contention",
+				"dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc", "%Queue-delay", "makespan"};
 		row = sheet1.createRow(rowid++);
 
 		for (String str : headers) {
@@ -223,7 +240,7 @@ public class JobStatistics {
 			cell.setCellValue(str);
 		}
 
-		for(Integer key : mJobTime.keySet()) {
+		for(Integer key : mJobStats.keySet()) {
 
 			row = sheet1.createRow(rowid++);
 			Vector<Double> values = mSimResults.get(key);
@@ -242,6 +259,31 @@ public class JobStatistics {
 			cell.setCellValue(makespan);
 		}
 
+		rowid = 0;
+		cellid = 0;
+		String[] cluster_headers = {"Timestamp", "Contention", "dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc",
+				"rackAlloc", "nwAlloc"};
+		row = sheet2.createRow(rowid++);
+
+		for (String str : cluster_headers) {
+			cell = row.createCell(cellid++);
+			cell.setCellValue(str);
+		}
+
+		for(ContentionValue val : mContention) {
+			row = sheet2.createRow(rowid++);
+			cell = row.createCell(0);
+			cell.setCellValue(val.mTimestamp);
+			cell = row.createCell(1);
+			cell.setCellValue(val.mContention);
+			int i = 2;
+			for (int alloc: val.mAllocs){
+				cell = row.createCell(i);
+				cell.setCellValue(alloc);
+				i += 1;
+			}
+		}
+
 		String policy = Cluster.getInstance().getConfiguration().getPolicy();
 		String topo_name = Cluster.getInstance().getConfiguration().getmTopoName();
 		String runName = Cluster.getInstance().getConfiguration().getmRunName();
@@ -252,13 +294,6 @@ public class JobStatistics {
 
 		File directory = new File(PATH);
 		directory.mkdir();
-		/*
-		if (! directory.exists()){
-			directory.mkdir();
-			// If you require it to make the entire directory path including parents,
-			// use directory.mkdirs(); here instead.
-		}
-		*/
 		File file = new File( PATH + topo_name + "_" + machines.toString() + "m_" + racks.toString() + "r"
 				+  ".xlsx");
 
@@ -272,30 +307,163 @@ public class JobStatistics {
 		}
 	}
 
-	private double printQueueDelay() {
+	private double printJobStats(){
+		double total_jct = 0.0;
+		double jct = 0.0;
+
 		double queue_delay = 0.0;
 		double cum_queue_delay = 0.0;
-		for(Integer key : mJobTime.keySet()) {
-			queue_delay = mJobTime.get(key).getQueueDelay();
-			cum_queue_delay += queue_delay;
-			mSimResults.get(key).add(queue_delay);
-			System.out.println("Queue Delay Job " + Integer.toString(key) + ": " + Double.toString(queue_delay));
-		}
-		return cum_queue_delay;
-	}
-	
-	private void printGpuTime() {
+
 		double total_time = 0.0;
 		double gpu_time = 0.0;
-		for(Integer key : mJobTime.keySet()) {
-			gpu_time = mJobTime.get(key).getGpuTime();
-			System.out.println("GPU Time Job " + Integer.toString(key) + ": " + Double.toString(gpu_time));
+
+		double avg_gpu_contention = 0;
+
+		int allocs[];
+
+		double earliest_start_time = Double.MAX_VALUE;
+		double latest_end_time = Double.MIN_VALUE;
+		double makespan = 0.0;
+
+		for(Integer key : mJobStats.keySet()) {
+			jct = mJobStats.get(key).getJobTime();
+			total_jct += jct;
+			mSimResults.get(key).add(jct);
+
+			queue_delay = mJobStats.get(key).getQueueDelay();
+			cum_queue_delay += queue_delay;
+			mSimResults.get(key).add(queue_delay);
+
+			gpu_time = mJobStats.get(key).getGpuTime();
 			mSimResults.get(key).add(gpu_time);
 			total_time += gpu_time;
+
+			avg_gpu_contention = mJobStats.get(key).getAvgGPUcontention();
+			mSimResults.get(key).add(avg_gpu_contention);
+
+			allocs = mJobStats.get(key).getAllocs();
+
+			for (int val: allocs) {
+				mSimResults.get(key).add(Double.valueOf(val));
+			}
+
+			double start_time = mJobStats.get(key).getStartTime();
+			double end_time = mJobStats.get(key).getEndTime();
+			if(start_time < earliest_start_time) {
+				earliest_start_time = start_time;
+			}
+			if(end_time > latest_end_time) {
+				latest_end_time = end_time;
+			}
 		}
+
+		double avg_jct = total_jct/mJobStats.keySet().size();
+		double avg_queue_delay = cum_queue_delay/mJobStats.keySet().size();
+
+		System.out.println("Average JCT: " + Double.toString(avg_jct));
+		System.out.println("Average queue delay: " + Double.toString(avg_queue_delay));
 		System.out.println("Total GPU Time: " + total_time);
+		System.out.println("Total dim2 allocs: " + mAllocs[0]);
+		System.out.println("Total dim1 allocs: " + mAllocs[1]);
+		System.out.println("Total slot allocs: " + mAllocs[2]);
+		System.out.println("Total machine allocs: " + mAllocs[3]);
+		System.out.println("Total rack allocs: " + mAllocs[4]);
+		System.out.println("Total network allocs: " + mAllocs[5]);
+
+		makespan = latest_end_time-earliest_start_time;
+		System.out.println("Makespan: " + Double.toString(makespan));
+		return makespan;
 	}
-	
+
+//	private void printJCT() {
+//		double total_jct = 0.0;
+//		double jct = 0.0;
+//		for(Integer key : mJobStats.keySet()) {
+//			jct = mJobStats.get(key).getJobTime();
+//			total_jct += jct;
+//			mSimResults.get(key).add(jct);
+//			System.out.println("Job " + Integer.toString(key) + " ran for time: " +
+//					Double.toString(jct));
+//		}
+//		double avg_jct = total_jct/mJobStats.keySet().size();
+//		System.out.println("Average JCT: " + Double.toString(avg_jct));
+//	}
+//
+//	private double printMakespan() {
+//		double earliest_start_time = Double.MAX_VALUE;
+//		double latest_end_time = Double.MIN_VALUE;
+//		double makespan = 0.0;
+//
+//		for(Integer key : mJobStats.keySet()) {
+//			double start_time = mJobStats.get(key).getStartTime();
+//			double end_time = mJobStats.get(key).getEndTime();
+//			if(start_time < earliest_start_time) {
+//				earliest_start_time = start_time;
+//			}
+//			if(end_time > latest_end_time) {
+//				latest_end_time = end_time;
+//			}
+//		}
+//
+//		makespan = latest_end_time-earliest_start_time;
+//		System.out.println("Makespan: " + Double.toString(makespan));
+//		return makespan;
+//	}
+//	private double printQueueDelay() {
+//		double queue_delay = 0.0;
+//		double cum_queue_delay = 0.0;
+//		for(Integer key : mJobStats.keySet()) {
+//			queue_delay = mJobStats.get(key).getQueueDelay();
+//			cum_queue_delay += queue_delay;
+//			mSimResults.get(key).add(queue_delay);
+//			System.out.println("Queue Delay Job " + Integer.toString(key) + ": " + Double.toString(queue_delay));
+//		}
+//		return cum_queue_delay;
+//	}
+//
+//	private void printGpuTime() {
+//		double total_time = 0.0;
+//		double gpu_time = 0.0;
+//		for(Integer key : mJobStats.keySet()) {
+//			gpu_time = mJobStats.get(key).getGpuTime();
+//			System.out.println("GPU Time Job " + Integer.toString(key) + ": " + Double.toString(gpu_time));
+//			mSimResults.get(key).add(gpu_time);
+//			total_time += gpu_time;
+//		}
+//		System.out.println("Total GPU Time: " + total_time);
+//	}
+//
+//	private void printAllocs() {
+//
+//		int dim2Allocs = 0;
+//		int dim1Allocs = 0;
+//		int slotAllocs = 0;
+//		int machineAllocs = 0;
+//		int rackAllocs = 0;
+//
+//		int allocs[];
+//
+//		for(Integer key : mJobStats.keySet()) {
+//			allocs = mJobStats.get(key).getAllocs();
+//			dim2Allocs += allocs[0];
+//			dim1Allocs += allocs[1];
+//			slotAllocs += allocs[2];
+//			machineAllocs += allocs[3];
+//			rackAllocs += allocs[4];
+//
+//			for (int val: allocs) {
+//				mSimResults.get(key).add((double) val);
+//			}
+//			//total_time += gpu_time;
+//		}
+//		System.out.println("Total dim2 allocs: " + dim2Allocs);
+//		System.out.println("Total dim1 allocs: " + dim1Allocs);
+//		System.out.println("Total slot allocs: " + slotAllocs);
+//		System.out.println("Total machine allocs: " + machineAllocs);
+//		System.out.println("Total rack allocs: " + rackAllocs);
+//	}
+	// end here
+
 	private void printFinishTimeFairness() {
 		double max = 0.0;
 		double sum = 0;
@@ -312,42 +480,9 @@ public class JobStatistics {
 		System.out.println("Finish Time Fairness : " + Double.toString(jf));
 		System.out.println("Max Fairness : " + Double.toString(max));
 	}
-	
-	private void printJCT() {
-		double total_jct = 0.0;
-		double jct = 0.0;
-		for(Integer key : mJobTime.keySet()) {
-			jct = mJobTime.get(key).getJobTime();
-			total_jct += jct;
-			mSimResults.get(key).add(jct);
-			System.out.println("Job " + Integer.toString(key) + " ran for time: " +
-					Double.toString(jct));
-		}
-		double avg_jct = total_jct/mJobTime.keySet().size();
-		System.out.println("Average JCT: " + Double.toString(avg_jct));
-	}
-	
-	private double printMakespan() {
-		double earliest_start_time = Double.MAX_VALUE;
-		double latest_end_time = Double.MIN_VALUE;
-		double makespan = 0.0;
 
-		for(Integer key : mJobTime.keySet()) {
-			double start_time = mJobTime.get(key).getStartTime();
-			double end_time = mJobTime.get(key).getEndTime();
-			if(start_time < earliest_start_time) {
-				earliest_start_time = start_time;
-			}
-			if(end_time > latest_end_time) {
-				latest_end_time = end_time;
-			}
-		}
 
-		makespan = latest_end_time-earliest_start_time;
-		System.out.println("Makespan: " + Double.toString(makespan));
-		return makespan;
-	}
-	
+
 	private void printFairnessIndex() {
 		for(FairnessIndex f : mFairnessIndices) {
 			System.out.println("JF " + Double.toString(f.getTimestamp()) + 
@@ -361,13 +496,13 @@ public class JobStatistics {
 					" " + Double.toString(l.getLoss()));
 		}
 	}
-	
+
 	private void printContentions() {
 		double sum = 0.0;
 		double max = 0.0;
 		for(ContentionValue l : mContention) {
-			System.out.println("Contention " + Double.toString(l.getTimestamp()) + 
-					" " + Double.toString(l.getContention()));
+			//System.out.println("Contention " + Double.toString(l.getTimestamp()) +
+			//		" " + Double.toString(l.getContention()));
 			sum += l.getContention();
 			if(l.getContention() > max) {
 				max = l.getContention();
@@ -389,10 +524,12 @@ public class JobStatistics {
 		private double mEndTime;
 		private double mGpuTime;
 		private double mQueueDelay;
-		
+		private double mAvgGPUcontention;
+		private int mAllocs[];
 		public SingleJobStat(double start_time) {
 			mStartTime = start_time;
 			mEndTime = -1; // indicates not set
+			mAllocs = new int[6];
 		}
 
 		public void setStartTime(double start_time) {
@@ -403,9 +540,7 @@ public class JobStatistics {
 			mEndTime = end_time;
 		}
 
-		public void setQueueDelay(double queue_delay) {
-			mQueueDelay = queue_delay;
-		}
+		public void setQueueDelay(double queue_delay) {	mQueueDelay = queue_delay; }
 
 		public double getQueueDelay() {
 			return mQueueDelay;
@@ -414,7 +549,9 @@ public class JobStatistics {
 		public void setGpuTime(double gpu_time) {
 			mGpuTime = gpu_time;
 		}
-		
+
+		public double getGpuTime() { return mGpuTime; }
+
 		public double getStartTime() {
 			return mStartTime;
 		}
@@ -422,11 +559,19 @@ public class JobStatistics {
 		public double getEndTime() {
 			return mEndTime;
 		}
-		
-		public double getGpuTime() {
-			return mGpuTime;
+
+		public void setAllocs(int[] allocs) {
+			mAllocs = allocs;
 		}
-		
+
+		public int[] getAllocs() {
+			return mAllocs;
+		}
+
+		public void setAvgGPUcontention(double gpu_contention) { mAvgGPUcontention = gpu_contention; }
+
+		public double getAvgGPUcontention() { return mAvgGPUcontention; }
+
 		public double getJobTime() {
 			if(mEndTime == -1) { // not set
 				return -1; // invalid request
@@ -474,10 +619,18 @@ public class JobStatistics {
 	private class ContentionValue {
 		private double mTimestamp;
 		private double mContention;
-		
-		public ContentionValue(double timestamp, double contention) {
+		private int[] mAllocs;
+
+		public ContentionValue(double timestamp, double contention, int [] allocs) {
 			mTimestamp = timestamp;
 			mContention = contention;
+			mAllocs = new int[6];
+			mAllocs[0] = allocs[0];
+			mAllocs[1] = allocs[1];
+			mAllocs[2] = allocs[2];
+			mAllocs[3] = allocs[3];
+			mAllocs[4] = allocs[4];
+			mAllocs[5] = allocs[5];
 		}
 		
 		public double getTimestamp() {
