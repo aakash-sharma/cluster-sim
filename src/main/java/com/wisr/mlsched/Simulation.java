@@ -56,9 +56,17 @@ public class Simulation {
 					(ConfigUtils.getJobStartTime(config), config));
 		}
 		
-		// Start processing
-		eventQueue.start();
-		
+		try {
+			// Start processing
+			eventQueue.start();
+		}
+		catch (OutOfMemoryError oome) {
+			//Log the info
+			System.err.println("Max JVM memory: " + Runtime.getRuntime().maxMemory());
+			System.err.println("Total JVM memory: " + Runtime.getRuntime().totalMemory());
+			System.err.println("Free JVM memory: " + Runtime.getRuntime().freeMemory());
+		}
+
 		// Print out statistics
 		JobStatistics.getInstance().printStats();
 	}
