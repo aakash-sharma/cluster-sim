@@ -2,6 +2,7 @@ package com.wisr.mlsched.globalsched;
 
 import java.util.*;
 
+import com.wisr.mlsched.localsched.IntraJobScheduler;
 import com.wisr.mlsched.resources.Cluster;
 import org.apache.commons.collections4.map.MultiKeyMap;
 import org.apache.commons.collections4.keyvalue.MultiKey;
@@ -34,9 +35,10 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 	}
 
 	@Override
-	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, int gpuDemand) {
+	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, IntraJobScheduler job) {
 
 		List<GPU> allocatedGpus = new ArrayList<GPU>();
+		int gpuDemand = job.getMaxParallelism() - job.getGPUsAvailableForNextIteration().size();
 
 		if (gpuDemand <= 0) {
 			return allocatedGpus;
