@@ -14,12 +14,15 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 	private static Logger sLog; // Instance of logger
 	private double mGPUServiceForJob; // Measurement of GPU time made available to job
+	private double nwDelayTimer[];
 
 	public DallyIntraJobScheduler(JSONObject config) {
 		super(config);
 		sLog = Logger.getLogger(Cluster.class.getSimpleName());
 		sLog.setLevel(Simulation.getLogLevel());
 		mGPUServiceForJob = 0.0;
+		nwDelayTimer = new double[2];
+		nwDelayTimer[0] = Cluster.getInstance().getLeaseTime() * 1000;
 	}
 
 	@Override
@@ -61,4 +64,11 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
 	}
 
+	public double[] getNwDelayTimer(){
+		return nwDelayTimer;
+	}
+
+	public void setNwDelayTimer(double time, int idx){
+		nwDelayTimer[idx] = time;
+	}
 }

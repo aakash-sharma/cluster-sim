@@ -99,8 +99,8 @@ public abstract class InterJobScheduler {
 		List<Bid> bids = new ArrayList<Bid>();
 		List<IntraJobScheduler> jobs = Cluster.getInstance().getRunningJobs();
 		for(IntraJobScheduler job : jobs) {
-			int gpuDemand = job.getMaxParallelism() - job.getGPUsAvailableForNextIteration().size();
-			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, gpuDemand);
+			//int gpuDemand = job.getMaxParallelism() - job.getGPUsAvailableForNextIteration().size();
+			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, job);
 
 			if (gpuAllocation.isEmpty()){
 				continue;
@@ -162,7 +162,7 @@ public abstract class InterJobScheduler {
 		startWaitingJobs();
 	}
 
-	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, int gpuDemand){
+	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, IntraJobScheduler job){
 		return null;
 	}
 

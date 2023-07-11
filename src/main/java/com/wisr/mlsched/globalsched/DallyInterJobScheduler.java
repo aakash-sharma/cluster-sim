@@ -1,6 +1,9 @@
 package com.wisr.mlsched.globalsched;
 
+import com.wisr.mlsched.Simulation;
 import com.wisr.mlsched.config.ClusterConfiguration;
+import com.wisr.mlsched.localsched.IntraJobScheduler;
+import com.wisr.mlsched.localsched.DallyIntraJobScheduler;
 import com.wisr.mlsched.resources.GPU;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.apache.commons.collections4.map.MultiKeyMap;
@@ -35,9 +38,11 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 	}
 
 	@Override
-	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, int gpuDemand) {
+	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, IntraJobScheduler job) {
 
 		List<GPU> allocatedGpus = new ArrayList<GPU>();
+		job = (DallyIntraJobScheduler) job;
+		int gpuDemand = job.getMaxParallelism() - job.getGPUsAvailableForNextIteration().size();
 
 		if (gpuDemand <= 0 || gpuList.size() < gpuDemand){
 			return allocatedGpus;
@@ -209,9 +214,17 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 					allocatedDim1, allocatedDim2);
 		}
 
-		return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
-				allocatedDim1, allocatedDim2);
+		double [] nw_delay_timer = ((DallyIntraJobScheduler) job).getNwDelayTimer();
 
+		if (nw_delay_timer[1] == 0) {
+			nw_delay_timer[1] = job.getLastResourceAssignment();
+		}
+		else if (Simulation.getSimulationTime() - nw_delay_timer[1] >= nw_delay_timer[0]) {
+			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+					allocatedDim1, allocatedDim2);
+		}
+
+		return allocatedGpus;
 	}
 
 	private List<GPU> allocateGPU(List<GPU> allocatedGpus, List<GPU> gpuList, int gpuDemand, int allocRack, int allocMac, int allocSlot,
