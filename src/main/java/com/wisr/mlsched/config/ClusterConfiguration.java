@@ -33,6 +33,10 @@ public class ClusterConfiguration {
 	String mInterDimSched;
 	private String mRunName;
 
+	private double mNwDelayWait;
+	private double mRackDelayWait;
+
+
 	public ClusterConfiguration(int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
 								int iter_granularity, String policy, double lease, double fairness_threshold,
 								double epsilon, boolean useConfig, boolean consolidate, String astra_sim_path,
@@ -59,7 +63,8 @@ public class ClusterConfiguration {
 								String astra_sim_bin_path, String topo_name, String[] topo_per_dim, String[] dim_type,
 								float[] link_ratio, long[] link_latency, int[] link_bandwidth, String[] all_reduce_impl,
 								String[] all_gather_impl, String[] reduce_scatter_impl, String[] all_to_all_impl,
-								String intra_dim_sched,	String inter_dim_sched) {
+								String intra_dim_sched,	String inter_dim_sched, double nw_delay_wait,
+								double rack_delay_wait) {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
@@ -88,6 +93,8 @@ public class ClusterConfiguration {
 		mIntraDimSched = intra_dim_sched;
 		mInterDimSched = inter_dim_sched;
 		mRunName = run_name;
+		mNwDelayWait = nw_delay_wait;
+		mRackDelayWait = rack_delay_wait;
 	}
 
 	public boolean getUseConfig() {
@@ -187,4 +194,12 @@ public class ClusterConfiguration {
 	public String getmInterDimSched(){
 		return mInterDimSched;
 	}
+	public double getmNwDelayWait() {
+		return mNwDelayWait;
+	}
+
+	public double getmRackDelayWait() {
+		return mRackDelayWait;
+	}
+
 }

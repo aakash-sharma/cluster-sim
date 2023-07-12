@@ -34,6 +34,8 @@ public class Cluster {
 	private static Logger sLog; // Instance of logger
 	private String mAstraSimPath; // Astra sim path
 	private String mAstraSimBinPath; // Astra sim binary path
+	private double mNwDelayWait;
+	private double mRackDelayWait;
 
 
 	/**
@@ -58,6 +60,9 @@ public class Cluster {
 		mScheduler = InterJobSchedulerFactory.createInstance(config);
 		mAstraSimPath = config.getmAstraSimPath();
 		mAstraSimBinPath = config.getmAstraSimBinPath();
+		mNwDelayWait = config.getmNwDelayWait();
+		mRackDelayWait = config.getmRackDelayWait();
+
 		System.out.println("========Network Configs========");
 		System.out.println(config.getRacks());
 		System.out.println(config.getMachinesPerRack());
@@ -125,9 +130,9 @@ public class Cluster {
 
 	public static Cluster createCluster(Integer racks, Integer machines, String cluster_policy,
 										JSONObject config, JSONObject networkConfig, String system_config_file,
-										String run_name) {
+										String run_name, double nw_delay_wait, double rack_delay_wait) {
 		ClusterConfiguration clusterConfig = ConfigUtils.getClusterConfig(racks, machines, cluster_policy,
-				config, networkConfig, system_config_file, run_name);
+				config, networkConfig, system_config_file, run_name, nw_delay_wait, rack_delay_wait);
 		sInstance = new Cluster(clusterConfig);
 		return sInstance;
 	}
@@ -226,6 +231,15 @@ public class Cluster {
 	public ClusterConfiguration getConfiguration() {
 		return mConfig;
 	}
+
+	public double getmNwDelayWait() {
+		return mNwDelayWait;
+	}
+
+	public double getmRackDelayWait() {
+		return mRackDelayWait;
+	}
+
 
 /*	private void initHeterogenousCluster() {
 		System.out.println("Initialzing heterogenous cluster");

@@ -14,15 +14,18 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 	private static Logger sLog; // Instance of logger
 	private double mGPUServiceForJob; // Measurement of GPU time made available to job
-	private double nwDelayTimer[];
+	private double nwDelayWait[];
+	private double rackDelayWait[];
 
 	public DallyIntraJobScheduler(JSONObject config) {
 		super(config);
 		sLog = Logger.getLogger(Cluster.class.getSimpleName());
 		sLog.setLevel(Simulation.getLogLevel());
 		mGPUServiceForJob = 0.0;
-		nwDelayTimer = new double[2];
-		nwDelayTimer[0] = Cluster.getInstance().getLeaseTime() * 1000;
+		nwDelayWait = new double[2];
+		rackDelayWait = new double[2];
+		nwDelayWait[0] = Cluster.getInstance().getLeaseTime() * Cluster.getInstance().getmNwDelayWait();
+		rackDelayWait[0] = Cluster.getInstance().getLeaseTime() * Cluster.getInstance().getmRackDelayWait();
 	}
 
 	@Override
@@ -64,11 +67,19 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
 	}
 
-	public double[] getNwDelayTimer(){
-		return nwDelayTimer;
+	public double[] getNwDelayWait(){
+		return nwDelayWait;
 	}
 
-	public void setNwDelayTimer(double time, int idx){
-		nwDelayTimer[idx] = time;
+	public void setNwDelayWait(double time, int idx){
+		nwDelayWait[idx] = time;
+	}
+
+	public double[] getRackDelayWait(){
+		return rackDelayWait;
+	}
+
+	public void setRackDelayWait(double time, int idx){
+		rackDelayWait[idx] = time;
 	}
 }

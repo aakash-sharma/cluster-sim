@@ -199,27 +199,34 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 					allocatedDim1, allocatedDim2);
 		}
 
+		double [] rack_delay_wait = ((DallyIntraJobScheduler) job).getRackDelayWait();
+		if (rack_delay_wait[1] == 0) {
+			System.out.println(job.getJobId() + ": Rack timer 0, setting to "  +
+					String.valueOf(job.getLastResourceAssignment()));
+			rack_delay_wait[1] = job.getLastResourceAssignment();
+		}
+		else if (Simulation.getSimulationTime() - rack_delay_wait[1] >= rack_delay_wait[0]) {
+			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
+				Integer rack = entry.getKey();
+				gpus = entry.getValue();
+				if (gpus >= gpuDemand && gpus < minGPUAllocation) {
+					minGPUAllocation = gpus;
+					allocatedRack = rack;
+				}
+			}
 
-		for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
-			Integer rack = entry.getKey();
-			gpus = entry.getValue();
-			if (gpus >= gpuDemand && gpus < minGPUAllocation) {
-				minGPUAllocation = gpus;
-				allocatedRack = rack;
+			if (gpus >= gpuDemand) {
+				return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+						allocatedDim1, allocatedDim2);
 			}
 		}
 
-		if (gpus >= gpuDemand) {
-			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
-					allocatedDim1, allocatedDim2);
-		}
+		double [] nw_delay_wait = ((DallyIntraJobScheduler) job).getNwDelayWait();
 
-		double [] nw_delay_timer = ((DallyIntraJobScheduler) job).getNwDelayTimer();
-
-		if (nw_delay_timer[1] == 0) {
-			nw_delay_timer[1] = job.getLastResourceAssignment();
+		if (nw_delay_wait[1] == 0) {
+			nw_delay_wait[1] = job.getLastResourceAssignment();
 		}
-		else if (Simulation.getSimulationTime() - nw_delay_timer[1] >= nw_delay_timer[0]) {
+		else if (Simulation.getSimulationTime() - nw_delay_wait[1] >= nw_delay_wait[0]) {
 			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
 		}

@@ -92,7 +92,7 @@ public class ConfigUtils {
 	public static ClusterConfiguration getClusterConfig(Integer cluster_racks, Integer cluster_machines,
 														String cluster_policy, JSONObject config,
 														JSONObject networkConfig, String system_config_file,
-														String run_name) {
+														String run_name, double nw_delay_wait, double rack_delay_wait) {
 		int slots = 1;
 	    int gpus_dim1 = 0;
 		int gpus_dim2 = 0;
@@ -303,7 +303,8 @@ public class ConfigUtils {
 				policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
 				topo_name, topo_per_dim, dim_type, link_ratio, link_latency, link_bandwidth, all_reduce_impl,
-				all_gather_impl, reduce_scatter_impl, all_to_all_impl, intra_dim_sched, inter_dim_sched);
+				all_gather_impl, reduce_scatter_impl, all_to_all_impl, intra_dim_sched, inter_dim_sched, nw_delay_wait,
+				rack_delay_wait);
 
 	}
 	
