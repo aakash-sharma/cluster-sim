@@ -34,9 +34,6 @@ public class Cluster {
 	private static Logger sLog; // Instance of logger
 	private String mAstraSimPath; // Astra sim path
 	private String mAstraSimBinPath; // Astra sim binary path
-	private double mNwDelayWait;
-	private double mRackDelayWait;
-
 
 	/**
 	 * Creates an instance of the required cluster from the given configuration.
@@ -60,43 +57,43 @@ public class Cluster {
 		mScheduler = InterJobSchedulerFactory.createInstance(config);
 		mAstraSimPath = config.getmAstraSimPath();
 		mAstraSimBinPath = config.getmAstraSimBinPath();
-		mNwDelayWait = config.getmNwDelayWait();
-		mRackDelayWait = config.getmRackDelayWait();
 
 		System.out.println("========Network Configs========");
 		System.out.println(config.getRacks());
 		System.out.println(config.getMachinesPerRack());
 		System.out.println(config.getSlotsPerMachine());
-		System.out.println(config.getGPUsDim1());
+		System.out.println(config.getDim1PerSlot());
+		System.out.println(config.getDim2sPerDim1());
 		System.out.println(config.getGPUsDim2());
-		System.out.println(config.getGPUsPerSlot());
 		System.out.println("================================");
 		for (int i = 0; i < config.getRacks(); i++) {
 			for (int j = 0; j < config.getMachinesPerRack(); j++) {
 				for (int k = 0; k < config.getSlotsPerMachine(); k++) {
-					if (config.getGPUsDim1() > 0) {
-						for (int l = 0; l < config.getGPUsDim1(); l++) {
-							if (config.getGPUsDim2() > 0) {
-								for (int m = 0; m < config.getGPUsDim2(); m++) {
-									for (int n = 0; n < config.getGPUsPerSlot(); n++) {
-										mGpusInCluster.add(new GPU(new GPULocation(n, m, l, k, j, i)));
+					if (config.getDim1PerSlot() > 0) {
+						for (int l = 0; l < config.getDim1PerSlot(); l++) {
+							if (config.getDim2sPerDim1() > 0) {
+								for (int m = 0; m < config.getDim2sPerDim1(); m++) {
+									if (config.getGPUsDim2() > 0) {
+										for (int n = 0; n < config.getGPUsDim2(); n++) {
+											mGpusInCluster.add(new GPU(new GPULocation(n, m, l, k, j, i)));
+										}
 									}
+									else {
+										mGpusInCluster.add(new GPU(new GPULocation(m, -1, l, k, j, i)));
+									}
+
 								}
 							} else {
-								for (int n = 0; n < config.getGPUsPerSlot(); n++) {
-									mGpusInCluster.add(new GPU(new GPULocation(n, -1, l, k, j, i)));
-								}
+									mGpusInCluster.add(new GPU(new GPULocation(l, -1, -1, k, j, i)));
 							}
 						}
 					}
 					else {
-						for (int n = 0; n < config.getGPUsPerSlot(); n++) {
-							mGpusInCluster.add(new GPU(new GPULocation(n, -1, -1, k, j, i)));
+							mGpusInCluster.add(new GPU(new GPULocation(k, -1, -1, -1, j, i)));
 						}
 					}
 				}
 			}
-		}
 
 		System.out.println("Created cluster with " + Integer.toString(mGpusInCluster.size()) + " GPUs and with " + mPolicy
 				+ " policy");
@@ -230,14 +227,6 @@ public class Cluster {
 	 */
 	public ClusterConfiguration getConfiguration() {
 		return mConfig;
-	}
-
-	public double getmNwDelayWait() {
-		return mNwDelayWait;
-	}
-
-	public double getmRackDelayWait() {
-		return mRackDelayWait;
 	}
 
 

@@ -24,8 +24,8 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		mGPUServiceForJob = 0.0;
 		nwDelayWait = new double[2];
 		rackDelayWait = new double[2];
-		nwDelayWait[0] = Cluster.getInstance().getLeaseTime() * Cluster.getInstance().getmNwDelayWait();
-		rackDelayWait[0] = Cluster.getInstance().getLeaseTime() * Cluster.getInstance().getmRackDelayWait();
+		nwDelayWait[0] = Cluster.getInstance().getLeaseTime() * Cluster.getInstance().getConfiguration().getmNwDelayWait();
+		rackDelayWait[0] = Cluster.getInstance().getLeaseTime() * Cluster.getInstance().getConfiguration().getmRackDelayWait();
 	}
 
 	@Override

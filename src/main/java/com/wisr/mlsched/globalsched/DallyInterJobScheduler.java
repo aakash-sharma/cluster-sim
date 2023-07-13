@@ -83,12 +83,14 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 				count = (Integer) machineMap.get(rack, machine);
 				machineMap.put(rack, machine, count+1);
 			}
-			if (!slotMap.containsKey(rack, machine, slot)) {
-				slotMap.put(rack, machine, slot, 1);
-			}
-			else {
-				count = (Integer) slotMap.get(rack, machine, slot);
-				slotMap.put(rack, machine, slot, count + 1);
+
+			if (slot != -1) {
+				if (!slotMap.containsKey(rack, machine, slot)) {
+					slotMap.put(rack, machine, slot, 1);
+				} else {
+					count = (Integer) slotMap.get(rack, machine, slot);
+					slotMap.put(rack, machine, slot, count + 1);
+				}
 			}
 
 			if (dim1 != -1) {
@@ -101,7 +103,7 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 				}
 			}
 
-			if (dim1 != -1 && dim2 != -1) {
+			if (dim2 != -1) {
 				if (!dim2Map.containsKey(rack, machine, slot, dim1, dim2)) {
 					dim2Map.put(rack, machine, slot, dim1, dim2, 1);
 				} else {

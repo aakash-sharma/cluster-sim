@@ -7,8 +7,8 @@ public class ClusterConfiguration {
 	private int mRacks;
 	private int mMachinesPerRack;
 	private int mSlotsPerMachine;
-	private int mGPUsPerSlot;
-	private int mGPUsDim1;
+	private int mDim1sPerSlot;
+	private int mDim2sPerDim1;
 	private int mGPUsDim2;
 	private int mIterGranularity;
 	private String mPolicy;
@@ -33,6 +33,14 @@ public class ClusterConfiguration {
 	String mInterDimSched;
 	private String mRunName;
 
+	public double getmNwDelayWait() {
+		return mNwDelayWait;
+	}
+
+	public double getmRackDelayWait() {
+		return mRackDelayWait;
+	}
+
 	private double mNwDelayWait;
 	private double mRackDelayWait;
 
@@ -44,7 +52,7 @@ public class ClusterConfiguration {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
-		mGPUsPerSlot = gpus_per_slot;
+		mDim1sPerSlot = gpus_per_slot;
 		mIterGranularity = iter_granularity;
 		mPolicy = policy;
 		mLeaseTime = lease;
@@ -57,7 +65,7 @@ public class ClusterConfiguration {
 	}
 
 	public ClusterConfiguration(String run_name, int racks, int machines_per_rack, int slots_per_machine,
-								int gpus_per_slot, int gpusDim1, int gpusDim2, int iter_granularity, String policy,
+								int dim1_slot, int dim2_dim1, int gpus_dim2, int iter_granularity, String policy,
 								double lease, double fairness_threshold, double epsilon, boolean useConfig,
 								boolean consolidate, String astra_sim_path,
 								String astra_sim_bin_path, String topo_name, String[] topo_per_dim, String[] dim_type,
@@ -68,9 +76,9 @@ public class ClusterConfiguration {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
-		mGPUsPerSlot = gpus_per_slot;
-		mGPUsDim1 = gpusDim1;
-		mGPUsDim2 = gpusDim2;
+		mDim1sPerSlot = dim1_slot;
+		mDim2sPerDim1 = dim2_dim1;
+		mGPUsDim2 = gpus_dim2;
 		mIterGranularity = iter_granularity;
 		mPolicy = policy;
 		mLeaseTime = lease;
@@ -117,12 +125,12 @@ public class ClusterConfiguration {
 		return mSlotsPerMachine;
 	}
 
-	public int getGPUsPerSlot() {
-		return mGPUsPerSlot;
+	public int getDim1PerSlot() {
+		return mDim1sPerSlot;
 	}
 
-	public int getGPUsDim1() {
-		return mGPUsDim1;
+	public int getDim2sPerDim1() {
+		return mDim2sPerDim1;
 	}
 
 	public int getGPUsDim2() {
@@ -194,12 +202,4 @@ public class ClusterConfiguration {
 	public String getmInterDimSched(){
 		return mInterDimSched;
 	}
-	public double getmNwDelayWait() {
-		return mNwDelayWait;
-	}
-
-	public double getmRackDelayWait() {
-		return mRackDelayWait;
-	}
-
 }

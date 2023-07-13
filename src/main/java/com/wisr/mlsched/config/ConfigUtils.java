@@ -93,12 +93,13 @@ public class ConfigUtils {
 														String cluster_policy, JSONObject config,
 														JSONObject networkConfig, String system_config_file,
 														String run_name, double nw_delay_wait, double rack_delay_wait) {
-		int slots = 1;
-	    int gpus_dim1 = 0;
-		int gpus_dim2 = 0;
-		int gpus = 0;
 		int racks = cluster_racks;
 		int machines = cluster_machines;
+		int slots = 1;
+		int dim1_slot = 0;
+		int dim2_dim1 = 0;
+		int gpus_dim2 = 0;
+
 		int iter_granularity = Integer.parseInt(getAttributeValue(config, "iteration_granularity"));
 		double lease_time = Double.parseDouble(getAttributeValue(config, "lease_time"));
 		double fairness_threshold = Double.parseDouble(getAttributeValue(config, "fairness_threshold"));
@@ -164,19 +165,6 @@ public class ConfigUtils {
 				intra_node_units.add(unit_count[i]);
 			}
 
-			/*
-			if (dim_type[i].equals("P")) {
-				machines = unit_count[i];
-			}
-			if (dim_type[i].equals("PP")) {
-				racks = unit_count[i];
-			}
-
-			if (dim_type[i].equals("T")) {
-				gpus *= unit_count[i];
-			}
-			*/
-
 			i += 1;
 		}
 
@@ -229,7 +217,7 @@ public class ConfigUtils {
 			nic_latency[i] = 0;
 		}
 
-		gpus = intra_node_units.remove(0);
+		//gpus = intra_node_units.remove(0);
 
 		int size = intra_node_units.size();
 
@@ -240,8 +228,13 @@ public class ConfigUtils {
 
 		if (size > 0)
 		{
-			gpus_dim1 = intra_node_units.remove(size-1);
+			dim1_slot = intra_node_units.remove(size-1);
 			size -= 1;
+		}
+
+		if (size > 0)
+		{
+			dim2_dim1 = intra_node_units.remove(size-1);
 		}
 
 		if (size > 0)
@@ -294,12 +287,12 @@ public class ConfigUtils {
 		System.out.println(racks);
 		System.out.println(machines);
 		System.out.println(slots);
-		System.out.println(gpus_dim1);
+		System.out.println(dim1_slot);
+		System.out.println(dim2_dim1);
 		System.out.println(gpus_dim2);
-		System.out.println(gpus);
 
 
-		return new ClusterConfiguration(run_name, racks, machines, slots, gpus, gpus_dim1, gpus_dim2, iter_granularity,
+		return new ClusterConfiguration(run_name, racks, machines, slots, dim1_slot, dim2_dim1, gpus_dim2, iter_granularity,
 				policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
 				topo_name, topo_per_dim, dim_type, link_ratio, link_latency, link_bandwidth, all_reduce_impl,
