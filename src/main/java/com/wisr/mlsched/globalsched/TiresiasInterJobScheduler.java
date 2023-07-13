@@ -9,6 +9,7 @@ import org.apache.commons.collections4.keyvalue.MultiKey;
 
 import com.wisr.mlsched.config.ClusterConfiguration;
 import com.wisr.mlsched.resources.GPU;
+
 //import java.util.HashMap;
 
 public class TiresiasInterJobScheduler extends InterJobScheduler {
@@ -93,7 +94,23 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			return allocatedGpus;
 		}
 
-		if (gpuDemand > 8) {
+		double gpusPerMachine = 1;
+
+		if (Cluster.getInstance().getConfiguration().getSlotsPerMachine() > 1) {
+			gpusPerMachine *= Cluster.getInstance().getConfiguration().getSlotsPerMachine();
+		}
+		if (Cluster.getInstance().getConfiguration().getDim1PerSlot() > 1) {
+			gpusPerMachine *= Cluster.getInstance().getConfiguration().getDim1PerSlot();
+		}
+		if (Cluster.getInstance().getConfiguration().getDim2sPerDim1() > 1) {
+			gpusPerMachine *= Cluster.getInstance().getConfiguration().getDim2sPerDim1();
+		}
+		if (Cluster.getInstance().getConfiguration().getGPUsDim2() > 1) {
+			gpusPerMachine *= Cluster.getInstance().getConfiguration().getGPUsDim2();
+		}
+
+		if (gpuDemand > gpusPerMachine) {
+			System.out.println(("GPUs per machine = " + String.valueOf(gpusPerMachine)));
 
 			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
 				rack = entry.getKey();
@@ -105,9 +122,19 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			}
 
 			if (gpus >= gpuDemand) {
-				allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, -1,
+				allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, -1, -1,
 						-1, -1);
 			}
+			return allocatedGpus;
+		}
+
+		double gpusPerRack = gpusPerMachine * Cluster.getInstance().getConfiguration().getMachinesPerRack();
+
+		if (gpuDemand > gpusPerRack) {
+			System.out.println(("GPUs per rack = " + String.valueOf(gpusPerRack)));
+
+			allocateGPU(allocatedGpus, gpuList, gpuDemand, -1, -1, -1,
+					-1, -1);
 		}
 
 		return allocatedGpus;
