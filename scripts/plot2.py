@@ -124,8 +124,8 @@ for i in range(len(cluster_dfs)):
     step = int((Max-Min)/len(y_jct_cdf[0]))
     x_axis = [x for x in range(int(Min), int(Max) - step, step)]
 
-    for jct_cdf in y_jct_cdf:
-        axs[i][3].plot(x_axis, jct_cdf, color=jct_colors[j], label=jct)
+    for j in range(len(y_jct_cdf)):
+        axs[i][3].plot(x_axis, y_jct_cdf[j], color=jct_colors[j], label=y_jct[j])
 
         j += 1
 
