@@ -58,6 +58,7 @@ fig, axs = plt.subplots(len(cluster_dfs)+1, 4, figsize=(30, 15))
 print(len(cluster_dfs))
 for i in range(len(cluster_dfs)):
     cluster_scheme = topologies[i]
+    print(cluster_scheme)
 
     y_jct = []
     y_q_delay = []
@@ -103,12 +104,28 @@ for i in range(len(cluster_dfs)):
     axs[i][2].set_title("Allocations" + "_" + cluster_scheme)
 
     j = 0
+    Min = cluster_dfs[i][y_jct[0]].tolist()[0]
+    Max = 0
+    y_jct_cdf = []
     for jct in y_jct:
         jct_sorted = np.sort(np.array(cluster_dfs[i][jct].tolist()))
+        print(y_jct[j])
         mean = np.mean(jct_sorted)
         std_dev = np.std(jct_sorted)
         jct_cdf = scipy.stats.norm.cdf(jct_sorted, loc=mean, scale=std_dev)
-        axs[i][3].plot(jct_sorted.tolist(), jct_cdf, color=jct_colors[j], label=jct)
+        y_jct_cdf.append(jct_cdf)
+        for jct in jct_cdf:
+            print(jct)
+
+        Min = min(jct_sorted[0], Min)
+        Max = max(jct_sorted[-1], Max)
+
+
+    step = int((Max-Min)/len(y_jct_cdf[0]))
+    x_axis = [x for x in range(int(Min), int(Max) - step, step)]
+
+    for jct_cdf in y_jct_cdf:
+        axs[i][3].plot(x_axis, jct_cdf, color=jct_colors[j], label=jct)
 
         j += 1
 
