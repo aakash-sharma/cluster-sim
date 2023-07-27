@@ -235,7 +235,7 @@ public class JobStatistics {
 		int cellid = 0;
 		Cell cell;
 		String[] headers = {"JobId", "JCT", "Queue-delay", "%Queue-delay", "GPU-time", "Compute-Time",
-				"Communication-Time", "Avg GPU contention",
+				"Communication-Time", "Avg-GPU-contention",
 				"dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc", "makespan"};
 		row = sheet1.createRow(rowid++);
 
