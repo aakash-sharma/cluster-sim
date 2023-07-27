@@ -81,7 +81,8 @@ public class JobStatistics {
 	 * @param timestamp
 	 */
 	public void recordJobEnd(int jobid, double timestamp, double start_time, double ideal_running_time,
-			boolean isLeader, double gpu_time, int gpu_demand, double queue_delay, int [] allocs) {
+			boolean isLeader, double gpu_time, double comp_time, double comm_time, int gpu_demand,
+							 double queue_delay, int [] allocs) {
 		if(mGPUContention.get(timestamp) == null) {
 			mGPUContention.put(timestamp, 0);
 		}
@@ -95,6 +96,8 @@ public class JobStatistics {
 		mJobStats.get(jobid).setStartTime(start_time);
 		mJobStats.get(jobid).setEndTime(timestamp);
 		mJobStats.get(jobid).setGpuTime(gpu_time);
+		mJobStats.get(jobid).setCompTime(comp_time);
+		mJobStats.get(jobid).setCommTime(comm_time);
 		mJobStats.get(jobid).setQueueDelay(queue_delay);
 		mJobStats.get(jobid).setAvgGPUcontention(avg_contention_for_job(jobid));
 		mJobStats.get(jobid).setAllocs(allocs);
@@ -231,8 +234,9 @@ public class JobStatistics {
 		int rowid = 0;
 		int cellid = 0;
 		Cell cell;
-		String[] headers = {"JobId", "JCT", "Queue-delay", "GPU-time", "Avg GPU contention",
-				"dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc", "%Queue-delay", "makespan"};
+		String[] headers = {"JobId", "JCT", "Queue-delay", "%Queue-delay", "GPU-time", "Compute Time",
+				"Communication Time", "Avg GPU contention",
+				"dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc", "makespan"};
 		row = sheet1.createRow(rowid++);
 
 		for (String str : headers) {
@@ -243,18 +247,39 @@ public class JobStatistics {
 		for(Integer key : mJobStats.keySet()) {
 
 			row = sheet1.createRow(rowid++);
-			Vector<Double> values = mSimResults.get(key);
+			//Vector<Double> values = mSimResults.get(key);
 			cellid = 0;
 			cell = row.createCell(cellid++);
 			cell.setCellValue(key);
 
-			for (Double val : values) {
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getJobTime());
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getQueueDelay());
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mSimResults.get(key).get(1) / mSimResults.get(key).get(0) * 100);
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getGpuTime());
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getCompTime());
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getCommTime());
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getAvgGPUcontention());
+
+			int allocs[] = mJobStats.get(key).getAllocs();
+
+			for (int val: allocs) {
 				cell = row.createCell(cellid++);
 				cell.setCellValue(val);
 			}
 
-			cell = row.createCell(cellid++);
-			cell.setCellValue(mSimResults.get(key).get(1) / mSimResults.get(key).get(0) * 100);
 			cell = row.createCell(cellid++);
 			cell.setCellValue(makespan);
 		}
@@ -326,6 +351,7 @@ public class JobStatistics {
 		double makespan = 0.0;
 
 		for(Integer key : mJobStats.keySet()) {
+
 			jct = mJobStats.get(key).getJobTime();
 			total_jct += jct;
 			mSimResults.get(key).add(jct);
@@ -523,12 +549,17 @@ public class JobStatistics {
 		private double mStartTime;
 		private double mEndTime;
 		private double mGpuTime;
+		private double mCompTime;
+		private double mCommTime;
 		private double mQueueDelay;
 		private double mAvgGPUcontention;
 		private int mAllocs[];
 		public SingleJobStat(double start_time) {
 			mStartTime = start_time;
 			mEndTime = -1; // indicates not set
+			mGpuTime = 0;
+			mCommTime = 0;
+			mCompTime = 0;
 			mAllocs = new int[6];
 		}
 
@@ -548,6 +579,24 @@ public class JobStatistics {
 		
 		public void setGpuTime(double gpu_time) {
 			mGpuTime = gpu_time;
+		}
+
+
+		public void setCompTime(double mCompTime) {
+			this.mCompTime = mCompTime;
+		}
+
+		public void setCommTime(double mCommTime) {
+			this.mCommTime = mCommTime;
+		}
+
+
+		public double getCompTime() {
+			return mCompTime;
+		}
+
+		public double getCommTime() {
+			return mCommTime;
 		}
 
 		public double getGpuTime() { return mGpuTime; }

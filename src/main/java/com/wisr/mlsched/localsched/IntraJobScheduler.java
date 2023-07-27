@@ -63,6 +63,8 @@ public abstract class IntraJobScheduler {
 	private double mTimeLastResourceAssignment; 
 	private static Logger sLog; // Instance of logger
 	private double mGpuTime;
+	private double mCommTime;
+	private double mCompTime;
 	private double queueDelay; // State to maintain with admission control
 	private double mJobArrivalTime; // Arrival time of the job
 	private boolean mIsQueued; // Every job starts with getting queued
@@ -83,6 +85,8 @@ public abstract class IntraJobScheduler {
 		oldRatio = Double.POSITIVE_INFINITY;
 		themisTs = Double.POSITIVE_INFINITY;
 		mGpuTime = 0;
+		mCommTime = 0;
+		mCompTime = 0;
 		mTimeLastResourceAssignment = Simulation.getSimulationTime();
 		mIsLeader = true; // By default, everyone is a leader unless told otherwise
 		mSlowdown = new HashMap<>();
@@ -190,6 +194,8 @@ public abstract class IntraJobScheduler {
 						mIterGranularity), this));
 		// Aakash: augment this
 		mGpuTime += mTimePerIteration / getJobSpeedup() * mCurrentIterationGPUs.size() * mIterGranularity;
+		mCompTime += mTimePerIteration * mIterGranularity;
+		mCommTime = mGpuTime - mCompTime;
 		Iterator<GPU> gpuIter = mCurrentIterationGPUs.iterator();
 		mNextIterationExpectedGPUs = new HashSet<GPU>();
 		while(gpuIter.hasNext()) {
@@ -223,7 +229,7 @@ public abstract class IntraJobScheduler {
 							+ CHECKPOINTING_OVERHEAD_PER_GPU*relinquished_resources.size(), relinquished_resources));
 			Cluster.getInstance().removeJob(this);
 			JobStatistics.getInstance().recordJobEnd(mJobId, Simulation.getSimulationTime(), mJobStartTime,
-					getIdealEstimate(), mIsLeader, mGpuTime, mMaxParallelism, queueDelay, mAllocs);
+					getIdealEstimate(), mIsLeader, mGpuTime, mCompTime, mCommTime, mMaxParallelism, queueDelay, mAllocs);
 			for (int val: mAllocs){
 				System.out.println("Alloc: " + val);
 			}
@@ -584,40 +590,6 @@ public abstract class IntraJobScheduler {
 		return computeTime/ (commTime + computeTime);
 	}
 
-/*
-	public double getPlacementSlowdown_astra(Set<GPU> gpus) {
-		HashSet<Integer> map = new HashSet<Integer>();
-		Vector<Integer> dimVec = new Vector<Integer>();
-		Iterator<GPU> gpuIter = gpus.iterator();
-
-		// Check if across slots
-		map = new HashSet<Integer>();
-		gpuIter = gpus.iterator();
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getSlotId());
-		}
-		dimVec.add(map.size());
-
-		// Check if across machines
-		map = new HashSet<Integer>();
-		gpuIter = gpus.iterator();
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getMachineId());
-		}
-		dimVec.add(map.size());
-
-		// Check if across racks
-		while (gpuIter.hasNext()) {
-			GPU gpu = gpuIter.next();
-			map.add(gpu.getLocation().getRackId());
-			//System.out.println("GPU location" + gpu.getLocation().getPrettyString());
-		}
-		dimVec.add(map.size());
-		return astra_sim(gpus, dimVec);
-	}
-*/
 	public double getPlacementSlowdown(Set<GPU> gpus) {
 
 		if (gpus.isEmpty())
