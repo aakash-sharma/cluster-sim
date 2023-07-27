@@ -49,10 +49,10 @@ public class Simulation {
 		double rack_delay_wait = 0;
 
 		if (args.length > 8) {
-			nw_delay_wait = Double.parseDouble(args[8]);
+			rack_delay_wait = Double.parseDouble(args[8]);
 		}
 		if (args.length > 9) {
-			rack_delay_wait = Double.parseDouble(args[9]);
+			nw_delay_wait = Double.parseDouble(args[9]);
 		}
 		Cluster.createCluster(racks, machines, cluster_policy, clusterConfig, networkConfig, system_config_file,
 				run_name, nw_delay_wait, rack_delay_wait);
