@@ -53,7 +53,7 @@ for topo in topologies:
         merged_df = pd.merge(merged_df, df, on=["JobId"])
     cluster_dfs.append(merged_df)
 
-fig, axs = plt.subplots(len(cluster_dfs)+1, 4, figsize=(30, 15))
+fig, axs = plt.subplots(len(cluster_dfs)+1, 7, figsize=(45, 15))
 
 print(len(cluster_dfs))
 for i in range(len(cluster_dfs)):
@@ -61,6 +61,8 @@ for i in range(len(cluster_dfs)):
     print(cluster_scheme)
 
     y_jct = []
+    y_comp = []
+    y_comm = []
     y_q_delay = []
     y_q_delay_pct = []
     y_allocs = []
@@ -71,6 +73,8 @@ for i in range(len(cluster_dfs)):
         schemes.append(scheme)
         print(scheme)
         y_jct.append("JCT" + "_" + scheme)
+        y_comp.append("Compute-Time" + "_" + scheme)
+        y_comm.append("Communication-Time" + "_" + scheme)
         y_q_delay.append("Queue-delay" + "_" + scheme)
         y_q_delay_pct.append("%Q-delay" + "_" + scheme)
         y_allocs.append("nwAlloc" + "_" + scheme)
@@ -132,6 +136,69 @@ for i in range(len(cluster_dfs)):
     handles4, labels4 = axs[i][3].get_legend_handles_labels()
     axs[i][3].legend(handles4, labels4)
     axs[i][3].set_title("JCT cdf" + "_" + cluster_scheme)
+
+    j = 0
+    Min_comp = cluster_dfs[i][y_comp[0]].tolist()[0]
+    Min_comm = cluster_dfs[i][y_comm[0]].tolist()[0]
+    Max_comp = 0
+    Max_comm = 0
+    y_comp_cdf = []
+    y_comm_cdf = []
+    for comp in y_comp:
+        comp_sorted = np.sort(np.array(cluster_dfs[i][comp].tolist()))
+        mean_comp = np.mean(comp_sorted)
+        std_dev_comp = np.std(comp_sorted)
+        comp_cdf = scipy.stats.norm.cdf(comp_sorted, loc=mean_comp, scale=std_dev_comp)
+
+        y_comp_cdf.append(comp_cdf)
+        #for jct in jct_cdf:
+         #   print(jct)
+
+        Min_comp = min(comp_sorted[0], Min_comp)
+        Max_comp = max(comp_sorted[-1], Max_comp)
+
+    for comm in y_comm:
+        comm_sorted = np.sort(np.array(cluster_dfs[i][comm].tolist()))
+        mean_comm = np.mean(comm_sorted)
+        std_dev_comm = np.std(comm_sorted)
+        comm_cdf = scipy.stats.norm.cdf(comm_sorted, loc=mean_comm, scale=std_dev_comm)
+        y_comm_cdf.append(comm_cdf)
+        Min_comm = min(comm_sorted[0], Min_comp)
+        Max_comm = max(comm_sorted[-1], Max_comm)
+
+    step_comp = int((Max_comp-Min_comp)/len(y_comp_cdf[0]))
+    step_comm = int((Max_comm-Min_comm)/len(y_comm_cdf[0]))
+    x_axis_comp = [x for x in range(int(Min_comp), int(Max_comp) - step_comp, step_comp)]
+    x_axis_comm = [x for x in range(int(Min_comm), int(Max_comm) - step_comm, step_comm)]
+
+    for j in range(len(y_comp_cdf)):
+        axs[i][4].plot(x_axis_comp, y_comp_cdf[j], color=jct_colors[j], label=y_comp[j])
+        axs[i][5].plot(x_axis_comm, y_comm_cdf[j], color=jct_colors[j], label=y_comm[j])
+
+        j += 1
+
+    handles5, labels5 = axs[i][4].get_legend_handles_labels()
+    axs[i][4].legend(handles5, labels5)
+    axs[i][4].set_title("Compute time cdf" + "_" + cluster_scheme)
+
+    handles6, labels6 = axs[i][5].get_legend_handles_labels()
+    axs[i][5].legend(handles6, labels6)
+    axs[i][5].set_title("Communication time cdf" + "_" + cluster_scheme)
+
+    axs3 = axs[i][6].twinx()
+    cluster_dfs[i].plot(ax=axs[i][6], y=y_comp,
+    x="JobId", kind="bar", linewidth=3, logy=True, color=q_delay_colors[:len(y_q_delay)])
+    cluster_dfs[i].plot(ax=axs3, y=y_comm,
+    x="JobId", kind="line", linewidth=3, logy=True, color=q_delay_pct_colors[:len(y_q_delay)])
+
+    handles7, labels7 = axs[i][6].get_legend_handles_labels()
+    handles8, labels8 = axs3.get_legend_handles_labels()
+    handles9 = handles7 + handles8
+    labels9 = labels7 + labels8
+
+    # Create a single legend with the combined handles and labels
+    axs[i][1].legend(handles9, labels9)
+    axs[i][1].set_title("GPU time" + "_" + cluster_scheme)
 
 makespans = []
 titles = []
