@@ -14,7 +14,8 @@ with open(sys.argv[1]) as fd:
 for trace in traceJson:
     if "model" not in trace.keys():
         trace["model"] = random.choice(models)
-    trace["total_iterations"] = str(int(trace["total_iterations"]) * 100)
+    trace["total_iterations"] = str(int(trace["total_iterations"]) * 1000)
+    trace["time_per_iteration"] = str(float(trace["time_per_iteration"]) * 100)
     trace["max_parallelism"] = random.choice(demands)
 
 fd.close()
