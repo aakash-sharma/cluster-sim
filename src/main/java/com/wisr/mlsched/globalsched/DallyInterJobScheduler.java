@@ -49,8 +49,8 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		System.out.println("====== Dally Consolidated gpu allocation ======");
-		System.out.println(gpuList.size());
-		System.out.println(gpuDemand);
+		System.out.println("JobId: " + String.valueOf(job.getJobId()) + " GPU list: " + String.valueOf(gpuList.size())
+				+ " GPU demand: " + String.valueOf(gpuDemand));
 
 		Integer allocatedRack = -1;
 		Integer allocatedMachine = -1;
@@ -202,8 +202,8 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		double [] rack_delay_wait = ((DallyIntraJobScheduler) job).getRackDelayWait();
-		if (rack_delay_wait[1] == 0) {
-			System.out.println(job.getJobId() + ": Rack timer 0, setting to "  +
+		if (rack_delay_wait[1] == -1) {
+			System.out.println(job.getJobId() + ": Rack delay timer -1, setting to "  +
 					String.valueOf(job.getLastResourceAssignment()));
 			rack_delay_wait[1] = job.getLastResourceAssignment();
 		}
@@ -225,7 +225,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 
 		double [] nw_delay_wait = ((DallyIntraJobScheduler) job).getNwDelayWait();
 
-		if (nw_delay_wait[1] == 0) {
+		if (nw_delay_wait[1] == -1) {
+			System.out.println(job.getJobId() + ": Network delay timer -1, setting to "  +
+					String.valueOf(job.getLastResourceAssignment()));
 			nw_delay_wait[1] = job.getLastResourceAssignment();
 		}
 		else if (Simulation.getSimulationTime() - nw_delay_wait[1] >= nw_delay_wait[0]) {
