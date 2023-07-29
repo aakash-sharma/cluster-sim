@@ -53,7 +53,7 @@ for topo in topologies:
         merged_df = pd.merge(merged_df, df, on=["JobId"])
     cluster_dfs.append(merged_df)
 
-fig, axs = plt.subplots(len(cluster_dfs)+1, 7, figsize=(45, 15))
+fig, axs = plt.subplots(len(cluster_dfs)+1, 8, figsize=(45, 15))
 
 print(len(cluster_dfs))
 for i in range(len(cluster_dfs)):
@@ -81,7 +81,7 @@ for i in range(len(cluster_dfs)):
         y_allocs.append("rackAlloc" + "_" + scheme)
 
     cluster_dfs[i].plot(ax=axs[i][0], y=y_jct,
-        x="JobId", kind="line", linewidth=3, logy=True, color=jct_colors[:len(y_jct)])
+        x="JobId", kind="line", linewidth=1, logy=True, color=jct_colors[:len(y_jct)])
 
     handles1, labels1 = axs[i][0].get_legend_handles_labels()
 
@@ -91,7 +91,7 @@ for i in range(len(cluster_dfs)):
 
     axs2 = axs[i][1].twinx()
     cluster_dfs[i].plot(ax=axs[i][1], y=y_q_delay,
-    x="JobId", kind="line", linewidth=3, logy=True, color=q_delay_colors[:len(y_q_delay)])
+    x="JobId", kind="line", linewidth=1, logy=True, color=q_delay_colors[:len(y_q_delay)])
 
     handles1, labels1 = axs[i][1].get_legend_handles_labels()
     handles = handles1 #+ handles2
@@ -113,13 +113,13 @@ for i in range(len(cluster_dfs)):
     y_jct_cdf = []
     for jct in y_jct:
         jct_sorted = np.sort(np.array(cluster_dfs[i][jct].tolist()))
-        print(y_jct[j])
+        #print(y_jct[j])
         mean = np.mean(jct_sorted)
         std_dev = np.std(jct_sorted)
         jct_cdf = scipy.stats.norm.cdf(jct_sorted, loc=mean, scale=std_dev)
         y_jct_cdf.append(jct_cdf)
-        for jct in jct_cdf:
-            print(jct)
+        #for jct in jct_cdf:
+         #   print(jct)
 
         Min = min(jct_sorted[0], Min)
         Max = max(jct_sorted[-1], Max)
@@ -185,20 +185,19 @@ for i in range(len(cluster_dfs)):
     axs[i][5].legend(handles6, labels6)
     axs[i][5].set_title("Communication time cdf" + "_" + cluster_scheme)
 
-    axs3 = axs[i][6].twinx()
+    #axs3 = axs[i][6].twinx()
     cluster_dfs[i].plot(ax=axs[i][6], y=y_comp,
     x="JobId", kind="bar", linewidth=3, logy=True, color=q_delay_colors[:len(y_q_delay)])
-    cluster_dfs[i].plot(ax=axs3, y=y_comm,
-    x="JobId", kind="line", linewidth=3, logy=True, color=q_delay_pct_colors[:len(y_q_delay)])
+    cluster_dfs[i].plot(ax=axs[i][7], y=y_comm,
+    x="JobId", kind="line", linewidth=1, logy=True, color=q_delay_pct_colors[:len(y_q_delay)])
 
     handles7, labels7 = axs[i][6].get_legend_handles_labels()
-    handles8, labels8 = axs3.get_legend_handles_labels()
-    handles9 = handles7 + handles8
-    labels9 = labels7 + labels8
+    handles8, labels8 = axs[i][7].get_legend_handles_labels()
 
-    # Create a single legend with the combined handles and labels
-    axs[i][1].legend(handles9, labels9)
-    axs[i][1].set_title("GPU time" + "_" + cluster_scheme)
+    axs[i][6].legend(handles7, labels7)
+    axs[i][6].set_title("Compute time" + "_" + cluster_scheme)
+    axs[i][7].legend(handles8, labels8)
+    axs[i][7].set_title("Communication time" + "_" + cluster_scheme)
 
 makespans = []
 titles = []
@@ -210,7 +209,7 @@ for i in range(len(cluster_dfs)):
         #print(cluster_dfs[i]["makespan" + "_" + scheme].head())
         titles.append(cluster_scheme + "_" + scheme)
 
-axs[len(cluster_dfs)][0].bar(titles, makespans, color=['red', 'green', 'blue', 'cyan'])
+axs[len(cluster_dfs)][0].bar(titles, makespans, color=['red', 'green', 'blue'])
 axs[len(cluster_dfs)][0].set_xticklabels(titles)
 axs[len(cluster_dfs)][0].set_xticklabels(axs[len(cluster_dfs)][0].get_xticklabels(), rotation=90)
 
@@ -224,7 +223,7 @@ for path in sys.argv[1:]:
    print(scheme)
    schemes.append(scheme)
 schemes = "_".join(schemes)
-fig.savefig("results/results-" + schemes + ".pdf", format="pdf", bbox_inches="tight")
+fig.savefig("results/results-" + schemes + ".pdf", format="pdf") #, bbox_inches="tight")
 #fig.savefig("results/results-delay_sched_sweep" + ".pdf", format="pdf", bbox_inches="tight")
 
 
