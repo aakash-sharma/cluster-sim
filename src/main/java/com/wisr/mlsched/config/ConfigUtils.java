@@ -283,14 +283,13 @@ public class ConfigUtils {
 			e.printStackTrace();
 		}
 
-		System.out.println(run_name);
-		System.out.println(racks);
-		System.out.println(machines);
-		System.out.println(slots);
-		System.out.println(dim1_slot);
-		System.out.println(dim2_dim1);
-		System.out.println(gpus_dim2);
-
+//		System.out.println(run_name);
+//		System.out.println(racks);
+//		System.out.println(machines);
+//		System.out.println(slots);
+//		System.out.println(dim1_slot);
+//		System.out.println(dim2_dim1);
+//		System.out.println(gpus_dim2);
 
 		return new ClusterConfiguration(run_name, racks, machines, slots, dim1_slot, dim2_dim1, gpus_dim2, iter_granularity,
 				policy, lease_time,
