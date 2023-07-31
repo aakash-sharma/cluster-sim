@@ -53,7 +53,7 @@ for topo in topologies:
         merged_df = pd.merge(merged_df, df, on=["JobId"])
     cluster_dfs.append(merged_df)
 
-fig, axs = plt.subplots(len(cluster_dfs)+1, 8, figsize=(45, 15))
+fig, axs = plt.subplots(len(cluster_dfs)+1, 9, figsize=(45, 15))
 
 print(len(cluster_dfs))
 for i in range(len(cluster_dfs)):
@@ -67,6 +67,8 @@ for i in range(len(cluster_dfs)):
     y_q_delay_pct = []
     y_allocs = []
     schemes = []
+    y_sum_allocs = [[] for x in range(len(sys.argv)-1)]
+    j = 0
     for path in sys.argv[1:]:
         scheme = path.split("/")[-1]
         scheme = path.split("/")[-1].split("_")[-1]
@@ -80,12 +82,24 @@ for i in range(len(cluster_dfs)):
         y_allocs.append("nwAlloc" + "_" + scheme)
         y_allocs.append("rackAlloc" + "_" + scheme)
 
+        df = cluster_dfs[i]
+
+        y_sum_allocs[j].append(df["dim2Alloc" + "_" + scheme].sum())
+        y_sum_allocs[j].append(df["dim1Alloc" + "_" + scheme].sum())
+        y_sum_allocs[j].append(df["slotAlloc" + "_" + scheme].sum())
+        y_sum_allocs[j].append(df["machineAlloc" + "_" + scheme].sum())
+        y_sum_allocs[j].append(df["rackAlloc" + "_" + scheme].sum())
+        y_sum_allocs[j].append(df["nwAlloc" + "_" + scheme].sum())
+
+        j += 1
+
+    print(y_sum_allocs)
+
     cluster_dfs[i].plot(ax=axs[i][0], y=y_jct,
         x="JobId", kind="line", linewidth=1, logy=True, color=jct_colors[:len(y_jct)])
 
     handles1, labels1 = axs[i][0].get_legend_handles_labels()
 
-    # Create a single legend with the combined handles and labels
     axs[i][0].legend(handles1, labels1)
     axs[i][0].set_title("JCT" + "_" + cluster_scheme)
 
@@ -93,11 +107,11 @@ for i in range(len(cluster_dfs)):
     cluster_dfs[i].plot(ax=axs[i][1], y=y_q_delay,
     x="JobId", kind="line", linewidth=1, logy=True, color=q_delay_colors[:len(y_q_delay)])
 
+    # Create a single legend with the combined handles and labels
     handles1, labels1 = axs[i][1].get_legend_handles_labels()
     handles = handles1 #+ handles2
     labels = labels1 #+ labels2
 
-    # Create a single legend with the combined handles and labels
     axs[i][1].legend(handles, labels)
     axs[i][1].set_title("Q delay" + "_" + cluster_scheme)
 
@@ -185,7 +199,6 @@ for i in range(len(cluster_dfs)):
     axs[i][5].legend(handles6, labels6)
     axs[i][5].set_title("Communication time cdf" + "_" + cluster_scheme)
 
-    #axs3 = axs[i][6].twinx()
     cluster_dfs[i].plot(ax=axs[i][6], y=y_comp,
     x="JobId", kind="bar", linewidth=3, logy=True, color=q_delay_colors[:len(y_q_delay)])
     cluster_dfs[i].plot(ax=axs[i][7], y=y_comm,
@@ -198,6 +211,26 @@ for i in range(len(cluster_dfs)):
     axs[i][6].set_title("Compute time" + "_" + cluster_scheme)
     axs[i][7].legend(handles8, labels8)
     axs[i][7].set_title("Communication time" + "_" + cluster_scheme)
+
+
+    x_allocs = []
+    x_allocs.append("dim2")
+    x_allocs.append("dim1")
+    x_allocs.append("slot")
+    x_allocs.append("mc")
+    x_allocs.append("rack")
+    x_allocs.append("nw")
+
+    for j in range(len(y_sum_allocs)):
+        axs[i][8].plot(x_allocs, y_sum_allocs[j], color=jct_colors[j], label=schemes[j])
+        j += 1
+
+    handles9, labels9 = axs[i][8].get_legend_handles_labels()
+    axs[i][8].legend(handles5, labels5)
+    axs[i][8].set_title("Dimension allocations" + "_" + cluster_scheme)
+
+    handles9, labels9 = axs[i][8].get_legend_handles_labels()
+    axs[i][8].legend(handles9, labels9)
 
 makespans = []
 titles = []
@@ -223,6 +256,7 @@ for path in sys.argv[1:]:
    print(scheme)
    schemes.append(scheme)
 schemes = "_".join(schemes)
+fig.tight_layout()
 fig.savefig("results/results-" + schemes + ".pdf", format="pdf") #, bbox_inches="tight")
 #fig.savefig("results/results-delay_sched_sweep" + ".pdf", format="pdf", bbox_inches="tight")
 
