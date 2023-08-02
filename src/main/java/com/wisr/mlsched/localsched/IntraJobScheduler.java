@@ -434,32 +434,35 @@ public abstract class IntraJobScheduler {
 		//System.out.println(diff);
 
 		//for (int idx = diff; idx < topoPerDim.length; idx++)
-		//for (int idx = 0; idx < dimVec.size(); idx++)
-		for (int idx = 0; idx < topoPerDim.length+1; idx++)
+		//for (int idx = 0; idx < topoPerDim.length+1; idx++)
+		int topoIdx = topoPerDim.length - 1;
+		//for (int idx = 0; idx < dimVec.length; idx++)
+		for (int idx = dimVec.length-1; idx >= 0; idx--)
 		{
 			if (dimVec[idx] != -1) {
-				if (start_idx == -1) {
-					start_idx = idx;
+				if (topoIdx < 0) {
+					topoIdx = 0; // Heuristic to account for extra dimension
 				}
+				start_idx = idx;
 				dim_counts += 1;
-				topologiesPerDim.add(topoPerDim[idx]);
+				topologiesPerDim.add(topoPerDim[topoIdx]);
 				dimensionType.add(dimType[idx]);
-				linkLatency.add(mLinkLatency[idx]);
-				linkBW.add(mLinkBandwidth[idx]);
+				linkLatency.add(mLinkLatency[topoIdx]);
+				linkBW.add(mLinkBandwidth[topoIdx]);
 
 				unitsCount.add(dimVec[idx]);
 
-				links = (int) Math.ceil(mLinkRatio[idx] * dimVec[idx]);
-				System.out.println(topoPerDim[idx]);
+				links = (int) Math.ceil(mLinkRatio[topoIdx] * dimVec[idx]);
+				System.out.println(topoPerDim[topoIdx]);
 				System.out.println(links);
 
-				if (topoPerDim[idx].equals("Ring")) {
+				if (topoPerDim[topoIdx].equals("Ring")) {
 					if (links % 2 != 0) {
 						links += 1;
 					}
 				}
 
-				if (topoPerDim[idx].equals("FullyConnected")) {
+				if (topoPerDim[topoIdx].equals("FullyConnected")) {
 					links += links % (dimVec[idx] - 1);
 				}
 
@@ -470,6 +473,8 @@ public abstract class IntraJobScheduler {
 				hbmLatency.add(500);
 				hbmBW.add(370);
 				hbmScale.add(0);
+
+				topoIdx -= 1;
 			}
 		}
 
@@ -498,25 +503,103 @@ public abstract class IntraJobScheduler {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(PATH + "/system/" + mJobId +".txt"));
 			writer.write("scheduling-policy: LIFO\n");
-			writer.append("endpoint-delay: 1\n");
+			writer.append("endpoint-delay: 10\n");
 			writer.append("active-chunks-per-dimension: 1\n");
 			writer.append("preferred-dataset-splits: 1\n");
 			writer.append("boost-mode: 1\n");
 
-			writer.append("all-reduce-implementation: " + mAllReduceImpl[start_idx]);
-			for (int idx = start_idx + 1; idx < topoPerDim.length+1; idx++) {
-				if (dimVec[idx] == -1) {
-					continue;
+			Vector<String> commAlg = new Vector<String>();
+			int algoIdx = mAllReduceImpl.length - 1;
+
+			for (int idx = dimVec.length-1; idx >= 0; idx--) {
+				if (dimVec[idx] != -1) {
+					if (algoIdx < 0) {
+						algoIdx = 0; // Heuristic to account for extra dimension
+					}
+					System.out.println("Adding idx: " + String.valueOf(idx));
+					commAlg.add(mAllReduceImpl[algoIdx]);
 				}
-				if (idx >= mAllReduceImpl.length) {
-					writer.append("_" + mAllReduceImpl[mAllReduceImpl.length-1]);
-				}
-				else {
-					writer.append("_" + mAllReduceImpl[idx]);
+				algoIdx--;
+			}
+
+			writer.append("all-reduce-implementation: " + commAlg.remove(commAlg.size()-1));
+
+			for (int idx = start_idx + 1; idx < dimVec.length; idx++) {
+				if (dimVec[idx] != -1) {
+					System.out.println("Getting idx: " + String.valueOf(idx));
+					writer.append("_" + commAlg.remove(commAlg.size()-1));
 				}
 			}
 			writer.append("\n");
 
+			commAlg = new Vector<String>();
+			algoIdx = mAllGatherImpl.length - 1;
+
+			for (int idx = dimVec.length-1; idx >= 0; idx--) {
+				if (dimVec[idx] != -1) {
+					if (algoIdx < 0) {
+						algoIdx = 0; // Heuristic to account for extra dimension
+					}
+					commAlg.add(mAllGatherImpl[algoIdx]);
+				}
+				algoIdx--;
+			}
+
+			writer.append("all-gather-implementation: " + commAlg.remove(commAlg.size()-1));
+
+			for (int idx = start_idx + 1; idx < dimVec.length; idx++) {
+				if (dimVec[idx] != -1) {
+					writer.append("_" + commAlg.remove(commAlg.size()-1));
+				}
+			}
+			writer.append("\n");
+
+			commAlg = new Vector<String>();
+			algoIdx = mReduceScatterImpl.length - 1;
+
+			for (int idx = dimVec.length-1; idx >= 0; idx--) {
+				if (dimVec[idx] != -1) {
+					if (algoIdx < 0) {
+						algoIdx = 0; // Heuristic to account for extra dimension
+					}
+					commAlg.add(mReduceScatterImpl[algoIdx]);
+				}
+				algoIdx--;
+			}
+
+			writer.append("reduce-scatter-implementation: " + commAlg.remove(commAlg.size()-1));
+
+			for (int idx = start_idx + 1; idx < dimVec.length; idx++) {
+				if (dimVec[idx] != -1) {
+					writer.append("_" + commAlg.remove(commAlg.size()-1));
+				}
+			}
+			writer.append("\n");
+
+			commAlg = new Vector<String>();
+			algoIdx = mAllToAllImpl.length - 1;
+
+			for (int idx = dimVec.length-1; idx >= 0; idx--) {
+				if (dimVec[idx] != -1) {
+					if (algoIdx < 0) {
+						algoIdx = 0; // Heuristic to account for extra dimension
+					}
+					commAlg.add(mAllToAllImpl[algoIdx]);
+				}
+				algoIdx--;
+			}
+
+			writer.append("all-to-all-implementation: " + commAlg.remove(commAlg.size()-1));
+
+			for (int idx = start_idx + 1; idx < dimVec.length; idx++) {
+				if (dimVec[idx] != -1) {
+					writer.append("_" + commAlg.remove(commAlg.size()-1));
+				}
+			}
+			writer.append("\n");
+
+
+			/*
 			writer.append("all-gather-implementation: " + mAllGatherImpl[start_idx]);
 			for (int idx = start_idx + 1; idx < topoPerDim.length+1; idx++) {
 				if (dimVec[idx] == -1) {
@@ -531,7 +614,7 @@ public abstract class IntraJobScheduler {
 			}
 			writer.append("\n");
 
-			writer.append("reduce-scatter-implementation: " + mReduceScatterImpl[start_idx]);
+			writer.append("reduce-scatter-implementation: " + mReduceScatterImpl[0]);
 			for (int idx = start_idx + 1; idx < topoPerDim.length+1; idx++) {
 				if (dimVec[idx] == -1) {
 					continue;
@@ -560,6 +643,8 @@ public abstract class IntraJobScheduler {
 				}
 			}
 			writer.append("\n");
+			*/
+
 			writer.append("collective-optimization: localBWAware\n");
 
 			if (mIntraDimSched != null) {
@@ -694,10 +779,10 @@ public abstract class IntraJobScheduler {
 		//Vector<Integer> dimVec = new Vector<Integer>();
 		//Vector<String> dimType = new Vector<String>();
 		double slowdown = 1.0;
-		int topoSize = Cluster.getInstance().getConfiguration().getmTopoPerDim().length + 1;
+		// int topoSize = Cluster.getInstance().getConfiguration().getmTopoPerDim().length;
 		System.out.println("Jobid: " + mJobId);
-		System.out.println("Topo size = " + String.valueOf(topoSize));
-		//int topoSize = 6;
+		//System.out.println("Topo size = " + String.valueOf(topoSize));
+		int topoSize = 6;
 		//boolean[] topoPerDimVec = new boolean[topoSize];
 		Integer [] dimVec = new Integer[topoSize];
 		Arrays.fill(dimVec, -1);
@@ -712,20 +797,13 @@ public abstract class IntraJobScheduler {
 
 		System.out.println("num gpus = " + num_gpus);
 
+		// Heuristic: assumes balanced tree of allocations, but in relaity tree may be unblanced. This heuristic can
+		// lead to an extra dimension when the total dims < 6
+
 		if (rack_size > 1) {
-			//dimType.insertElementAt("PP", 0);
-			if (topoSize <= 0) {
-				System.out.println("Topology size < 0 unexpected at rack!");
-				System.exit(-1);
-			}
 			dimType[topoSize-1] = "PP";
-			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % rack_size != 0) {
-				//dimVec.insertElementAt(num_gpus, 0);
 				dimVec[topoSize-1] = num_gpus;
-				if (mSlowdown.containsKey(gpus)){
-					return mSlowdown.get(gpus);
-				}
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
 				allocs[5] += 1;
@@ -736,24 +814,20 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize-1] = rackMap.size();
 			}
 			num_gpus /= rack_size;
-			System.out.println("rack num gpus = " + num_gpus);
+			System.out.println("num gpus below each rack = " + num_gpus);
 		}
+		topoSize -= 1;
 
 		int machine_size = machineMap.size();
 
 		if (machine_size > 1) {
-			topoSize -= 1;
 			dimType[topoSize-1] = "P";
 			if (topoSize <= 0) {
 				System.out.println("Topology size < 0 unexpected at machine!");
 				System.exit(-1);
 			}
-			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % machine_size != 0) {
 				dimVec[topoSize-1] = num_gpus;
-				if (mSlowdown.containsKey(gpus)){
-					return mSlowdown.get(gpus);
-				}
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
 				allocs[4] += 1;
@@ -764,24 +838,20 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize-1] = machineMap.size();
 			}
 			num_gpus /= machine_size;
-			System.out.println("machine num gpus = " + num_gpus);
+			System.out.println("num gpus below machine = " + num_gpus);
 		}
+		topoSize -= 1;
 
 		int slot_size = slotMap.size();
 
 		if (slot_size > 0) {
-			topoSize -= 1;
 			dimType[topoSize-1] = "N";
 			if (topoSize <= 0) {
 				System.out.println("Topology size < 0 unexpected at slot!");
 				System.exit(-1);
 			}
-			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % slot_size != 0) {
 				dimVec[topoSize-1] = num_gpus;
-				if (mSlowdown.containsKey(gpus)){
-					return mSlowdown.get(gpus);
-				}
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
 				allocs[3] += 1;
@@ -791,24 +861,20 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize-1] = slotMap.size();
 			}
 			num_gpus /= slot_size;
-			System.out.println("slot num gpus = " + num_gpus);
+			System.out.println("num gpus below slot = " + num_gpus);
 		}
+		topoSize -= 1;
 
 		int dim1_size = dim1Map.size();
 
 		if (dim1_size > 0) {
-			topoSize -= 1;
 			dimType[topoSize-1] = "N";
 			if (topoSize <= 0) {
 				System.out.println("Topology size < 0 unexpected at dim1!");
 				System.exit(-1);
 			}
-			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % dim1_size != 0) {
 				dimVec[topoSize-1] = num_gpus;
-				if (mSlowdown.containsKey(gpus)){
-					return mSlowdown.get(gpus);
-				}
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
 				allocs[2] += 1;
@@ -818,24 +884,20 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize-1] = dim1Map.size();
 			}
 			num_gpus /= dim1_size;
-			System.out.println("dim1 num gpus = " + num_gpus);
+			System.out.println("num gpus below dim1 = " + num_gpus);
 		}
+		topoSize -= 1;
 
 		int dim2_size = dim2Map.size();
 
 		if (dim2_size > 0) {
-			topoSize -= 1;
 			dimType[topoSize-1] = "N";
 			if (topoSize <= 0) {
 				System.out.println("Topology size < 0 unexpected at dim2!");
 				System.exit(-1);
 			}
-			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % dim2_size != 0) {
 				dimVec[topoSize-1] = num_gpus;
-				if (mSlowdown.containsKey(gpus)){
-					return mSlowdown.get(gpus);
-				}
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
 				allocs[1] += 1;
@@ -845,25 +907,21 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize-1] = dim2Map.size();
 			}
 			num_gpus /= dim2_size;
-			System.out.println("dim2 num gpus = " + num_gpus);
+			System.out.println("num gpus below dim2 = " + num_gpus);
 		}
-
 		topoSize -= 1;
-		if (topoSize <= 0) {
-			System.out.println("Topology size < 0 unexpected at gpu!");
-			System.exit(-1);
-		}
+
+//		if (topoSize <= 0) {
+//			System.out.println("Topology size < 0 unexpected at gpu!");
+//			System.exit(-1);
+//		}
 		/*if (topoSize > 1) {
 			System.out.println("Topology size > 1 unexpected at gpu!");
 			System.exit(-1);
 		}*/
 		dimVec[topoSize-1] = num_gpus;
 		dimType[topoSize-1] = "N";
-		//topoPerDimVec[topoSize-1] = true;
 
-		if (mSlowdown.containsKey(gpus)){
-			return mSlowdown.get(gpus);
-		}
 		slowdown = astra_sim(dimVec, dimType);
 		mSlowdown.put(gpus, slowdown);
 		allocs[0] += 1;
