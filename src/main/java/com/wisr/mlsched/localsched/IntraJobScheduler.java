@@ -68,8 +68,9 @@ public abstract class IntraJobScheduler {
 	private double queueDelay; // State to maintain with admission control
 	private double mJobArrivalTime; // Arrival time of the job
 	private boolean mIsQueued; // Every job starts with getting queued
-	//private Map<Set<GPU>, Double> mSlowdown;
-	private Map<Vector<Integer>, Double> mSlowdown;
+	private Map<Set<GPU>, Double> mSlowdown;
+	//private Map<Vector<Integer>, Double> mSlowdown;
+	//private Map<Integer[], Double> mSlowdown;
 
 	public IntraJobScheduler(JSONObject config) {
 		initFromConfig(config);
@@ -183,12 +184,12 @@ public abstract class IntraJobScheduler {
 		mNextIterationGPUs = new HashSet<GPU>();
 		mIsWaiting = false;
 		assert(mCurrentIterationGPUs.size() > 0);
-		/*System.out.println("Placement Job " + Integer.toString(mJobId) + ":" 
+		System.out.println("Placement Job " + Integer.toString(mJobId) + ":"
 				+ " Time: " + Double.toString(Simulation.getSimulationTime())
-				+ " Iteration: " + Integer.toString(mTotalExpectedIterations - mTotalIterationsRemaining)
+				+ " Iteration remaining: " + Long.toString(mTotalIterationsRemaining)
 				+ " NumGPUs: " + Integer.toString(mCurrentIterationGPUs.size())
 				+ " Score: " + Double.toString(getPlacementSlowdown(mCurrentIterationGPUs))
-				+ " Number_jobs_running: " + Integer.toString(Cluster.getInstance().getRunningJobs().size()));*/
+				+ " Number_jobs_running: " + Integer.toString(Cluster.getInstance().getRunningJobs().size()));
 		ClusterEventQueue.getInstance().enqueueEvent(
 				new EndIterationEvent(Simulation.getSimulationTime() + (mTimePerIteration / getJobSpeedup() *
 						mIterGranularity), this));
@@ -196,6 +197,7 @@ public abstract class IntraJobScheduler {
 		mGpuTime += mTimePerIteration / getJobSpeedup() * mCurrentIterationGPUs.size() * mIterGranularity;
 		mCompTime += mTimePerIteration * mIterGranularity;
 		mCommTime = mGpuTime - mCompTime;
+		/*
 		Iterator<GPU> gpuIter = mCurrentIterationGPUs.iterator();
 		mNextIterationExpectedGPUs = new HashSet<GPU>();
 		while(gpuIter.hasNext()) {
@@ -204,7 +206,7 @@ public abstract class IntraJobScheduler {
 					(mTimePerIteration * mIterGranularity / getJobSpeedup())) {
 				mNextIterationExpectedGPUs.add(gpu);
 			}
-		}
+		}*/
 	}
 
 	public void endIteration() {
@@ -252,16 +254,20 @@ public abstract class IntraJobScheduler {
 				mNextIterationExpectedGPUs.add(gpu);
 			}
 		}
-		
+
+		if (expiredResources.isEmpty()) {
+			mNextIterationGPUs = mCurrentIterationGPUs;
+		}
+
 		// check if this iteration can finish within the least lease end time
-		while(true) {
+		while (true) {
 			boolean converged = true;
 			double timeForIterations = mTimePerIteration * mIterGranularity /
-					getPlacementSlowdown(mNextIterationGPUs)/mNextIterationGPUs.size();
+					getPlacementSlowdown(mNextIterationGPUs) / mNextIterationGPUs.size();
 			Iterator<GPU> it = mNextIterationGPUs.iterator();
-			while(it.hasNext()) {
+			while (it.hasNext()) {
 				GPU gpu = it.next();
-				if(Simulation.getSimulationTime() + timeForIterations > gpu.getLeaseEnd()) {
+				if (Simulation.getSimulationTime() + timeForIterations > gpu.getLeaseEnd()) {
 					// cannot use this GPU anymore
 					//System.out.println("Cannot use this GPU anymore " + Integer.toString(mJobId));
 					mNextIterationExpectedGPUs.remove(gpu);
@@ -271,11 +277,15 @@ public abstract class IntraJobScheduler {
 					converged = false;
 				}
 			}
-			if(converged) {
-				break;	
+			if (converged) {
+				break;
 			}
 		}
-		
+
+		if (mNextIterationGPUs.size() > mNextIterationExpectedGPUs.size()) {
+			mNextIterationGPUs = mNextIterationExpectedGPUs;
+		}
+
 		if(!expiredResources.isEmpty()) {
 			ClusterEventQueue.getInstance()
 			.enqueueEvent(new ResourceAvailableEvent(Simulation.getSimulationTime() +
@@ -350,7 +360,8 @@ public abstract class IntraJobScheduler {
 		return mJobGroupId;
 	}
 
-	protected double astra_sim(Set<GPU> gpus, Vector<Integer> dimVec, Vector<String> dimType) {
+	//protected double astra_sim(Set<GPU> gpus, Vector<Integer> dimVec, Vector<String> dimType, boolean[] topoPerDimVec) {
+	protected double astra_sim(Integer[] dimVec, String[] dimType) {
 
 		String[] topoPerDim = Cluster.getInstance().getConfiguration().getmTopoPerDim();
 		String[] mDimType = Cluster.getInstance().getConfiguration().getmDimType();
@@ -411,51 +422,61 @@ public abstract class IntraJobScheduler {
 		JSONArray hbmScale = new JSONArray();
 		int links = 0;
 
-		int diff = topoPerDim.length - dimVec.size();
+		//int diff = topoPerDim.length - dimVec.size();
+		int dim_counts = 0;
+		int start_idx = -1;
 
 		System.out.println("==============astra-sim configs========");
 		System.out.println(String.join(" ", dimType));
-		//System.out.println(String.join(" ", topoPerDim));
+		System.out.println(dimVec.toString());
+		System.out.println(String.join(" ", topoPerDim));
 		//System.out.println(String.join(" ", mDimType));
-		System.out.println(diff);
+		//System.out.println(diff);
 
 		//for (int idx = diff; idx < topoPerDim.length; idx++)
-		for (int idx = 0; idx < dimVec.size(); idx++)
+		//for (int idx = 0; idx < dimVec.size(); idx++)
+		for (int idx = 0; idx < topoPerDim.length+1; idx++)
 		{
-			topologiesPerDim.add(topoPerDim[idx+diff]);
-			dimensionType.add(dimType.get(idx));
-			linkLatency.add(mLinkLatency[idx+diff]);
-			linkBW.add(mLinkBandwidth[idx+diff]);
-
-			unitsCount.add(dimVec.get(idx));
-
-			links = (int) Math.ceil(mLinkRatio[idx+diff] * dimVec.get(idx));
-			System.out.println(topoPerDim[idx]);
-			System.out.println(links);
-
-			if (topoPerDim[idx].equals("Ring")) {
-				if (links % 2 != 0) {
-					links += 1;
+			if (dimVec[idx] != -1) {
+				if (start_idx == -1) {
+					start_idx = idx;
 				}
+				dim_counts += 1;
+				topologiesPerDim.add(topoPerDim[idx]);
+				dimensionType.add(dimType[idx]);
+				linkLatency.add(mLinkLatency[idx]);
+				linkBW.add(mLinkBandwidth[idx]);
+
+				unitsCount.add(dimVec[idx]);
+
+				links = (int) Math.ceil(mLinkRatio[idx] * dimVec[idx]);
+				System.out.println(topoPerDim[idx]);
+				System.out.println(links);
+
+				if (topoPerDim[idx].equals("Ring")) {
+					if (links % 2 != 0) {
+						links += 1;
+					}
+				}
+
+				if (topoPerDim[idx].equals("FullyConnected")) {
+					links += links % (dimVec[idx] - 1);
+				}
+
+				linksCount.add(links);
+
+				nicLatency.add(0);
+				routerLatency.add(0);
+				hbmLatency.add(500);
+				hbmBW.add(370);
+				hbmScale.add(0);
 			}
-
-			if (topoPerDim[idx].equals("FullyConnected")) {
-				links += links % (dimVec.get(idx-diff) - 1);
-			}
-
-			linksCount.add(links);
-
-			nicLatency.add(0);
-			routerLatency.add(0);
-			hbmLatency.add(500);
-			hbmBW.add(370);
-			hbmScale.add(0);
 		}
 
 		jsonObject.put("topology-name", "Hierarchical");
 		jsonObject.put("topologies-per-dim", topologiesPerDim);
 		jsonObject.put("dimension-type", dimensionType);
-		jsonObject.put("dimensions-count", dimVec.size());
+		jsonObject.put("dimensions-count", dim_counts);
 		jsonObject.put("units-count", unitsCount);
 		jsonObject.put("links-count", linksCount);
 		jsonObject.put("link-latency", linkLatency);
@@ -481,9 +502,12 @@ public abstract class IntraJobScheduler {
 			writer.append("active-chunks-per-dimension: 1\n");
 			writer.append("preferred-dataset-splits: 1\n");
 			writer.append("boost-mode: 1\n");
-			writer.append("all-reduce-implementation: " + mAllReduceImpl[0]);
 
-			for (int idx = diff + 1; idx < dimVec.size(); idx++) {
+			writer.append("all-reduce-implementation: " + mAllReduceImpl[start_idx]);
+			for (int idx = start_idx + 1; idx < topoPerDim.length+1; idx++) {
+				if (dimVec[idx] == -1) {
+					continue;
+				}
 				if (idx >= mAllReduceImpl.length) {
 					writer.append("_" + mAllReduceImpl[mAllReduceImpl.length-1]);
 				}
@@ -492,8 +516,12 @@ public abstract class IntraJobScheduler {
 				}
 			}
 			writer.append("\n");
-			writer.append("all-gather-implementation: " + mAllGatherImpl[0]);
-			for (int idx = diff + 1; idx < dimVec.size(); idx++) {
+
+			writer.append("all-gather-implementation: " + mAllGatherImpl[start_idx]);
+			for (int idx = start_idx + 1; idx < topoPerDim.length+1; idx++) {
+				if (dimVec[idx] == -1) {
+					continue;
+				}
 				if (idx >= mAllGatherImpl.length) {
 					writer.append("_" + mAllGatherImpl[mAllGatherImpl.length-1]);
 				}
@@ -502,8 +530,12 @@ public abstract class IntraJobScheduler {
 				}
 			}
 			writer.append("\n");
-			writer.append("reduce-scatter-implementation: " + mReduceScatterImpl[0]);
-			for (int idx = diff + 1; idx < dimVec.size(); idx++) {
+
+			writer.append("reduce-scatter-implementation: " + mReduceScatterImpl[start_idx]);
+			for (int idx = start_idx + 1; idx < topoPerDim.length+1; idx++) {
+				if (dimVec[idx] == -1) {
+					continue;
+				}
 				if (idx >= mReduceScatterImpl.length) {
 					writer.append("_" + mReduceScatterImpl[mReduceScatterImpl.length-1]);
 				}
@@ -512,13 +544,19 @@ public abstract class IntraJobScheduler {
 				}
 			}
 			writer.append("\n");
-			writer.append("all-to-all-implementation: " + mAllToAllImpl[0]);
-			for (int idx = diff + 1; idx < dimVec.size(); idx++) {
-				if (idx >= mAllToAllImpl.length) {
-					writer.append("_" + mAllToAllImpl[mAllToAllImpl.length-1]);
+
+			int idx2 = 0;
+			writer.append("all-to-all-implementation: " + mAllToAllImpl[idx2]);
+			for (int idx = start_idx + 1; idx < topoPerDim.length+1; idx++) {
+				idx2 += 1;
+				if (dimVec[idx] == -1) {
+					continue;
+				}
+				if (idx2 >= mAllToAllImpl.length) {
+					break;
 				}
 				else {
-					writer.append("_" + mAllToAllImpl[idx]);
+					writer.append("_" + mAllToAllImpl[idx2]);
 				}
 			}
 			writer.append("\n");
@@ -597,6 +635,10 @@ public abstract class IntraJobScheduler {
 			return Double.MIN_VALUE;
 		}
 
+		if (mSlowdown.containsKey(gpus)){
+			return mSlowdown.get(gpus);
+		}
+
 		Map<Integer, Integer> rackMap = new HashMap<>();
 		MultiKeyMap machineMap = new MultiKeyMap();
 		MultiKeyMap slotMap = new MultiKeyMap();
@@ -649,121 +691,181 @@ public abstract class IntraJobScheduler {
 		}
 
 		int num_gpus = gpus.size();
-		Vector<Integer> dimVec = new Vector<Integer>();
-		Vector<String> dimType = new Vector<String>();
+		//Vector<Integer> dimVec = new Vector<Integer>();
+		//Vector<String> dimType = new Vector<String>();
 		double slowdown = 1.0;
+		int topoSize = Cluster.getInstance().getConfiguration().getmTopoPerDim().length + 1;
+		System.out.println("Jobid: " + mJobId);
+		System.out.println("Topo size = " + String.valueOf(topoSize));
+		//int topoSize = 6;
+		//boolean[] topoPerDimVec = new boolean[topoSize];
+		Integer [] dimVec = new Integer[topoSize];
+		Arrays.fill(dimVec, -1);
+		String [] dimType = new String[topoSize];
 		int [] allocs = JobStatistics.getInstance().getAllocs();
+
+		System.out.println("Map size values: " + String.valueOf(dim2Map.size()) + " " + String.valueOf(dim1Map.size())+ " " +
+				String.valueOf(slotMap.size()) + " " + String.valueOf(machineMap.size()) + " " +
+				String.valueOf(rackMap.size()));
 
 		int rack_size = rackMap.size();
 
+		System.out.println("num gpus = " + num_gpus);
+
 		if (rack_size > 1) {
-			dimType.insertElementAt("PP", 0);
+			//dimType.insertElementAt("PP", 0);
+			if (topoSize <= 0) {
+				System.out.println("Topology size < 0 unexpected at rack!");
+				System.exit(-1);
+			}
+			dimType[topoSize-1] = "PP";
+			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % rack_size != 0) {
-				dimVec.insertElementAt(num_gpus, 0);
-				if (mSlowdown.containsKey(dimVec)){
-					return mSlowdown.get(dimVec);
+				//dimVec.insertElementAt(num_gpus, 0);
+				dimVec[topoSize-1] = num_gpus;
+				if (mSlowdown.containsKey(gpus)){
+					return mSlowdown.get(gpus);
 				}
-				slowdown = astra_sim(gpus, dimVec, dimType);
-				mSlowdown.put(dimVec, slowdown);
+				slowdown = astra_sim(dimVec, dimType);
+				mSlowdown.put(gpus, slowdown);
 				allocs[5] += 1;
 				mAllocs[5] += 1;
 				return slowdown;
 			}
 			else {
-				dimVec.insertElementAt(rackMap.size(), 0);
+				dimVec[topoSize-1] = rackMap.size();
 			}
 			num_gpus /= rack_size;
+			System.out.println("rack num gpus = " + num_gpus);
 		}
 
 		int machine_size = machineMap.size();
 
 		if (machine_size > 1) {
-			dimType.insertElementAt("P", 0);
+			topoSize -= 1;
+			dimType[topoSize-1] = "P";
+			if (topoSize <= 0) {
+				System.out.println("Topology size < 0 unexpected at machine!");
+				System.exit(-1);
+			}
+			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % machine_size != 0) {
-				dimVec.insertElementAt(num_gpus, 0);
-				if (mSlowdown.containsKey(dimVec)){
-					return mSlowdown.get(dimVec);
+				dimVec[topoSize-1] = num_gpus;
+				if (mSlowdown.containsKey(gpus)){
+					return mSlowdown.get(gpus);
 				}
-				slowdown = astra_sim(gpus, dimVec, dimType);
-				mSlowdown.put(dimVec, slowdown);
+				slowdown = astra_sim(dimVec, dimType);
+				mSlowdown.put(gpus, slowdown);
 				allocs[4] += 1;
 				mAllocs[4] += 1;
 				return slowdown;
 			}
 			else {
-				dimVec.insertElementAt(machineMap.size(), 0);
+				dimVec[topoSize-1] = machineMap.size();
 			}
 			num_gpus /= machine_size;
+			System.out.println("machine num gpus = " + num_gpus);
 		}
 
 		int slot_size = slotMap.size();
 
 		if (slot_size > 0) {
-			dimType.insertElementAt("N", 0);
+			topoSize -= 1;
+			dimType[topoSize-1] = "N";
+			if (topoSize <= 0) {
+				System.out.println("Topology size < 0 unexpected at slot!");
+				System.exit(-1);
+			}
+			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % slot_size != 0) {
-				dimVec.insertElementAt(num_gpus, 0);
-				if (mSlowdown.containsKey(dimVec)){
-					return mSlowdown.get(dimVec);
+				dimVec[topoSize-1] = num_gpus;
+				if (mSlowdown.containsKey(gpus)){
+					return mSlowdown.get(gpus);
 				}
-				slowdown = astra_sim(gpus, dimVec, dimType);
-				mSlowdown.put(dimVec, slowdown);
+				slowdown = astra_sim(dimVec, dimType);
+				mSlowdown.put(gpus, slowdown);
 				allocs[3] += 1;
 				mAllocs[3] += 1;
 				return slowdown;
 			} else {
-				dimVec.insertElementAt(slotMap.size(), 0);
+				dimVec[topoSize-1] = slotMap.size();
 			}
 			num_gpus /= slot_size;
+			System.out.println("slot num gpus = " + num_gpus);
 		}
 
 		int dim1_size = dim1Map.size();
 
 		if (dim1_size > 0) {
-			dimType.insertElementAt("N", 0);
+			topoSize -= 1;
+			dimType[topoSize-1] = "N";
+			if (topoSize <= 0) {
+				System.out.println("Topology size < 0 unexpected at dim1!");
+				System.exit(-1);
+			}
+			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % dim1_size != 0) {
-				dimVec.insertElementAt(num_gpus, 0);
-				if (mSlowdown.containsKey(dimVec)){
-					return mSlowdown.get(dimVec);
+				dimVec[topoSize-1] = num_gpus;
+				if (mSlowdown.containsKey(gpus)){
+					return mSlowdown.get(gpus);
 				}
-				slowdown = astra_sim(gpus, dimVec, dimType);
-				mSlowdown.put(dimVec, slowdown);
+				slowdown = astra_sim(dimVec, dimType);
+				mSlowdown.put(gpus, slowdown);
 				allocs[2] += 1;
 				mAllocs[2] += 1;
 				return slowdown;
 			} else {
-				dimVec.insertElementAt(dim1Map.size(), 0);
+				dimVec[topoSize-1] = dim1Map.size();
 			}
 			num_gpus /= dim1_size;
+			System.out.println("dim1 num gpus = " + num_gpus);
 		}
 
 		int dim2_size = dim2Map.size();
 
 		if (dim2_size > 0) {
-			dimType.insertElementAt("N", 0);
+			topoSize -= 1;
+			dimType[topoSize-1] = "N";
+			if (topoSize <= 0) {
+				System.out.println("Topology size < 0 unexpected at dim2!");
+				System.exit(-1);
+			}
+			//topoPerDimVec[topoSize-1] = true;
 			if (num_gpus % dim2_size != 0) {
-				dimVec.insertElementAt(num_gpus, 0);
-				if (mSlowdown.containsKey(dimVec)){
-					return mSlowdown.get(dimVec);
+				dimVec[topoSize-1] = num_gpus;
+				if (mSlowdown.containsKey(gpus)){
+					return mSlowdown.get(gpus);
 				}
-				slowdown = astra_sim(gpus, dimVec, dimType);
-				mSlowdown.put(dimVec, slowdown);
+				slowdown = astra_sim(dimVec, dimType);
+				mSlowdown.put(gpus, slowdown);
 				allocs[1] += 1;
 				mAllocs[1] += 1;
 				return slowdown;
 			} else {
-				dimVec.insertElementAt(dim2Map.size(), 0);
+				dimVec[topoSize-1] = dim2Map.size();
 			}
 			num_gpus /= dim2_size;
+			System.out.println("dim2 num gpus = " + num_gpus);
 		}
 
-		dimVec.insertElementAt(num_gpus, 0);
-		dimType.insertElementAt("N", 0);
-
-		if (mSlowdown.containsKey(dimVec)){
-			return mSlowdown.get(dimVec);
+		topoSize -= 1;
+		if (topoSize <= 0) {
+			System.out.println("Topology size < 0 unexpected at gpu!");
+			System.exit(-1);
 		}
-		slowdown = astra_sim(gpus, dimVec, dimType);
-		mSlowdown.put(dimVec, slowdown);
+		/*if (topoSize > 1) {
+			System.out.println("Topology size > 1 unexpected at gpu!");
+			System.exit(-1);
+		}*/
+		dimVec[topoSize-1] = num_gpus;
+		dimType[topoSize-1] = "N";
+		//topoPerDimVec[topoSize-1] = true;
+
+		if (mSlowdown.containsKey(gpus)){
+			return mSlowdown.get(gpus);
+		}
+		slowdown = astra_sim(dimVec, dimType);
+		mSlowdown.put(gpus, slowdown);
 		allocs[0] += 1;
 		mAllocs[0] += 1;
 		return slowdown;
@@ -792,10 +894,10 @@ public abstract class IntraJobScheduler {
 	}
 	
 	public Set<GPU> getGPUsAvailableForNextIteration() {
-		Set<GPU> set = new HashSet<GPU>(mNextIterationGPUs);
+		//Set<GPU> set = new HashSet<GPU>(mNextIterationGPUs);
 		// Now add all GPUs to this set which will not expire after the iteration
-		set.addAll(mNextIterationExpectedGPUs);
-		return set;
+		//set.addAll(mNextIterationExpectedGPUs);
+		return mNextIterationGPUs;
 	}
 	
 	/**
