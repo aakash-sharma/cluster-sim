@@ -14,6 +14,7 @@ q_delay_colors = ['orange', 'cyan', 'purple', 'red', 'black', 'brown','green', '
 q_delay_pct_colors = ['black', 'red', 'blue', 'purple', 'cyan', 'blue', 'brown', 'orange']
 pct_q_delay_colors = ["black", "brown", "grey"]
 
+
 topologies = [file.split("/")[-1] for file in glob.glob(sys.argv[1] + "/*.xlsx")]
 topologies = ["_".join(file.split("_")[1:]) for file in topologies]
 topologies = [file.split(".")[0] for file in topologies]
@@ -29,6 +30,7 @@ for topo in topologies:
     for path in sys.argv[1:]:
         scheme = path.split("/")[-1].split("_")[-1]
         print("reading path: " + path)
+        print("reading scheme: " + scheme)
         run_name = path.split("/")[-1]
         for file in glob.glob(path + "/*.xlsx"):
            match = re.search(topo, file)
@@ -151,25 +153,86 @@ for i in range(len(cluster_dfs)):
     axs[i][3].legend(handles4, labels4)
     axs[i][3].set_title("JCT cdf" + "_" + cluster_scheme)
 
-    j = 0
-    Min_comp = cluster_dfs[i][y_comp[0]].tolist()[0]
-    Min_comm = cluster_dfs[i][y_comm[0]].tolist()[0]
-    Max_comp = 0
-    Max_comm = 0
-    y_comp_cdf = []
-    y_comm_cdf = []
-    for comp in y_comp:
-        comp_sorted = np.sort(np.array(cluster_dfs[i][comp].tolist()))
-        mean_comp = np.mean(comp_sorted)
-        std_dev_comp = np.std(comp_sorted)
-        comp_cdf = scipy.stats.norm.cdf(comp_sorted, loc=mean_comp, scale=std_dev_comp)
+#     j = 0
+#     Min_comp = cluster_dfs[i][y_comp[0]].tolist()[0]
+#     Min_comm = cluster_dfs[i][y_comm[0]].tolist()[0]
+#     Max_comp = 0
+#     Max_comm = 0
+#     y_comp_cdf = []
+#     y_comm_cdf = []
+#     for comp in y_comp:
+#         comp_sorted = np.sort(np.array(cluster_dfs[i][comp].tolist()))
+#         mean_comp = np.mean(comp_sorted)
+#         std_dev_comp = np.std(comp_sorted)
+#         comp_cdf = scipy.stats.norm.cdf(comp_sorted, loc=mean_comp, scale=std_dev_comp)
+#
+#         y_comp_cdf.append(comp_cdf)
+#         #for jct in jct_cdf:
+#          #   print(jct)
+#
+#         Min_comp = min(comp_sorted[0], Min_comp)
+#         Max_comp = max(comp_sorted[-1], Max_comp)
+#
+#     for comm in y_comm:
+#         comm_sorted = np.sort(np.array(cluster_dfs[i][comm].tolist()))
+#         mean_comm = np.mean(comm_sorted)
+#         std_dev_comm = np.std(comm_sorted)
+#         comm_cdf = scipy.stats.norm.cdf(comm_sorted, loc=mean_comm, scale=std_dev_comm)
+#         y_comm_cdf.append(comm_cdf)
+#         Min_comm = min(comm_sorted[0], Min_comp)
+#         Max_comm = max(comm_sorted[-1], Max_comm)
+#
+#     step_comp = int((Max_comp-Min_comp)/len(y_comp_cdf[0]))
+#     step_comm = int((Max_comm-Min_comm)/len(y_comm_cdf[0]))
+#     x_axis_comp = [x for x in range(int(Min_comp), int(Max_comp) - step_comp, step_comp)]
+#     x_axis_comm = [x for x in range(int(Min_comm), int(Max_comm) - step_comm, step_comm)]
+#
+#     for j in range(len(y_comp_cdf)):
+#         axs[i][4].plot(x_axis_comp, y_comp_cdf[j], color=jct_colors[j], label=y_comp[j])
+#         axs[i][5].plot(x_axis_comm, y_comm_cdf[j], color=jct_colors[j], label=y_comm[j])
+#
+#         j += 1
+#
+#     handles5, labels5 = axs[i][4].get_legend_handles_labels()
+#     axs[i][4].legend(handles5, labels5)
+#     axs[i][4].set_title("Compute time cdf" + "_" + cluster_scheme)
+#
+#     handles6, labels6 = axs[i][5].get_legend_handles_labels()
+#     axs[i][5].legend(handles6, labels6)
+#     axs[i][5].set_title("Communication time cdf" + "_" + cluster_scheme)
+#
+#     cluster_dfs[i].plot(ax=axs[i][6], y=y_comp,
+#     x="JobId", kind="bar", linewidth=3, logy=True, color=q_delay_colors[:len(y_q_delay)])
+#     cluster_dfs[i].plot(ax=axs[i][7], y=y_comm,
+#     x="JobId", kind="line", linewidth=1, logy=True, color=q_delay_pct_colors[:len(y_q_delay)])
+#
+#     handles7, labels7 = axs[i][6].get_legend_handles_labels()
+#     handles8, labels8 = axs[i][7].get_legend_handles_labels()
+#
+#     axs[i][6].legend(handles7, labels7)
+#     axs[i][6].set_title("Compute time" + "_" + cluster_scheme)
+#     axs[i][7].legend(handles8, labels8)
+#     axs[i][7].set_title("Communication time" + "_" + cluster_scheme)
 
-        y_comp_cdf.append(comp_cdf)
+    j = 0
+    Min_q_delay = cluster_dfs[i][y_q_delay[0]].tolist()[0]
+    Min_comm = cluster_dfs[i][y_comm[0]].tolist()[0]
+    Max_q_delay = 0
+    Max_comm = 0
+    y_q_delay_cdf = []
+    y_comm_cdf = []
+    for q_delay in y_q_delay:
+        q_delay_sorted = np.sort(np.array(cluster_dfs[i][q_delay].tolist()))
+        mean_q_delay = np.mean(q_delay_sorted)
+        std_dev_q_delay = np.std(q_delay_sorted)
+        q_delay_cdf = scipy.stats.norm.cdf(q_delay_sorted, loc=mean_q_delay, scale=std_dev_q_delay)
+
+        y_q_delay_cdf.append(q_delay_cdf)
         #for jct in jct_cdf:
          #   print(jct)
 
-        Min_comp = min(comp_sorted[0], Min_comp)
-        Max_comp = max(comp_sorted[-1], Max_comp)
+        Min_q_delay = min(q_delay_sorted[0], Min_q_delay)
+        Max_q_delay = max(q_delay_sorted[-1], Max_q_delay)
 
     for comm in y_comm:
         comm_sorted = np.sort(np.array(cluster_dfs[i][comm].tolist()))
@@ -177,29 +240,30 @@ for i in range(len(cluster_dfs)):
         std_dev_comm = np.std(comm_sorted)
         comm_cdf = scipy.stats.norm.cdf(comm_sorted, loc=mean_comm, scale=std_dev_comm)
         y_comm_cdf.append(comm_cdf)
-        Min_comm = min(comm_sorted[0], Min_comp)
+        Min_comm = min(comm_sorted[0], Min_q_delay)
         Max_comm = max(comm_sorted[-1], Max_comm)
 
-    step_comp = int((Max_comp-Min_comp)/len(y_comp_cdf[0]))
+    step_q_delay = int((Max_q_delay-Min_q_delay)/len(y_q_delay_cdf[0]))
     step_comm = int((Max_comm-Min_comm)/len(y_comm_cdf[0]))
-    x_axis_comp = [x for x in range(int(Min_comp), int(Max_comp) - step_comp, step_comp)]
+    x_axis_q_delay = [x for x in range(int(Min_q_delay), int(Max_q_delay) - step_q_delay, step_q_delay)]
     x_axis_comm = [x for x in range(int(Min_comm), int(Max_comm) - step_comm, step_comm)]
 
-    for j in range(len(y_comp_cdf)):
-        axs[i][4].plot(x_axis_comp, y_comp_cdf[j], color=jct_colors[j], label=y_comp[j])
-        axs[i][5].plot(x_axis_comm, y_comm_cdf[j], color=jct_colors[j], label=y_comm[j])
 
-        j += 1
+    for j in range(len(y_q_delay_cdf)):
+        axs[i][5].plot(x_axis_comm, y_comm_cdf[j], color=jct_colors[j], label=y_comm[j])
+        axs[i][4].plot(x_axis_q_delay, y_q_delay_cdf[j], color=jct_colors[j], label=y_q_delay[j])
+
+        #j += 1
 
     handles5, labels5 = axs[i][4].get_legend_handles_labels()
     axs[i][4].legend(handles5, labels5)
-    axs[i][4].set_title("Compute time cdf" + "_" + cluster_scheme)
+    axs[i][4].set_title("Q_delay time cdf" + "_" + cluster_scheme)
 
     handles6, labels6 = axs[i][5].get_legend_handles_labels()
     axs[i][5].legend(handles6, labels6)
     axs[i][5].set_title("Communication time cdf" + "_" + cluster_scheme)
 
-    cluster_dfs[i].plot(ax=axs[i][6], y=y_comp,
+    cluster_dfs[i].plot(ax=axs[i][6], y=y_q_delay,
     x="JobId", kind="bar", linewidth=3, logy=True, color=q_delay_colors[:len(y_q_delay)])
     cluster_dfs[i].plot(ax=axs[i][7], y=y_comm,
     x="JobId", kind="line", linewidth=1, logy=True, color=q_delay_pct_colors[:len(y_q_delay)])
@@ -208,7 +272,7 @@ for i in range(len(cluster_dfs)):
     handles8, labels8 = axs[i][7].get_legend_handles_labels()
 
     axs[i][6].legend(handles7, labels7)
-    axs[i][6].set_title("Compute time" + "_" + cluster_scheme)
+    axs[i][6].set_title("Q_delay time" + "_" + cluster_scheme)
     axs[i][7].legend(handles8, labels8)
     axs[i][7].set_title("Communication time" + "_" + cluster_scheme)
 
@@ -242,7 +306,7 @@ for i in range(len(cluster_dfs)):
         #print(cluster_dfs[i]["makespan" + "_" + scheme].head())
         titles.append(cluster_scheme + "_" + scheme)
 
-axs[len(cluster_dfs)][0].bar(titles, makespans, color=['red', 'green', 'blue'])
+axs[len(cluster_dfs)][0].bar(titles, makespans, color=['red', 'green', 'blue', "purple", "brown", "magenta"])
 axs[len(cluster_dfs)][0].set_xticklabels(titles)
 axs[len(cluster_dfs)][0].set_xticklabels(axs[len(cluster_dfs)][0].get_xticklabels(), rotation=90)
 
