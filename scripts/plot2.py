@@ -62,6 +62,7 @@ print(len(cluster_dfs))
 for i in range(len(cluster_dfs)):
     cluster_scheme = topologies[i]
     print(cluster_scheme)
+    idx = 0
 
     y_jct = []
     y_comp = []
@@ -98,32 +99,35 @@ for i in range(len(cluster_dfs)):
 
     print(y_sum_allocs)
 
-    cluster_dfs[i].plot(ax=axs[0][i], y=y_jct,
+    cluster_dfs[i].plot(ax=axs[idx][i], y=y_jct,
         x="JobId", kind="line", linewidth=1, logy=True, color=jct_colors[:len(y_jct)])
 
-    handles1, labels1 = axs[0][i].get_legend_handles_labels()
+    handles1, labels1 = axs[idx][i].get_legend_handles_labels()
 
-    axs[0][i].legend(handles1, labels1)
-    axs[0][i].set_title("JCT" + "_" + cluster_scheme)
+    axs[idx][i].legend(handles1, labels1)
+    axs[idx][i].set_title("JCT" + "_" + cluster_scheme)
+    idx += 1
 
     #axs2 = axs[0][i].twinx()
-    cluster_dfs[i].plot(ax=axs[1][i], y=y_q_delay,
+    cluster_dfs[i].plot(ax=axs[idx][i], y=y_q_delay,
     x="JobId", kind="line", linewidth=1, logy=True, color=q_delay_colors[:len(y_q_delay)])
 
     # Create a single legend with the combined handles and labels
-    handles1, labels1 = axs[1][i].get_legend_handles_labels()
+    handles1, labels1 = axs[idx][i].get_legend_handles_labels()
     handles = handles1 #+ handles2
     labels = labels1 #+ labels2
 
-    axs[1][i].legend(handles, labels)
-    axs[2][i].set_title("Q delay" + "_" + cluster_scheme)
+    axs[idx][i].legend(handles, labels)
+    axs[idx][i].set_title("Q delay" + "_" + cluster_scheme)
+    idx += 1
 
-    cluster_dfs[i].plot(ax=axs[2][i], y=y_allocs, x="JobId", kind="line",
+    cluster_dfs[i].plot(ax=axs[idx][i], y=y_allocs, x="JobId", kind="line",
     color=jct_colors[:len(y_allocs)])
-    handles3, labels3 = axs[2][i].get_legend_handles_labels()
-    axs[2][i].legend(handles3, labels3) #, loc='upper center', bbox_to_anchor=(1, -1),
+    handles3, labels3 = axs[idx][i].get_legend_handles_labels()
+    axs[idx][i].legend(handles3, labels3) #, loc='upper center', bbox_to_anchor=(1, -1),
                                          #         fancybox=True, shadow=True, ncol=3)
-    axs[2][i].set_title("Allocations" + "_" + cluster_scheme)
+    axs[idx][i].set_title("Allocations" + "_" + cluster_scheme)
+    idx += 1
 
     j = 0
     Min = cluster_dfs[i][y_jct[0]].tolist()[0]
@@ -147,11 +151,12 @@ for i in range(len(cluster_dfs)):
     x_axis = [x for x in range(int(Min), int(Max) - step, step)]
 
     for j in range(len(y_jct_cdf)):
-        axs[3][i].plot(x_axis, y_jct_cdf[j], color=jct_colors[j], label=y_jct[j])
+        axs[idx][i].plot(x_axis, y_jct_cdf[j], color=jct_colors[j], label=y_jct[j])
 
-    handles4, labels4 = axs[3][i].get_legend_handles_labels()
-    axs[3][i].legend(handles4, labels4)
-    axs[3][i].set_title("JCT cdf" + "_" + cluster_scheme)
+    handles4, labels4 = axs[idx][i].get_legend_handles_labels()
+    axs[idx][i].legend(handles4, labels4)
+    axs[idx][i].set_title("JCT cdf" + "_" + cluster_scheme)
+    idx += 1
 
     j = 0
     Min_q_delay = cluster_dfs[i][y_q_delay[0]].tolist()[0]
@@ -189,29 +194,31 @@ for i in range(len(cluster_dfs)):
 
 
     for j in range(len(y_q_delay_cdf)):
-        axs[5][i].plot(x_axis_comm, y_comm_cdf[j], color=jct_colors[j], label=y_comm[j])
-        axs[4][i].plot(x_axis_q_delay, y_q_delay_cdf[j], color=jct_colors[j], label=y_q_delay[j])
+        axs[idx][i].plot(x_axis_q_delay, y_q_delay_cdf[j], color=jct_colors[j], label=y_q_delay[j])
+        axs[idx+1][i].plot(x_axis_comm, y_comm_cdf[j], color=jct_colors[j], label=y_comm[j])
 
     handles5, labels5 = axs[4][i].get_legend_handles_labels()
-    axs[4][i].legend(handles5, labels5)
-    axs[4][i].set_title("Q_delay time cdf" + "_" + cluster_scheme)
+    axs[idx][i].legend(handles5, labels5)
+    axs[idx][i].set_title("Q_delay time cdf" + "_" + cluster_scheme)
 
     handles6, labels6 = axs[5][i].get_legend_handles_labels()
-    axs[5][i].legend(handles6, labels6)
-    axs[5][i].set_title("Communication time cdf" + "_" + cluster_scheme)
+    axs[idx+1][i].legend(handles6, labels6)
+    axs[idx+1][i].set_title("Communication time cdf" + "_" + cluster_scheme)
+    idx += 2
 
-    cluster_dfs[i].plot(ax=axs[6][i], y=y_q_delay,
+    cluster_dfs[i].plot(ax=axs[idx][i], y=y_q_delay,
     x="JobId", kind="bar", linewidth=3, logy=True, color=q_delay_colors[:len(y_q_delay)])
-    cluster_dfs[i].plot(ax=axs[7][i], y=y_comm,
+    cluster_dfs[i].plot(ax=axs[idx+1][i], y=y_comm,
     x="JobId", kind="line", linewidth=1, logy=True, color=q_delay_pct_colors[:len(y_q_delay)])
 
-    handles7, labels7 = axs[6][i].get_legend_handles_labels()
-    handles8, labels8 = axs[7][i].get_legend_handles_labels()
+    handles7, labels7 = axs[idx][i].get_legend_handles_labels()
+    handles8, labels8 = axs[idx+2][i].get_legend_handles_labels()
 
-    axs[6][i].legend(handles7, labels7)
-    axs[6][i].set_title("Q_delay time" + "_" + cluster_scheme)
-    axs[7][i].legend(handles8, labels8)
-    axs[7][i].set_title("Communication time" + "_" + cluster_scheme)
+    axs[idx][i].legend(handles7, labels7)
+    axs[idx][i].set_title("Q_delay time" + "_" + cluster_scheme)
+    axs[idx+2][i].legend(handles8, labels8)
+    axs[idx+2][i].set_title("Communication time" + "_" + cluster_scheme)
+    idx += 2
 
 
     x_allocs = []
@@ -223,14 +230,14 @@ for i in range(len(cluster_dfs)):
     x_allocs.append("nw")
 
     for j in range(len(y_sum_allocs)):
-        axs[8][i].plot(x_allocs, y_sum_allocs[j], color=jct_colors[j], label=schemes[j])
+        axs[idx][i].plot(x_allocs, y_sum_allocs[j], color=jct_colors[j], label=schemes[j])
 
-    handles9, labels9 = axs[8][i].get_legend_handles_labels()
-    axs[8][i].legend(handles5, labels5)
-    axs[8][i].set_title("Dimension allocations" + "_" + cluster_scheme)
+    handles9, labels9 = axs[idx][i].get_legend_handles_labels()
+    axs[idx][i].legend(handles5, labels5)
+    axs[idx][i].set_title("Dimension allocations" + "_" + cluster_scheme)
 
-    handles9, labels9 = axs[8][i].get_legend_handles_labels()
-    axs[8][i].legend(handles9, labels9)
+    handles9, labels9 = axs[idx][i].get_legend_handles_labels()
+    axs[idx][i].legend(handles9, labels9)
 
 makespans = []
 titles = []
