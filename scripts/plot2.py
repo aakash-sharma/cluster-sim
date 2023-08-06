@@ -58,6 +58,7 @@ for topo in topologies:
 fig, axs = plt.subplots(9, len(cluster_dfs)+1, figsize=(15, 45))
 
 print(len(cluster_dfs))
+
 for i in range(len(cluster_dfs)):
     cluster_scheme = topologies[i]
     print(cluster_scheme)
@@ -120,7 +121,8 @@ for i in range(len(cluster_dfs)):
     cluster_dfs[i].plot(ax=axs[2][i], y=y_allocs, x="JobId", kind="line",
     color=jct_colors[:len(y_allocs)])
     handles3, labels3 = axs[2][i].get_legend_handles_labels()
-    axs[2][i].legend(handles3, labels3)
+    axs[2][i].legend(handles3, labels3) #, loc='upper center', bbox_to_anchor=(1, -1),
+                                         #         fancybox=True, shadow=True, ncol=3)
     axs[2][i].set_title("Allocations" + "_" + cluster_scheme)
 
     j = 0
@@ -146,8 +148,6 @@ for i in range(len(cluster_dfs)):
 
     for j in range(len(y_jct_cdf)):
         axs[3][i].plot(x_axis, y_jct_cdf[j], color=jct_colors[j], label=y_jct[j])
-
-        j += 1
 
     handles4, labels4 = axs[3][i].get_legend_handles_labels()
     axs[3][i].legend(handles4, labels4)
@@ -192,8 +192,6 @@ for i in range(len(cluster_dfs)):
         axs[5][i].plot(x_axis_comm, y_comm_cdf[j], color=jct_colors[j], label=y_comm[j])
         axs[4][i].plot(x_axis_q_delay, y_q_delay_cdf[j], color=jct_colors[j], label=y_q_delay[j])
 
-        #j += 1
-
     handles5, labels5 = axs[4][i].get_legend_handles_labels()
     axs[4][i].legend(handles5, labels5)
     axs[4][i].set_title("Q_delay time cdf" + "_" + cluster_scheme)
@@ -226,7 +224,6 @@ for i in range(len(cluster_dfs)):
 
     for j in range(len(y_sum_allocs)):
         axs[8][i].plot(x_allocs, y_sum_allocs[j], color=jct_colors[j], label=schemes[j])
-        j += 1
 
     handles9, labels9 = axs[8][i].get_legend_handles_labels()
     axs[8][i].legend(handles5, labels5)
@@ -245,7 +242,8 @@ for i in range(len(cluster_dfs)):
         #print(cluster_dfs[i]["makespan" + "_" + scheme].head())
         titles.append(cluster_scheme + "_" + scheme)
 
-axs[0][len(cluster_dfs)].bar(titles, makespans, color=jct_colors[:len(cluster_dfs)])#['red', 'green', 'blue', "purple", "brown", "magenta"])
+
+axs[0][len(cluster_dfs)].bar(titles, makespans, color=jct_colors[:len(schemes)])#['red', 'green', 'blue', "purple", "brown", "magenta"])
 axs[0][len(cluster_dfs)].set_xticklabels(titles)
 axs[0][len(cluster_dfs)].set_xticklabels(axs[0][len(cluster_dfs)].get_xticklabels(), rotation=90)
 
