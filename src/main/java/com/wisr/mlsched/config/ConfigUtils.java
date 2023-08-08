@@ -235,6 +235,7 @@ public class ConfigUtils {
 		if (size > 0)
 		{
 			dim2_dim1 = intra_node_units.remove(size-1);
+			size -= 1;
 		}
 
 		if (size > 0)
