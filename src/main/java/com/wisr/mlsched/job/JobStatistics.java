@@ -226,10 +226,10 @@ public class JobStatistics {
 		makespan = printJobStats();
 		printContentions();
 		printFinishTimeFairness();
-//		makespan = printMakespan();
 
 		XSSFSheet sheet1 = mWorkbook.createSheet("job-stats ");
-		XSSFSheet sheet2 = mWorkbook.createSheet("cluster-stats");
+		XSSFSheet sheet2 = mWorkbook.createSheet("cluster-timeline-stats");
+		XSSFSheet sheet3 = mWorkbook.createSheet("cluster-cum-stats");
 		XSSFRow row;
 		int rowid = 0;
 		int cellid = 0;
@@ -244,6 +244,12 @@ public class JobStatistics {
 			cell.setCellValue(str);
 		}
 
+		int total_jct = 0;
+		int total_compute = 0;
+		int total_queueing = 0;
+		int total_comm = 0;
+		int total_jobs = mJobStats.size();
+
 		for(Integer key : mJobStats.keySet()) {
 
 			row = sheet1.createRow(rowid++);
@@ -254,9 +260,11 @@ public class JobStatistics {
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getJobTime());
+			total_jct += mJobStats.get(key).getJobTime();
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getQueueDelay());
+			total_queueing += mJobStats.get(key).getQueueDelay();
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mSimResults.get(key).get(1) / mSimResults.get(key).get(0) * 100);
@@ -266,9 +274,11 @@ public class JobStatistics {
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getCompTime());
+			total_compute += mJobStats.get(key).getCompTime();
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getCommTime());
+			total_comm += mJobStats.get(key).getCommTime();
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getAvgGPUcontention());
@@ -308,6 +318,47 @@ public class JobStatistics {
 				i += 1;
 			}
 		}
+
+		rowid = 0;
+		cellid = 0;
+		int col = 0;
+		cluster_headers = new String[]{"Makespan", "Total_JCT", "Total_compute", "Total_queueing", "Total_comm",
+				"Avg_JCT", "Avg_compute", "Avg_queueing", "Avg_comm"};
+		row = sheet3.createRow(rowid++);
+
+		for (String str : cluster_headers) {
+			cell = row.createCell(cellid++);
+			cell.setCellValue(str);
+		}
+
+		row = sheet3.createRow(rowid++);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(makespan);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_jct);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_compute);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_queueing);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_comm);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_jct/total_jobs);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_compute/total_jobs);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_queueing/total_jobs);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_comm/total_jobs);
 
 		String policy = Cluster.getInstance().getConfiguration().getPolicy();
 		String topo_name = Cluster.getInstance().getConfiguration().getmTopoName();
