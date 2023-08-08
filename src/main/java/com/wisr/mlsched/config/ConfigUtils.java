@@ -203,7 +203,7 @@ public class ConfigUtils {
 			dim_type[i+1] = "PP";
 			link_latency[i] = 500; // ns
 			link_latency[i+1] = 50000000; // ns
-			link_bandwidth[i] = 50;
+			link_bandwidth[i] = 100;
 			link_bandwidth[i+1] = 10;
 			nic_latency[i] = 0;
 			nic_latency[i+1] = 1000000;
@@ -213,7 +213,7 @@ public class ConfigUtils {
 			link_ratio[i] = machines * 2;
 			dim_type[i] = "P";
 			link_latency[i] = 500;
-			link_bandwidth[i] = 50;
+			link_bandwidth[i] = 100;
 			nic_latency[i] = 0;
 		}
 
