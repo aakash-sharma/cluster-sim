@@ -11,6 +11,8 @@ import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.File;
+import java.util.Collections;
+
 
 import org.apache.commons.collections4.map.MultiKeyMap;
 import org.json.simple.JSONObject;
@@ -430,14 +432,23 @@ public abstract class IntraJobScheduler {
 		System.out.println(String.join(" ", dimType));
 		System.out.println(dimVec.toString());
 		System.out.println(String.join(" ", topoPerDim));
-		//System.out.println(String.join(" ", mDimType));
-		//System.out.println(diff);
 
 		//for (int idx = diff; idx < topoPerDim.length; idx++)
 		//for (int idx = 0; idx < topoPerDim.length+1; idx++)
-		int topoIdx = topoPerDim.length - 1;
+		int topoIdx = mDimType.length -1;
+		int dim_size = dimVec.length-1;
+
+		if (mDimType[topoIdx] != "PP") {
+			if (mDimType[topoIdx] != "P") {
+				dim_size -= 2;
+			}
+			else {
+				dim_size -= 1;
+			}
+		}
+
 		//for (int idx = 0; idx < dimVec.length; idx++)
-		for (int idx = dimVec.length-1; idx >= 0; idx--)
+		for (int idx = dim_size; idx >= 0; idx--)
 		{
 			if (dimVec[idx] != -1) {
 				if (topoIdx < 0) {
@@ -476,6 +487,18 @@ public abstract class IntraJobScheduler {
 			}
 			topoIdx -= 1;
 		}
+
+		Collections.reverse(topologiesPerDim);
+		Collections.reverse(dimensionType);
+		Collections.reverse(unitsCount);
+		Collections.reverse(linksCount);
+		Collections.reverse(linkLatency);
+		Collections.reverse(linkBW);
+		Collections.reverse(nicLatency);
+		Collections.reverse(routerLatency);
+		Collections.reverse(hbmLatency);
+		Collections.reverse(hbmBW);
+		Collections.reverse(hbmScale);
 
 		jsonObject.put("topology-name", "Hierarchical");
 		jsonObject.put("topologies-per-dim", topologiesPerDim);
