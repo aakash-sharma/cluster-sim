@@ -473,9 +473,8 @@ public abstract class IntraJobScheduler {
 				hbmLatency.add(500);
 				hbmBW.add(370);
 				hbmScale.add(0);
-
-				topoIdx -= 1;
 			}
+			topoIdx -= 1;
 		}
 
 		jsonObject.put("topology-name", "Hierarchical");
