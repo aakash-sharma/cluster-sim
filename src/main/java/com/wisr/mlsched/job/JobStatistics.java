@@ -149,9 +149,11 @@ public class JobStatistics {
 		mFairnessIndices.add(new FairnessIndex(Simulation.getSimulationTime(), computeJainFairness()));
 		mLossValues.add(new LossValue(Simulation.getSimulationTime(), computeCumulativeLoss()));
 		mContention.add(new ContentionValue(Simulation.getSimulationTime(), computeCurrentContention(), mAllocs));
+		System.out.println("Adding contention at time: " + String.valueOf(Simulation.getSimulationTime()));
+		System.out.println("Size of contentions: " + String.valueOf(mContention.size()));
 		if(ClusterEventQueue.getInstance().getNumberEvents() > 0) {
 			ClusterEventQueue.getInstance().enqueueEvent(new 
-					JobStatisticEvent(Simulation.getSimulationTime() + (Cluster.getInstance().getLeaseTime() * 100000)));
+					JobStatisticEvent(Simulation.getSimulationTime() + Cluster.getInstance().getLeaseTime()));
 		}
 	}
 	
@@ -234,8 +236,8 @@ public class JobStatistics {
 		int rowid = 0;
 		int cellid = 0;
 		Cell cell;
-		String[] headers = {"JobId", "JCT", "Queue-delay", "%Queue-delay", "GPU-time", "Compute-Time",
-				"Communication-Time", "Avg-GPU-contention",
+		String[] headers = {"JobId", "JCT", "Queue-delay", "%Queue-delay", "GPU-time", "%GPU-time", "Comp-time",
+				"%Comp-Time", "Comm-time", "%Comm-time", "Avg-GPU-contention",
 				"dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc", "makespan"};
 		row = sheet1.createRow(rowid++);
 
@@ -245,6 +247,7 @@ public class JobStatistics {
 		}
 
 		int total_jct = 0;
+		int total_gpu = 0;
 		int total_compute = 0;
 		int total_queueing = 0;
 		int total_comm = 0;
@@ -271,14 +274,24 @@ public class JobStatistics {
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getGpuTime());
+			total_gpu += mJobStats.get(key).getGpuTime();
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getGpuTime() / mJobStats.get(key).getJobTime() * 100);
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getCompTime());
 			total_compute += mJobStats.get(key).getCompTime();
 
 			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getCompTime() / mJobStats.get(key).getJobTime() * 100);
+
+			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getCommTime());
 			total_comm += mJobStats.get(key).getCommTime();
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getCommTime() / mJobStats.get(key).getJobTime() * 100);
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getAvgGPUcontention());
@@ -322,8 +335,8 @@ public class JobStatistics {
 		rowid = 0;
 		cellid = 0;
 		int col = 0;
-		cluster_headers = new String[]{"Makespan", "Total_JCT", "Total_compute", "Total_queueing", "Total_comm",
-				"Avg_JCT", "Avg_compute", "Avg_queueing", "Avg_comm"};
+		cluster_headers = new String[]{"Makespan", "Total_JCT", "Total_GPU", "Total_compute", "Total_queueing",
+				"Total_comm", "Avg_JCT", "Avg_compute", "Avg_queueing", "Avg_comm"};
 		row = sheet3.createRow(rowid++);
 
 		for (String str : cluster_headers) {
@@ -338,6 +351,9 @@ public class JobStatistics {
 
 		cell = row.createCell(col++);
 		cell.setCellValue(total_jct);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_gpu);
 
 		cell = row.createCell(col++);
 		cell.setCellValue(total_compute);
@@ -392,6 +408,8 @@ public class JobStatistics {
 
 		double total_time = 0.0;
 		double gpu_time = 0.0;
+		double comp_time = 0.0;
+		double comm_time = 0.0;
 
 		double avg_gpu_contention = 0;
 
