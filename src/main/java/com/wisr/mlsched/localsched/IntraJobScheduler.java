@@ -213,7 +213,7 @@ public abstract class IntraJobScheduler {
 
 	public void endIteration() {
 		long itr_remain = getmTotalIterationsRemaining();
-		setmTotalIterationsRemaining(itr_remain - mIterGranularity);
+		setmTotalIterationsRemaining(itr_remain  - (mIterGranularity * mCurrentIterationGPUs.size()/mMaxParallelism));
 		if (itr_remain % 10000 == 0) {
 			sLog.log(Level.ALL, "End iteration for job " + Integer.toString(mJobId));
 			sLog.info("Iterations Remaining: " + Long.toString(itr_remain));
