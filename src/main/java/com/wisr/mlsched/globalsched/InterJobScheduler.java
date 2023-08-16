@@ -99,16 +99,12 @@ public abstract class InterJobScheduler {
 		List<Bid> bids = new ArrayList<Bid>();
 		List<IntraJobScheduler> jobs = Cluster.getInstance().getRunningJobs();
 
-		boolean allocated = false;
-
 		for(IntraJobScheduler job : jobs) {
 			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, job);
 
 			if (gpuAllocation.isEmpty()){
 				continue;
 			}
-
-			allocated = true;
 
 			System.out.println("Allocated GPUs to job");
 			for (GPU gpu: gpuAllocation){
@@ -124,10 +120,6 @@ public abstract class InterJobScheduler {
 		}
 		if(bids.size() == 0) {
 			// No bids. All jobs must be running at full capacity
-			return;
-		}
-
-		if (!allocated) {
 			return;
 		}
 
