@@ -99,7 +99,9 @@ public abstract class InterJobScheduler {
 		List<Bid> bids = new ArrayList<Bid>();
 		List<IntraJobScheduler> jobs = Cluster.getInstance().getRunningJobs();
 
+		/*
 		for(IntraJobScheduler job : jobs) {
+
 			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, job);
 
 			if (gpuAllocation.isEmpty()){
@@ -122,7 +124,6 @@ public abstract class InterJobScheduler {
 			// No bids. All jobs must be running at full capacity
 			return;
 		}
-
 		Collections.sort(bids, new PerGPUBidComparator());
 
 		Bid bid = bids.get(0); // Select the winner
@@ -148,17 +149,59 @@ public abstract class InterJobScheduler {
 				}
 			}
 
-			if (flag)
+		 */
+
+		for(IntraJobScheduler job : jobs) {
+
+			if (job.getGPUsAvailableForNextIteration().size() >= job.getMaxParallelism()) {
+				// Already have enough GPUs. No need to bid
 				continue;
+			}
 
-			bid.getJob().notifyResourceAssignment(bid.getGPUList());
-
-			for (GPU gpu : bid.getGPUList())
-				gpu.assignGPU(Cluster.getInstance().getLeaseTime(), bid.getJob());
-
-			gpusLeft -= bid.getGPUList().size();
+			List<Bid> bidsFromJob = job.prepareMultiBid(null);
+			if (bidsFromJob != null && !bidsFromJob.isEmpty()) {
+				bids.addAll(bidsFromJob);
+			}
 		}
 
+		if(bids.size() == 0) {
+			// No bids. All jobs must be running at full capacity
+			return;
+		}
+
+		Collections.sort(bids, new PerGPUBidComparator());
+
+		for (int i = 0; i < bids.size(); i++) {
+
+			if (gpuList.isEmpty())
+				break;
+
+			Bid bid = bids.get(i); // Select the winner
+			IntraJobScheduler job = bid.getJob();
+
+			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, job);
+
+			if (gpuAllocation.isEmpty()){
+				continue;
+			}
+
+			System.out.println("Allocated GPUs to job");
+			for (GPU gpu: gpuAllocation){
+				System.out.println(gpu.getLocation().getGPUId() + " "  + gpu.getLocation().getDim2Id()
+						+ " " + gpu.getLocation().getDim1Id() + " " + gpu.getLocation().getSlotId() + " " +
+						gpu.getLocation().getMachineId() + " " + gpu.getLocation().getRackId() + "\n");
+			}
+
+			bid.getJob().notifyResourceAssignment(gpuAllocation);
+
+			for (GPU gpu : gpuAllocation) {
+				gpu.assignGPU(Cluster.getInstance().getLeaseTime(), bid.getJob());
+				if (!gpuList.remove(gpu)) {
+					System.out.println("Unable to remove GPU from gpu list!");
+					System.exit(-1);
+				}
+			}
+		}
 		startWaitingJobs();
 	}
 
