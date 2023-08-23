@@ -816,6 +816,7 @@ public abstract class IntraJobScheduler {
 				String.valueOf(rackMap.size()));
 
 		int rack_size = rackMap.size();
+		boolean allocFlag = true;
 
 		System.out.println("num gpus = " + num_gpus);
 
@@ -824,12 +825,13 @@ public abstract class IntraJobScheduler {
 
 		if (rack_size > 1) {
 			dimType[topoSize-1] = "PP";
+			allocs[5] += 1;
+			mAllocs[5] += 1;
+			allocFlag = false;
 			if (num_gpus % rack_size != 0) {
 				dimVec[topoSize-1] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				allocs[5] += 1;
-				mAllocs[5] += 1;
 				return slowdown;
 			}
 			else {
@@ -844,6 +846,11 @@ public abstract class IntraJobScheduler {
 
 		if (machine_size > 1) {
 			dimType[topoSize-1] = "P";
+			if (allocFlag) {
+				allocs[4] += 1;
+				mAllocs[4] += 1;
+				allocFlag = false;
+			}
 			if (topoSize <= 0) {
 				System.out.println("Topology size < 0 unexpected at machine!");
 				System.exit(-1);
@@ -852,8 +859,6 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize-1] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				allocs[4] += 1;
-				mAllocs[4] += 1;
 				return slowdown;
 			}
 			else {
@@ -868,6 +873,11 @@ public abstract class IntraJobScheduler {
 
 		if (slot_size > 0) {
 			dimType[topoSize-1] = "N";
+			if (allocFlag) {
+				allocs[3] += 1;
+				mAllocs[3] += 1;
+				allocFlag = false;
+			}
 			if (topoSize <= 0) {
 				System.out.println("Topology size < 0 unexpected at slot!");
 				System.exit(-1);
@@ -876,8 +886,6 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize-1] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				allocs[3] += 1;
-				mAllocs[3] += 1;
 				return slowdown;
 			} else {
 				dimVec[topoSize-1] = slotMap.size();
@@ -891,6 +899,11 @@ public abstract class IntraJobScheduler {
 
 		if (dim1_size > 0) {
 			dimType[topoSize-1] = "N";
+			if (allocFlag) {
+				allocs[2] += 1;
+				mAllocs[2] += 1;
+				allocFlag = false;
+			}
 			if (topoSize <= 0) {
 				System.out.println("Topology size < 0 unexpected at dim1!");
 				System.exit(-1);
@@ -899,8 +912,6 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize-1] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				allocs[2] += 1;
-				mAllocs[2] += 1;
 				return slowdown;
 			} else {
 				dimVec[topoSize-1] = dim1Map.size();
@@ -914,6 +925,11 @@ public abstract class IntraJobScheduler {
 
 		if (dim2_size > 0) {
 			dimType[topoSize-1] = "N";
+			if (allocFlag) {
+				allocs[1] += 1;
+				mAllocs[1] += 1;
+				allocFlag = false;
+			}
 			if (topoSize <= 0) {
 				System.out.println("Topology size < 0 unexpected at dim2!");
 				System.exit(-1);
@@ -922,8 +938,6 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize-1] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				allocs[1] += 1;
-				mAllocs[1] += 1;
 				return slowdown;
 			} else {
 				dimVec[topoSize-1] = dim2Map.size();
@@ -933,14 +947,6 @@ public abstract class IntraJobScheduler {
 		}
 		topoSize -= 1;
 
-//		if (topoSize <= 0) {
-//			System.out.println("Topology size < 0 unexpected at gpu!");
-//			System.exit(-1);
-//		}
-		/*if (topoSize > 1) {
-			System.out.println("Topology size > 1 unexpected at gpu!");
-			System.exit(-1);
-		}*/
 		dimVec[topoSize-1] = num_gpus;
 		dimType[topoSize-1] = "N";
 
@@ -986,6 +992,10 @@ public abstract class IntraJobScheduler {
 	 */
 	public int getMaxParallelism() {
 		return mMaxParallelism;
+	}
+
+	public int getCurrentParallelism() {
+		return mCurrentIterationGPUs.size();
 	}
 	
 	public double getOldBenefit() {
