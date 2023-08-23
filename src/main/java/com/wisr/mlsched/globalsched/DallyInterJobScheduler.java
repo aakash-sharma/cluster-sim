@@ -201,7 +201,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 					allocatedDim1, allocatedDim2);
 		}
 
-		double [] rack_delay_wait = ((DallyIntraJobScheduler) job).getRackDelayWait();
+
+
+		/*
 		if (rack_delay_wait[1] == -1) {
 			System.out.println(job.getJobId() + ": Rack delay timer -1, setting to "  +
 					String.valueOf(job.getLastResourceAssignment()));
@@ -231,6 +233,30 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			nw_delay_wait[1] = job.getLastResourceAssignment();
 		}
 		else if (Simulation.getSimulationTime() - nw_delay_wait[1] >= nw_delay_wait[0]) {
+			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+					allocatedDim1, allocatedDim2);
+		}
+		 */
+
+		double [] rack_delay_wait = ((DallyIntraJobScheduler) job).getRackDelayWait();
+		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= rack_delay_wait[0]) {
+			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
+				Integer rack = entry.getKey();
+				gpus = entry.getValue();
+				if (gpus >= gpuDemand && gpus < minGPUAllocation) {
+					minGPUAllocation = gpus;
+					allocatedRack = rack;
+				}
+			}
+
+			if (gpus >= gpuDemand) {
+				return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+						allocatedDim1, allocatedDim2);
+			}
+		}
+
+		double [] nw_delay_wait = ((DallyIntraJobScheduler) job).getNwDelayWait();
+		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= nw_delay_wait[0]) {
 			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
 		}
