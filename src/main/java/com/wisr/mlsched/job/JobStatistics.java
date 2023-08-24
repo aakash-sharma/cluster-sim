@@ -40,7 +40,7 @@ public class JobStatistics {
 		mFinishTimeFairness = new ArrayList<Double>();
 		mContention = new ArrayList<ContentionValue>();
 		mGPUContention = new TreeMap<Double, Integer>();
-		mAllocs = new int[6];
+		mAllocs = new int[Simulation.getNumDims()];
 		mWorkbook = new XSSFWorkbook();
 		mSimResults = new TreeMap<Integer, Vector<Double>>();
 		ClusterEventQueue.getInstance().enqueueEvent(new 

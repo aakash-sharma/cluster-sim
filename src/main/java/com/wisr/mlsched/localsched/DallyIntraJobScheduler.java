@@ -1,6 +1,7 @@
 package com.wisr.mlsched.localsched;
 
 import com.wisr.mlsched.Simulation;
+import com.wisr.mlsched.config.ConfigUtils;
 import com.wisr.mlsched.job.Bid;
 import com.wisr.mlsched.resources.Cluster;
 import com.wisr.mlsched.resources.GPU;
@@ -14,20 +15,35 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 	private static Logger sLog; // Instance of logger
 	private double mGPUServiceForJob; // Measurement of GPU time made available to job
-	private double nwDelayWait[];
-	private double rackDelayWait[];
+	private double nwDelayWait;
+	private double rackDelayWait;
 
 	public DallyIntraJobScheduler(JSONObject config) {
 		super(config);
 		sLog = Logger.getLogger(Cluster.class.getSimpleName());
 		sLog.setLevel(Simulation.getLogLevel());
 		mGPUServiceForJob = 0.0;
-		nwDelayWait = new double[2];
-		rackDelayWait = new double[2];
-		rackDelayWait[0] = Cluster.getInstance().getLeaseTime() * Cluster.getInstance().getConfiguration().getmRackDelayWait();
-		rackDelayWait[1] = -1;
-		nwDelayWait[0] = Cluster.getInstance().getLeaseTime() * Cluster.getInstance().getConfiguration().getmNwDelayWait();
-		nwDelayWait[1] = -1;
+		setDelayTimers(config);
+	}
+
+	private void setDelayTimers(JSONObject config) {
+		double[] delay_timers = ConfigUtils.getJobDelayTimes(config);
+
+		if (delay_timers[5] != -1) {
+			nwDelayWait = delay_timers[5];
+		}
+		else {
+			nwDelayWait = Cluster.getInstance().getLeaseTime() *
+					Cluster.getInstance().getConfiguration().getmNwDelayWait();
+		}
+
+		if (delay_timers[4] != -1) {
+			rackDelayWait = delay_timers[4];
+		}
+		else {
+			rackDelayWait = Cluster.getInstance().getLeaseTime() *
+					Cluster.getInstance().getConfiguration().getmRackDelayWait();
+		}
 	}
 
 	@Override
@@ -69,19 +85,19 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
 	}
 
-	public double[] getNwDelayWait(){
+	public double getNwDelayWait(){
 		return nwDelayWait;
 	}
 
-	public void setNwDelayWait(double time, int idx){
-		nwDelayWait[idx] = time;
+	public void setNwDelayWait(double time){
+		nwDelayWait = time;
 	}
 
-	public double[] getRackDelayWait(){
+	public double getRackDelayWait(){
 		return rackDelayWait;
 	}
 
 	public void setRackDelayWait(double time, int idx){
-		rackDelayWait[idx] = time;
+		rackDelayWait = time;
 	}
 }

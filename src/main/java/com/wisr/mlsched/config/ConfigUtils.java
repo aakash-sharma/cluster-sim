@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 
-
+import com.wisr.mlsched.Simulation;
 import com.wisr.mlsched.localsched.IntraJobScheduler;
 import com.wisr.mlsched.localsched.IntraJobSchedulerFactory;
 
@@ -332,7 +332,23 @@ public class ConfigUtils {
 		return Double.parseDouble(getAttributeValue
 				(workload_config, "start_time"));
 	}
-	
+
+	public static double[] getJobDelayTimes(JSONObject workload_config) {
+		double delay_timers [] = new double[Simulation.getNumDims()];
+		Arrays.fill(delay_timers, -1);
+		if (workload_config.containsKey("delay_timers")){
+			JSONArray delay_timers_js = (JSONArray) workload_config.get("delay_timers");
+			Iterator<Long> double_itr = delay_timers_js.iterator();
+			int i = Simulation.getNumDims() - delay_timers_js.size();
+			while(double_itr.hasNext()) {
+				delay_timers[i] = (double_itr.next()).doubleValue();
+				i += 1;
+			}
+		}
+		return delay_timers;
+	}
+
+	/**
 	/**
 	 * Return an attribute value given a key and a JSON configuration
 	 */

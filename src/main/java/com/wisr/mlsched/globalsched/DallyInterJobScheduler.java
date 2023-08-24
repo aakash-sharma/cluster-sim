@@ -238,8 +238,8 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 		 */
 
-		double [] rack_delay_wait = ((DallyIntraJobScheduler) job).getRackDelayWait();
-		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= rack_delay_wait[0]) {
+		double rack_delay_wait = ((DallyIntraJobScheduler) job).getRackDelayWait();
+		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= rack_delay_wait) {
 			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
 				Integer rack = entry.getKey();
 				gpus = entry.getValue();
@@ -255,8 +255,8 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			}
 		}
 
-		double [] nw_delay_wait = ((DallyIntraJobScheduler) job).getNwDelayWait();
-		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= nw_delay_wait[0]) {
+		double nw_delay_wait = ((DallyIntraJobScheduler) job).getNwDelayWait();
+		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= nw_delay_wait) {
 			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
 		}

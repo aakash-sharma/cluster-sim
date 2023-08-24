@@ -17,7 +17,8 @@ public class Simulation {
 	private static final Level mLogLevel = Level.ALL;
 	//private static final Level mLogLevel = Level.OFF;
 	private static boolean admissionControl = false;
-	
+	private static final int DIMS = 6;
+
 	public static void main(String args[]) {
 		Integer racks = Integer.parseInt(args[0]);
 		Integer machines = Integer.parseInt(args[1]);
@@ -94,6 +95,9 @@ public class Simulation {
 		return mLogLevel;
 	}
 
+	public static int getNumDims() {
+		return DIMS;
+	}
 	public static boolean isAdmissionControlEnabled() {
 		return admissionControl;
 	}

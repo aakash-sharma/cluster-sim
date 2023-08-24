@@ -93,7 +93,7 @@ public abstract class IntraJobScheduler {
 		mTimeLastResourceAssignment = Simulation.getSimulationTime();
 		mIsLeader = true; // By default, everyone is a leader unless told otherwise
 		mSlowdown = new HashMap<>();
-		mAllocs = new int[6];
+		mAllocs = new int[Simulation.getNumDims()];
 		JobStatistics.getInstance().recordJobStart(mJobId, Simulation.getSimulationTime(), mMaxParallelism);
 		List<GPU> availableResources = getResourcesAvailableInCluster();
 		if (!availableResources.isEmpty()) {
@@ -804,7 +804,7 @@ public abstract class IntraJobScheduler {
 		// int topoSize = Cluster.getInstance().getConfiguration().getmTopoPerDim().length;
 		System.out.println("Jobid: " + mJobId);
 		//System.out.println("Topo size = " + String.valueOf(topoSize));
-		int topoSize = 6;
+		int topoSize = Simulation.getNumDims();
 		//boolean[] topoPerDimVec = new boolean[topoSize];
 		Integer [] dimVec = new Integer[topoSize];
 		Arrays.fill(dimVec, -1);
