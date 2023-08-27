@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import re
 import scipy
+import math
 
 
 num_paths = len(sys.argv) - 1
@@ -32,19 +33,21 @@ for topo in topologies:
         print("reading path: " + path)
         print("reading scheme: " + scheme)
         run_name = path.split("/")[-1]
-        for file in glob.glob(path + "/*.xlsx"):
+        files = glob.glob(path + "/*.xlsx")
+        filtered_files = [f for f in files if "~" not in f]
+        for file in filtered_files:
            match = re.search(topo, file)
            if match:
              print("Reading file = ", file)
+#              df_dict = pd.read_excel(file, sheet_name=None)
+#              df = pd.DataFrame()
+#              for sheet_name, df_sheet in df_dict.items():
+#                  df = df.append(df_sheet)
+#              df = pd.concat(df_dict, ignore_index=True)
              df = pd.read_excel(file)
              df["%Q-delay"] = df["Queue-delay"] / df["JCT"] * 100
              df["run"] = run_name
-             #df["JCT_sorted"] = df["JCT"].copy().sort_values().reset_index(drop=True)
-             #df['JCT_CDF'] = df["JCT_sorted"].rank(method = 'average', pct = True)
-             #cdf_column = ranked_column.sort_values()# / len(df["JCT"])
-             #df['JCT_CDF'] = cdf_column.reset_index(drop=True)
-             #print(cdf_column)
-             #print(cdf_column.keys())
+
 
              df.rename(columns=lambda x: x + "_" + scheme if "JobId" not in x else "JobId", inplace=True)
              dfs.append(df)
@@ -55,7 +58,9 @@ for topo in topologies:
         merged_df = pd.merge(merged_df, df, on=["JobId"])
     cluster_dfs.append(merged_df)
 
-fig, axs = plt.subplots(11, len(cluster_dfs)+1, figsize=(15, 45))
+    #print(merged_df.columns.values)
+
+fig, axs = plt.subplots(11, len(cluster_dfs)+1, figsize=(30, 90))
 
 print(len(cluster_dfs))
 
@@ -79,8 +84,8 @@ for i in range(len(cluster_dfs)):
         schemes.append(scheme)
         print(scheme)
         y_jct.append("JCT" + "_" + scheme)
-        y_comp.append("Compute-Time" + "_" + scheme)
-        y_comm.append("Communication-Time" + "_" + scheme)
+        y_comp.append("Comp-time" + "_" + scheme)
+        y_comm.append("Comm-time" + "_" + scheme)
         y_q_delay.append("Queue-delay" + "_" + scheme)
         y_q_delay_pct.append("%Q-delay" + "_" + scheme)
         y_allocs.append("nwAlloc" + "_" + scheme)
@@ -98,7 +103,7 @@ for i in range(len(cluster_dfs)):
         j += 1
 
     print(y_sum_allocs)
-
+    print(len(cluster_dfs[i][y_jct[0]].tolist()))
     cluster_dfs[i].plot(ax=axs[idx][i], y=y_jct,
         x="JobId", kind="line", linewidth=1, logy=True, color=jct_colors[:len(y_jct)])
 
@@ -117,14 +122,15 @@ for i in range(len(cluster_dfs)):
     handles = handles1 #+ handles2
     labels = labels1 #+ labels2
 
-    axs[idx][i].legend(handles, labels)
+    axs[idx][i].legend(handles, labels, loc='lower center')
     axs[idx][i].set_title("Q delay" + "_" + cluster_scheme)
     idx += 1
 
     cluster_dfs[i].plot(ax=axs[idx][i], y=y_allocs, x="JobId", kind="line",
     color=jct_colors[:len(y_allocs)])
     handles3, labels3 = axs[idx][i].get_legend_handles_labels()
-    axs[idx][i].legend(handles3, labels3) #, loc='upper center', bbox_to_anchor=(1, -1),
+    axs[idx][i].legend(handles3, labels3)
+                        #, loc="lower center", bbox_to_anchor=(0.9, 1.3, 0, 0), fontsize="5") #, loc='upper center', bbox_to_anchor=(1, -1),
                                          #         fancybox=True, shadow=True, ncol=3)
     axs[idx][i].set_title("Allocations" + "_" + cluster_scheme)
     idx += 1
@@ -181,6 +187,7 @@ for i in range(len(cluster_dfs)):
 
     for comm in y_comm:
         comm_sorted = np.sort(np.array(cluster_dfs[i][comm].tolist()))
+        #print("comm len: " + str(comm_sorted.size))
         mean_comm = np.mean(comm_sorted)
         std_dev_comm = np.std(comm_sorted)
         comm_cdf = scipy.stats.norm.cdf(comm_sorted, loc=mean_comm, scale=std_dev_comm)
@@ -188,21 +195,24 @@ for i in range(len(cluster_dfs)):
         y_comm_cdf.append(comm_cdf)
         y_comm_pdf.append(comm_pdf)
         y_comm_sorted.append(comm_sorted)
-        Min_comm = min(comm_sorted[0], Min_q_delay)
+        Min_comm = min(comm_sorted[0], Min_comm)
         Max_comm = max(comm_sorted[-1], Max_comm)
 
     step_q_delay = int((Max_q_delay-Min_q_delay)/len(y_q_delay_cdf[0]))
-    step_comm = int((Max_comm-Min_comm)/len(y_comm_cdf[0]))
+    step_comm = math.ceil((Max_comm-Min_comm)/len(y_comm_cdf[0]))
+    print(len(y_comm_cdf[0]))
     x_axis_q_delay = [x for x in range(int(Min_q_delay), int(Max_q_delay) - step_q_delay, step_q_delay)]
-    x_axis_comm = [x for x in range(int(Min_comm), int(Max_comm) - step_comm, step_comm)]
+    x_axis_comm = [x for x in range(int(Min_comm), int(Max_comm), step_comm)]
     x_axis_sorted = [x for x in range(len(y_comm_sorted[0]))]
 
 
     for j in range(len(y_q_delay_cdf)):
-        axs[idx][i].plot(x_axis_q_delay, y_q_delay_cdf[j], color=jct_colors[j], label=y_q_delay[j])
+        axs[idx][i].plot(x_axis_q_delay[:len(y_q_delay_cdf[j])], y_q_delay_cdf[j], color=jct_colors[j], label=y_q_delay[j])
         #axs[idx+1][i].plot(x_axis_q_delay, y_q_delay_pdf[j], color=jct_colors[j], label=y_q_delay[j])
         axs[idx+1][i].plot(x_axis_sorted, y_q_delay_sorted[j], color=jct_colors[j], label=y_q_delay[j])
-        axs[idx+2][i].plot(x_axis_comm, y_comm_cdf[j], color=jct_colors[j], label=y_comm[j])
+        print(len(x_axis_comm))
+        print(len(y_comm_cdf[j]))
+        axs[idx+2][i].plot(x_axis_comm[:len(y_comm_cdf[j])], y_comm_cdf[j], color=jct_colors[j], label=y_comm[j])
         #axs[idx+3][i].plot(x_axis_comm, y_comm_pdf[j], color=jct_colors[j], label=y_comm[j])
         axs[idx+3][i].plot(x_axis_sorted, y_comm_sorted[j], color=jct_colors[j], label=y_comm[j])
 
@@ -238,7 +248,6 @@ for i in range(len(cluster_dfs)):
     axs[idx+2][i].set_title("Communication time" + "_" + cluster_scheme)
     idx += 2
 
-
     x_allocs = []
     x_allocs.append("dim2")
     x_allocs.append("dim1")
@@ -258,12 +267,18 @@ for i in range(len(cluster_dfs)):
     axs[idx][i].legend(handles9, labels9)
 
 makespans = []
+avg_jct = []
+avg_comm = []
+avg_q = []
 titles = []
 for i in range(len(cluster_dfs)):
     cluster_scheme = topologies[i]
     for path in sys.argv[1:]:
         scheme = path.split("/")[-1].split("_")[-1]
         makespans.append(cluster_dfs[i]["makespan" + "_" + scheme][0])
+#         avg_jct.append(cluster_dfs[i]["Avg_JCT" + "_" + scheme][0])
+#         avg_comm.append(cluster_dfs[i]["Avg_comm" + "_" + scheme][0])
+#         avg_q.append(cluster_dfs[i]["Avg_queueing" + "_" + scheme][0])
         titles.append(cluster_scheme + "_" + scheme)
 
 
@@ -281,9 +296,10 @@ for path in sys.argv[1:]:
    print(scheme)
    schemes.append(scheme)
 schemes = "_".join(schemes)
-fig.tight_layout()
+fig.tight_layout(pad=5.0)
 fig.savefig("results/results-" + schemes + ".pdf", format="pdf") #, bbox_inches="tight")
 #fig.savefig("results/results-delay_sched_sweep" + ".pdf", format="pdf", bbox_inches="tight")
+#fig.savefig("results/results-delay_sched_sweep-2" + ".pdf", format="pdf", bbox_inches="tight")
 
 
 
