@@ -30,7 +30,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		double[] delay_timers = ConfigUtils.getJobDelayTimes(config);
 
 		if (delay_timers[5] != -1) {
-			nwDelayWait = delay_timers[5];
+			nwDelayWait = Cluster.getInstance().getLeaseTime() * delay_timers[5];
 		}
 		else {
 			nwDelayWait = Cluster.getInstance().getLeaseTime() *
@@ -38,7 +38,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		}
 
 		if (delay_timers[4] != -1) {
-			rackDelayWait = delay_timers[4];
+			rackDelayWait = Cluster.getInstance().getLeaseTime() * delay_timers[4];
 		}
 		else {
 			rackDelayWait = Cluster.getInstance().getLeaseTime() *
