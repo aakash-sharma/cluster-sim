@@ -71,7 +71,7 @@ public abstract class IntraJobScheduler {
 	private double mJobArrivalTime; // Arrival time of the job
 	private boolean mIsQueued; // Every job starts with getting queued
 	private Map<Set<GPU>, Double> mSlowdown;
-	private double[] mSlowdownDims;
+	protected double[] mSlowdownDims;
 	//private Map<Vector<Integer>, Double> mSlowdown;
 	//private Map<Integer[], Double> mSlowdown;
 
@@ -189,12 +189,12 @@ public abstract class IntraJobScheduler {
 		mNextIterationGPUs = new HashSet<GPU>();
 		mIsWaiting = false;
 		assert(mCurrentIterationGPUs.size() > 0);
-		System.out.println("Placement Job " + Integer.toString(mJobId) + ":"
+		/*System.out.println("Placement Job " + Integer.toString(mJobId) + ":"
 				+ " Time: " + Double.toString(Simulation.getSimulationTime())
 				+ " Iteration remaining: " + Long.toString(mTotalIterationsRemaining)
 				+ " NumGPUs: " + Integer.toString(mCurrentIterationGPUs.size())
 				+ " Score: " + Double.toString(getPlacementSlowdown(mCurrentIterationGPUs))
-				+ " Number_jobs_running: " + Integer.toString(Cluster.getInstance().getRunningJobs().size()));
+				+ " Number_jobs_running: " + Integer.toString(Cluster.getInstance().getRunningJobs().size()));*/
 		ClusterEventQueue.getInstance().enqueueEvent(
 				new EndIterationEvent(Simulation.getSimulationTime() + (mTimePerIteration / getJobSpeedup() *
 						mIterGranularity), this));
@@ -301,11 +301,14 @@ public abstract class IntraJobScheduler {
 			mCurrentIterationGPUs = new HashSet<GPU>();
 			mIsWaiting = true;
 			mTimeLastResourceAssignment = Simulation.getSimulationTime();
+			//tuneDelayTimers();
 		} else {
 			ClusterEventQueue.getInstance().enqueueEvent(new StartIterationEvent(Simulation.getSimulationTime(), this));
 		}
 	}
-	
+
+	public void tuneDelayTimers(){}
+
 	public void resetOldRatio() { // short-circuit this API
 		//oldRatio = Double.POSITIVE_INFINITY;
 	}
