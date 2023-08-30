@@ -20,7 +20,7 @@
         "minute": "0",
         "dayofweek": "1",
         "dataset": "Multi30k",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "75.164",
@@ -34,11 +34,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406352",
@@ -61,7 +57,7 @@
         "minute": "1",
         "dayofweek": "1",
         "dataset": "Multi30k",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "75.164",
@@ -75,11 +71,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406353",
@@ -116,11 +108,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406358",
@@ -157,11 +145,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406360",
@@ -198,11 +182,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406371",
@@ -239,11 +219,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406372",
@@ -275,16 +251,12 @@
         "total_iterations": "204274089",
         "time_per_iteration": "0.0001640100321656475",
         "random_seed": "58",
-        "max_parallelism": "2",
+        "max_parallelism": "1",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406373",
@@ -307,7 +279,7 @@
         "minute": "26",
         "dayofweek": "1",
         "dataset": "Wikitext2",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "73.625",
@@ -316,16 +288,12 @@
         "total_iterations": "150517867",
         "time_per_iteration": "0.0002224254202005432",
         "random_seed": "68",
-        "max_parallelism": "1",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406375",
@@ -357,16 +325,12 @@
         "total_iterations": "155162121",
         "time_per_iteration": "0.0002224254202005432",
         "random_seed": "72",
-        "max_parallelism": "2",
+        "max_parallelism": "8",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406376",
@@ -398,16 +362,12 @@
         "total_iterations": "155865293",
         "time_per_iteration": "0.00022241641646673284",
         "random_seed": "1",
-        "max_parallelism": "2",
+        "max_parallelism": "8",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406391",
@@ -430,7 +390,7 @@
         "minute": "45",
         "dayofweek": "1",
         "dataset": "SQuAD",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "99.593",
@@ -444,11 +404,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406395",
@@ -485,11 +441,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406411",
@@ -512,7 +464,7 @@
         "minute": "18",
         "dayofweek": "1",
         "dataset": "Wikitext2",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "63.706",
@@ -526,11 +478,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406430",
@@ -567,11 +515,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406444",
@@ -608,11 +552,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406475",
@@ -649,11 +589,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406486",
@@ -690,11 +626,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406490",
@@ -731,11 +663,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406492",
@@ -772,11 +700,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406493",
@@ -813,11 +737,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406494",
@@ -840,7 +760,7 @@
         "minute": "19",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "51.0",
@@ -854,11 +774,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406499",
@@ -890,16 +806,12 @@
         "total_iterations": "70104",
         "time_per_iteration": "0.00713220977255383",
         "random_seed": "98",
-        "max_parallelism": "1",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406502",
@@ -922,7 +834,7 @@
         "minute": "31",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "6.24",
@@ -936,11 +848,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406503",
@@ -977,11 +885,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406504",
@@ -1018,11 +922,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406505",
@@ -1059,11 +959,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406510",
@@ -1086,7 +982,7 @@
         "minute": "49",
         "dayofweek": "2",
         "dataset": "LunarLander",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "14.96",
@@ -1100,11 +996,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406513",
@@ -1141,11 +1033,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406514",
@@ -1168,7 +1056,7 @@
         "minute": "54",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "43.667",
@@ -1182,11 +1070,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406518",
@@ -1223,11 +1107,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406520",
@@ -1264,11 +1144,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406526",
@@ -1291,7 +1167,7 @@
         "minute": "10",
         "dayofweek": "2",
         "dataset": "Wikitext2",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "63.706",
@@ -1305,11 +1181,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406527",
@@ -1332,7 +1204,7 @@
         "minute": "11",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "33.571",
@@ -1346,11 +1218,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406528",
@@ -1387,11 +1255,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406529",
@@ -1428,11 +1292,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406532",
@@ -1469,11 +1329,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406534",
@@ -1496,7 +1352,7 @@
         "minute": "34",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "24.5",
@@ -1510,11 +1366,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406538",
@@ -1551,11 +1403,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406540",
@@ -1578,7 +1426,7 @@
         "minute": "40",
         "dayofweek": "2",
         "dataset": "LunarLander",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "14.96",
@@ -1592,11 +1440,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406541",
@@ -1633,11 +1477,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406543",
@@ -1660,7 +1500,7 @@
         "minute": "46",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "5.551",
@@ -1674,11 +1514,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406547",
@@ -1715,11 +1551,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406548",
@@ -1756,11 +1588,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406549",
@@ -1797,11 +1625,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406550",
@@ -1838,11 +1662,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406551",
@@ -1879,11 +1699,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406552",
@@ -1920,11 +1736,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406553",
@@ -1947,7 +1759,7 @@
         "minute": "0",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "41.833",
@@ -1961,11 +1773,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406554",
@@ -2002,11 +1810,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406555",
@@ -2029,7 +1833,7 @@
         "minute": "41",
         "dayofweek": "2",
         "dataset": "BipedalWalker",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "12.828",
@@ -2043,11 +1847,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406556",
@@ -2070,7 +1870,7 @@
         "minute": "50",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "28.833",
@@ -2084,11 +1884,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406557",
@@ -2125,11 +1921,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406558",
@@ -2152,7 +1944,7 @@
         "minute": "1",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "96.25",
@@ -2166,11 +1958,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406559",
@@ -2193,7 +1981,7 @@
         "minute": "9",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "40.667",
@@ -2207,11 +1995,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406560",
@@ -2248,11 +2032,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406569",
@@ -2275,7 +2055,7 @@
         "minute": "8",
         "dayofweek": "2",
         "dataset": "Wikitext2",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "63.706",
@@ -2289,11 +2069,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406571",
@@ -2316,7 +2092,7 @@
         "minute": "11",
         "dayofweek": "2",
         "dataset": "Wikitext2",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "63.706",
@@ -2330,11 +2106,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406573",
@@ -2357,7 +2129,7 @@
         "minute": "45",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -2371,11 +2143,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406575",
@@ -2398,7 +2166,7 @@
         "minute": "46",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "35.4",
@@ -2412,11 +2180,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406576",
@@ -2439,7 +2203,7 @@
         "minute": "46",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "28.833",
@@ -2453,11 +2217,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406577",
@@ -2480,7 +2240,7 @@
         "minute": "53",
         "dayofweek": "2",
         "dataset": "LSUN",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "72.9",
@@ -2494,11 +2254,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406578",
@@ -2521,7 +2277,7 @@
         "minute": "54",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "44.833",
@@ -2535,11 +2291,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406581",
@@ -2576,11 +2328,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406582",
@@ -2603,7 +2351,7 @@
         "minute": "9",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "80.667",
@@ -2617,11 +2365,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406584",
@@ -2658,11 +2402,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406590",
@@ -2685,7 +2425,7 @@
         "minute": "57",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "11.533",
@@ -2699,11 +2439,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406592",
@@ -2740,11 +2476,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406593",
@@ -2781,11 +2513,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406594",
@@ -2822,11 +2550,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406595",
@@ -2863,11 +2587,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406596",
@@ -2890,7 +2610,7 @@
         "minute": "3",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "78.0",
@@ -2904,11 +2624,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "7",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "7"
     },
     {
         "job_id": "406597",
@@ -2945,11 +2661,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406598",
@@ -2972,7 +2684,7 @@
         "minute": "7",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -2986,11 +2698,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406599",
@@ -3027,11 +2735,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406600",
@@ -3068,11 +2772,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406601",
@@ -3095,7 +2795,7 @@
         "minute": "12",
         "dayofweek": "2",
         "dataset": "Wikitext2",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "97.0",
@@ -3109,11 +2809,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406602",
@@ -3150,11 +2846,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406605",
@@ -3191,11 +2883,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406607",
@@ -3218,7 +2906,7 @@
         "minute": "18",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "11.533",
@@ -3232,11 +2920,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406609",
@@ -3268,16 +2952,12 @@
         "total_iterations": "19188",
         "time_per_iteration": "0.007243804735999536",
         "random_seed": "79",
-        "max_parallelism": "8",
+        "max_parallelism": "2",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406612",
@@ -3314,11 +2994,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406613",
@@ -3341,7 +3017,7 @@
         "minute": "22",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "44.833",
@@ -3355,11 +3031,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406614",
@@ -3382,7 +3054,7 @@
         "minute": "22",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "6.24",
@@ -3391,16 +3063,12 @@
         "total_iterations": "29776",
         "time_per_iteration": "0.007388307264922534",
         "random_seed": "65",
-        "max_parallelism": "4",
+        "max_parallelism": "2",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406615",
@@ -3437,11 +3105,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406616",
@@ -3478,11 +3142,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "7",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "7"
     },
     {
         "job_id": "406620",
@@ -3514,16 +3174,12 @@
         "total_iterations": "59869",
         "time_per_iteration": "0.00713220977255383",
         "random_seed": "21",
-        "max_parallelism": "8",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406625",
@@ -3555,16 +3211,12 @@
         "total_iterations": "111536",
         "time_per_iteration": "0.0012282945008026906",
         "random_seed": "1",
-        "max_parallelism": "2",
+        "max_parallelism": "1",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406636",
@@ -3601,11 +3253,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406639",
@@ -3642,11 +3290,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406641",
@@ -3683,11 +3327,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406644",
@@ -3710,7 +3350,7 @@
         "minute": "53",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "44.833",
@@ -3724,11 +3364,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406646",
@@ -3765,11 +3401,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406650",
@@ -3806,11 +3438,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406652",
@@ -3833,7 +3461,7 @@
         "minute": "1",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "11.533",
@@ -3847,11 +3475,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406653",
@@ -3888,11 +3512,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406658",
@@ -3924,16 +3544,12 @@
         "total_iterations": "18136",
         "time_per_iteration": "0.007388307264922534",
         "random_seed": "11",
-        "max_parallelism": "4",
+        "max_parallelism": "1",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406659",
@@ -3956,7 +3572,7 @@
         "minute": "5",
         "dayofweek": "2",
         "dataset": "ImageNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "45.409",
@@ -3965,16 +3581,12 @@
         "total_iterations": "54463000",
         "time_per_iteration": "0.0007665754697382836",
         "random_seed": "49",
-        "max_parallelism": "2",
+        "max_parallelism": "8",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406660",
@@ -4011,11 +3623,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406661",
@@ -4038,7 +3646,7 @@
         "minute": "7",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "98.833",
@@ -4052,11 +3660,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406669",
@@ -4079,7 +3683,7 @@
         "minute": "13",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "80.667",
@@ -4093,11 +3697,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406670",
@@ -4120,7 +3720,7 @@
         "minute": "13",
         "dayofweek": "2",
         "dataset": "BipedalWalker",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "12.828",
@@ -4134,11 +3734,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "8",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "8"
     },
     {
         "job_id": "406672",
@@ -4175,11 +3771,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406675",
@@ -4202,7 +3794,7 @@
         "minute": "15",
         "dayofweek": "2",
         "dataset": "LSUN",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "34.9",
@@ -4216,11 +3808,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406680",
@@ -4257,11 +3845,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406687",
@@ -4298,11 +3882,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406690",
@@ -4325,7 +3905,7 @@
         "minute": "42",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -4339,11 +3919,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406691",
@@ -4366,7 +3942,7 @@
         "minute": "42",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "7.75",
@@ -4380,11 +3956,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406692",
@@ -4416,16 +3988,12 @@
         "total_iterations": "94905181",
         "time_per_iteration": "0.00039409860977774415",
         "random_seed": "52",
-        "max_parallelism": "2",
+        "max_parallelism": "8",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406696",
@@ -4462,11 +4030,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406699",
@@ -4489,7 +4053,7 @@
         "minute": "46",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "24.5",
@@ -4503,11 +4067,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406700",
@@ -4530,7 +4090,7 @@
         "minute": "47",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "24.5",
@@ -4544,11 +4104,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406707",
@@ -4585,11 +4141,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406709",
@@ -4626,11 +4178,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406710",
@@ -4667,11 +4215,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406712",
@@ -4694,7 +4238,7 @@
         "minute": "52",
         "dayofweek": "2",
         "dataset": "LunarLander",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "11.949",
@@ -4708,11 +4252,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "8",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "8"
     },
     {
         "job_id": "406714",
@@ -4735,7 +4275,7 @@
         "minute": "53",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "11.533",
@@ -4749,11 +4289,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406721",
@@ -4776,7 +4312,7 @@
         "minute": "59",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "5.551",
@@ -4790,11 +4326,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406722",
@@ -4817,7 +4349,7 @@
         "minute": "8",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "55.714",
@@ -4826,16 +4358,12 @@
         "total_iterations": "983298",
         "time_per_iteration": "0.00034882585218155686",
         "random_seed": "93",
-        "max_parallelism": "2",
+        "max_parallelism": "8",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406726",
@@ -4858,7 +4386,7 @@
         "minute": "26",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "7.0",
@@ -4867,16 +4395,12 @@
         "total_iterations": "22443",
         "time_per_iteration": "0.007351860020585207",
         "random_seed": "78",
-        "max_parallelism": "2",
+        "max_parallelism": "1",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406728",
@@ -4913,11 +4437,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406740",
@@ -4954,11 +4474,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406741",
@@ -4995,11 +4511,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406742",
@@ -5022,7 +4534,7 @@
         "minute": "41",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "44.0",
@@ -5036,11 +4548,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406744",
@@ -5063,7 +4571,7 @@
         "minute": "42",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -5077,11 +4585,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406746",
@@ -5118,11 +4622,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406747",
@@ -5145,7 +4645,7 @@
         "minute": "43",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "8.982",
@@ -5159,11 +4659,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "8",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "8"
     },
     {
         "job_id": "406748",
@@ -5200,11 +4696,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406750",
@@ -5241,11 +4733,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406751",
@@ -5268,7 +4756,7 @@
         "minute": "46",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "28.833",
@@ -5282,11 +4770,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406752",
@@ -5323,11 +4807,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406753",
@@ -5364,11 +4844,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406754",
@@ -5405,11 +4881,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406755",
@@ -5446,11 +4918,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406756",
@@ -5473,7 +4941,7 @@
         "minute": "50",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "7.0",
@@ -5487,11 +4955,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406757",
@@ -5528,11 +4992,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406758",
@@ -5555,7 +5015,7 @@
         "minute": "51",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -5569,11 +5029,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406760",
@@ -5596,7 +5052,7 @@
         "minute": "52",
         "dayofweek": "2",
         "dataset": "MovieLens",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "9.643",
@@ -5610,11 +5066,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406761",
@@ -5637,7 +5089,7 @@
         "minute": "54",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "8.982",
@@ -5651,11 +5103,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406763",
@@ -5692,11 +5140,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406764",
@@ -5719,7 +5163,7 @@
         "minute": "55",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "44.833",
@@ -5733,11 +5177,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406765",
@@ -5760,7 +5200,7 @@
         "minute": "56",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "58.667",
@@ -5774,11 +5214,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406767",
@@ -5801,7 +5237,7 @@
         "minute": "57",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "35.4",
@@ -5815,11 +5251,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406768",
@@ -5856,11 +5288,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406769",
@@ -5883,7 +5311,7 @@
         "minute": "58",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "40.667",
@@ -5897,11 +5325,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406770",
@@ -5924,7 +5348,7 @@
         "minute": "0",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "28.833",
@@ -5938,11 +5362,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406771",
@@ -5979,11 +5399,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406773",
@@ -6020,11 +5436,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406774",
@@ -6061,11 +5473,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406776",
@@ -6088,7 +5496,7 @@
         "minute": "3",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "58.667",
@@ -6102,11 +5510,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406777",
@@ -6143,11 +5547,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406778",
@@ -6184,11 +5584,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406779",
@@ -6211,7 +5607,7 @@
         "minute": "6",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "58.667",
@@ -6225,11 +5621,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406780",
@@ -6252,7 +5644,7 @@
         "minute": "9",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "62.0",
@@ -6266,11 +5658,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406781",
@@ -6293,7 +5681,7 @@
         "minute": "9",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "5.551",
@@ -6307,11 +5695,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406782",
@@ -6348,11 +5732,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406783",
@@ -6389,11 +5769,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406784",
@@ -6430,11 +5806,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406785",
@@ -6457,7 +5829,7 @@
         "minute": "12",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "80.667",
@@ -6471,11 +5843,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406786",
@@ -6512,11 +5880,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406787",
@@ -6539,7 +5903,7 @@
         "minute": "15",
         "dayofweek": "2",
         "dataset": "LunarLander",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "12.425",
@@ -6553,11 +5917,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406789",
@@ -6594,11 +5954,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406791",
@@ -6621,7 +5977,7 @@
         "minute": "15",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "80.667",
@@ -6635,11 +5991,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406793",
@@ -6662,7 +6014,7 @@
         "minute": "17",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -6676,11 +6028,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406794",
@@ -6717,11 +6065,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406795",
@@ -6744,7 +6088,7 @@
         "minute": "18",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "48.0",
@@ -6758,11 +6102,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406798",
@@ -6785,7 +6125,7 @@
         "minute": "20",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "40.667",
@@ -6799,11 +6139,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406801",
@@ -6840,11 +6176,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406802",
@@ -6867,7 +6199,7 @@
         "minute": "21",
         "dayofweek": "2",
         "dataset": "LunarLander",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "11.949",
@@ -6881,11 +6213,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406803",
@@ -6908,7 +6236,7 @@
         "minute": "22",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "48.0",
@@ -6922,11 +6250,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406805",
@@ -6949,7 +6273,7 @@
         "minute": "24",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "50.5",
@@ -6963,11 +6287,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406809",
@@ -6990,7 +6310,7 @@
         "minute": "25",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "24.5",
@@ -7004,11 +6324,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406810",
@@ -7045,11 +6361,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406811",
@@ -7072,7 +6384,7 @@
         "minute": "25",
         "dayofweek": "2",
         "dataset": "ImageNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "52.355",
@@ -7086,11 +6398,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406812",
@@ -7113,7 +6421,7 @@
         "minute": "26",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "55.714",
@@ -7127,11 +6435,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406813",
@@ -7154,7 +6458,7 @@
         "minute": "27",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -7168,11 +6472,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406814",
@@ -7195,7 +6495,7 @@
         "minute": "28",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "55.714",
@@ -7209,11 +6509,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406815",
@@ -7250,11 +6546,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406816",
@@ -7291,11 +6583,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406818",
@@ -7318,7 +6606,7 @@
         "minute": "31",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "40.667",
@@ -7332,11 +6620,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406819",
@@ -7373,11 +6657,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406820",
@@ -7414,11 +6694,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406823",
@@ -7455,11 +6731,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406828",
@@ -7496,11 +6768,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406829",
@@ -7537,11 +6805,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406831",
@@ -7578,11 +6842,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406832",
@@ -7619,11 +6879,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406834",
@@ -7646,7 +6902,7 @@
         "minute": "42",
         "dayofweek": "2",
         "dataset": "MovieLens",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "9.836",
@@ -7660,11 +6916,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406835",
@@ -7701,11 +6953,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406836",
@@ -7742,11 +6990,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406837",
@@ -7769,7 +7013,7 @@
         "minute": "43",
         "dayofweek": "2",
         "dataset": "Multi30k",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "53.645",
@@ -7783,11 +7027,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406838",
@@ -7824,11 +7064,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406839",
@@ -7851,7 +7087,7 @@
         "minute": "44",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "44.0",
@@ -7865,11 +7101,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406840",
@@ -7892,7 +7124,7 @@
         "minute": "45",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "11.533",
@@ -7906,11 +7138,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406841",
@@ -7947,11 +7175,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406843",
@@ -7988,11 +7212,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406844",
@@ -8024,16 +7244,12 @@
         "total_iterations": "114061828",
         "time_per_iteration": "0.0007665754697382836",
         "random_seed": "4",
-        "max_parallelism": "8",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406845",
@@ -8056,7 +7272,7 @@
         "minute": "47",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "40.667",
@@ -8070,11 +7286,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406846",
@@ -8111,11 +7323,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406847",
@@ -8152,11 +7360,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "406848",
@@ -8193,11 +7397,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406849",
@@ -8220,7 +7420,7 @@
         "minute": "49",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "24.5",
@@ -8234,11 +7434,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406850",
@@ -8261,7 +7457,7 @@
         "minute": "51",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "40.667",
@@ -8275,11 +7471,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406851",
@@ -8302,7 +7494,7 @@
         "minute": "53",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "6.24",
@@ -8316,11 +7508,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406853",
@@ -8343,7 +7531,7 @@
         "minute": "57",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -8357,11 +7545,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406855",
@@ -8384,7 +7568,7 @@
         "minute": "59",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "48.0",
@@ -8398,11 +7582,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406856",
@@ -8425,7 +7605,7 @@
         "minute": "0",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -8439,11 +7619,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406857",
@@ -8466,7 +7642,7 @@
         "minute": "2",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -8480,11 +7656,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406859",
@@ -8507,7 +7679,7 @@
         "minute": "3",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -8521,11 +7693,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406860",
@@ -8548,7 +7716,7 @@
         "minute": "3",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "5.551",
@@ -8562,11 +7730,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406861",
@@ -8603,11 +7767,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406862",
@@ -8644,11 +7804,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406865",
@@ -8671,7 +7827,7 @@
         "minute": "6",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "51.0",
@@ -8685,11 +7841,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406869",
@@ -8712,7 +7864,7 @@
         "minute": "10",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "48.0",
@@ -8726,11 +7878,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406872",
@@ -8767,11 +7915,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406874",
@@ -8794,7 +7938,7 @@
         "minute": "13",
         "dayofweek": "2",
         "dataset": "LSUN",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "47.5",
@@ -8808,11 +7952,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406879",
@@ -8835,7 +7975,7 @@
         "minute": "15",
         "dayofweek": "2",
         "dataset": "LunarLander",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "12.425",
@@ -8849,11 +7989,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "7",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "7"
     },
     {
         "job_id": "406880",
@@ -8876,7 +8012,7 @@
         "minute": "16",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "11.533",
@@ -8890,11 +8026,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406883",
@@ -8931,11 +8063,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406884",
@@ -8958,7 +8086,7 @@
         "minute": "18",
         "dayofweek": "2",
         "dataset": "Multi30k",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "75.164",
@@ -8972,11 +8100,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "8",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "8"
     },
     {
         "job_id": "406886",
@@ -9013,11 +8137,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406889",
@@ -9040,7 +8160,7 @@
         "minute": "26",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -9054,11 +8174,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406891",
@@ -9095,11 +8211,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "406892",
@@ -9122,7 +8234,7 @@
         "minute": "29",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -9136,11 +8248,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406894",
@@ -9163,7 +8271,7 @@
         "minute": "32",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "33.571",
@@ -9177,11 +8285,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406897",
@@ -9218,11 +8322,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "406905",
@@ -9245,7 +8345,7 @@
         "minute": "47",
         "dayofweek": "2",
         "dataset": "LSUN",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "72.9",
@@ -9259,11 +8359,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406906",
@@ -9286,7 +8382,7 @@
         "minute": "47",
         "dayofweek": "2",
         "dataset": "ImageNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "34.966",
@@ -9300,11 +8396,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406907",
@@ -9327,7 +8419,7 @@
         "minute": "48",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "24.5",
@@ -9341,11 +8433,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406924",
@@ -9368,7 +8456,7 @@
         "minute": "56",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "48.0",
@@ -9382,11 +8470,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "406928",
@@ -9423,11 +8507,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406930",
@@ -9450,7 +8530,7 @@
         "minute": "0",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -9464,11 +8544,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406937",
@@ -9505,11 +8581,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406938",
@@ -9532,7 +8604,7 @@
         "minute": "6",
         "dayofweek": "2",
         "dataset": "SQuAD",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "99.689",
@@ -9546,11 +8618,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406939",
@@ -9573,7 +8641,7 @@
         "minute": "6",
         "dayofweek": "2",
         "dataset": "ImageNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "45.409",
@@ -9587,11 +8655,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "3",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "3"
     },
     {
         "job_id": "406942",
@@ -9628,11 +8692,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406946",
@@ -9655,7 +8715,7 @@
         "minute": "10",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "6.24",
@@ -9669,11 +8729,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406947",
@@ -9696,7 +8752,7 @@
         "minute": "11",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "7.0",
@@ -9705,16 +8761,12 @@
         "total_iterations": "5712",
         "time_per_iteration": "0.007351860020585207",
         "random_seed": "91",
-        "max_parallelism": "2",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406949",
@@ -9737,7 +8789,7 @@
         "minute": "12",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "55.714",
@@ -9751,11 +8803,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "406951",
@@ -9787,16 +8835,12 @@
         "total_iterations": "56529",
         "time_per_iteration": "0.0009021793947639313",
         "random_seed": "9",
-        "max_parallelism": "4",
+        "max_parallelism": "1",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406954",
@@ -9833,11 +8877,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "406957",
@@ -9860,7 +8900,7 @@
         "minute": "14",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -9874,11 +8914,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406956",
@@ -9910,16 +8946,12 @@
         "total_iterations": "82681",
         "time_per_iteration": "0.0005200678584541711",
         "random_seed": "53",
-        "max_parallelism": "8",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406962",
@@ -9942,7 +8974,7 @@
         "minute": "16",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "8.982",
@@ -9956,11 +8988,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406963",
@@ -9992,16 +9020,12 @@
         "total_iterations": "33379",
         "time_per_iteration": "0.0012282945008026906",
         "random_seed": "28",
-        "max_parallelism": "4",
+        "max_parallelism": "8",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406968",
@@ -10024,7 +9048,7 @@
         "minute": "19",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "5.551",
@@ -10038,11 +9062,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "406969",
@@ -10079,11 +9099,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406970",
@@ -10115,16 +9131,12 @@
         "total_iterations": "62688",
         "time_per_iteration": "0.0012282945008026906",
         "random_seed": "98",
-        "max_parallelism": "8",
+        "max_parallelism": "1",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406973",
@@ -10147,7 +9159,7 @@
         "minute": "21",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "7.0",
@@ -10156,16 +9168,12 @@
         "total_iterations": "5304",
         "time_per_iteration": "0.007351860020585207",
         "random_seed": "14",
-        "max_parallelism": "8",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406974",
@@ -10197,16 +9205,12 @@
         "total_iterations": "35822",
         "time_per_iteration": "0.0012282945008026906",
         "random_seed": "16",
-        "max_parallelism": "1",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406977",
@@ -10238,16 +9242,12 @@
         "total_iterations": "5798",
         "time_per_iteration": "0.007243804735999536",
         "random_seed": "40",
-        "max_parallelism": "1",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406978",
@@ -10270,7 +9270,7 @@
         "minute": "24",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "8.982",
@@ -10279,16 +9279,12 @@
         "total_iterations": "6169",
         "time_per_iteration": "0.00713220977255383",
         "random_seed": "78",
-        "max_parallelism": "2",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406981",
@@ -10311,7 +9307,7 @@
         "minute": "26",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "44.833",
@@ -10320,16 +9316,12 @@
         "total_iterations": "124742",
         "time_per_iteration": "0.0002885942918357829",
         "random_seed": "0",
-        "max_parallelism": "4",
+        "max_parallelism": "1",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406982",
@@ -10361,16 +9353,12 @@
         "total_iterations": "5984",
         "time_per_iteration": "0.007351860020585207",
         "random_seed": "70",
-        "max_parallelism": "1",
+        "max_parallelism": "2",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "406991",
@@ -10393,7 +9381,7 @@
         "minute": "30",
         "dayofweek": "2",
         "dataset": "MovieLens",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "10.483",
@@ -10407,11 +9395,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407000",
@@ -10434,7 +9418,7 @@
         "minute": "43",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -10448,11 +9432,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "407002",
@@ -10489,11 +9469,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "407004",
@@ -10530,11 +9506,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "407007",
@@ -10557,7 +9529,7 @@
         "minute": "56",
         "dayofweek": "2",
         "dataset": "BipedalWalker",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "12.828",
@@ -10571,11 +9543,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407009",
@@ -10612,11 +9580,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407011",
@@ -10653,11 +9617,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407016",
@@ -10694,11 +9654,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "407025",
@@ -10721,7 +9677,7 @@
         "minute": "13",
         "dayofweek": "2",
         "dataset": "ImageNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "80.522",
@@ -10735,11 +9691,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "8",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "8"
     },
     {
         "job_id": "407029",
@@ -10762,7 +9714,7 @@
         "minute": "15",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -10776,11 +9728,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407031",
@@ -10803,7 +9751,7 @@
         "minute": "16",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "11.533",
@@ -10817,11 +9765,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407032",
@@ -10844,7 +9788,7 @@
         "minute": "16",
         "dayofweek": "2",
         "dataset": "Wikitext2",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "76.2",
@@ -10858,11 +9802,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "407034",
@@ -10885,7 +9825,7 @@
         "minute": "16",
         "dayofweek": "2",
         "dataset": "LunarLander",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "12.425",
@@ -10899,11 +9839,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407035",
@@ -10940,11 +9876,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407043",
@@ -10967,7 +9899,7 @@
         "minute": "22",
         "dayofweek": "2",
         "dataset": "MovieLens",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "9.836",
@@ -10981,11 +9913,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407046",
@@ -11022,11 +9950,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407048",
@@ -11058,16 +9982,12 @@
         "total_iterations": "8933",
         "time_per_iteration": "0.007388307264922534",
         "random_seed": "27",
-        "max_parallelism": "8",
+        "max_parallelism": "4",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "407051",
@@ -11090,7 +10010,7 @@
         "minute": "28",
         "dayofweek": "2",
         "dataset": "LSUN",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "34.9",
@@ -11099,16 +10019,12 @@
         "total_iterations": "32012410",
         "time_per_iteration": "0.0006403766439268921",
         "random_seed": "31",
-        "max_parallelism": "2",
+        "max_parallelism": "8",
         "cross_machine_slowdown": "0.8",
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407052",
@@ -11131,7 +10047,7 @@
         "minute": "28",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "48.0",
@@ -11145,11 +10061,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407058",
@@ -11186,11 +10098,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "10",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "10"
     },
     {
         "job_id": "407062",
@@ -11213,7 +10121,7 @@
         "minute": "36",
         "dayofweek": "2",
         "dataset": "ImageNet",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "95.864",
@@ -11227,11 +10135,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407077",
@@ -11268,11 +10172,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407084",
@@ -11295,7 +10195,7 @@
         "minute": "4",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "33.571",
@@ -11309,11 +10209,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407086",
@@ -11336,7 +10232,7 @@
         "minute": "5",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "28.833",
@@ -11350,11 +10246,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407099",
@@ -11391,11 +10283,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "7",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "7"
     },
     {
         "job_id": "407105",
@@ -11418,7 +10306,7 @@
         "minute": "19",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "33.571",
@@ -11432,11 +10320,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407113",
@@ -11473,11 +10357,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407115",
@@ -11500,7 +10380,7 @@
         "minute": "29",
         "dayofweek": "2",
         "dataset": "SQuAD",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "99.689",
@@ -11514,11 +10394,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407116",
@@ -11555,11 +10431,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407118",
@@ -11596,11 +10468,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "7",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "7"
     },
     {
         "job_id": "407121",
@@ -11637,11 +10505,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407124",
@@ -11664,7 +10528,7 @@
         "minute": "36",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "50.5",
@@ -11678,11 +10542,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407125",
@@ -11719,11 +10579,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407128",
@@ -11760,11 +10616,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "407131",
@@ -11801,11 +10653,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407133",
@@ -11842,11 +10690,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407139",
@@ -11869,7 +10713,7 @@
         "minute": "47",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "28.833",
@@ -11883,11 +10727,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "7",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "7"
     },
     {
         "job_id": "407140",
@@ -11924,11 +10764,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "7",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "7"
     },
     {
         "job_id": "407143",
@@ -11951,7 +10787,7 @@
         "minute": "48",
         "dayofweek": "2",
         "dataset": "LunarLander",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "11.949",
@@ -11965,11 +10801,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407144",
@@ -12006,11 +10838,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407146",
@@ -12047,11 +10875,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "1",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "1"
     },
     {
         "job_id": "407149",
@@ -12074,7 +10898,7 @@
         "minute": "51",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "25.5",
@@ -12088,11 +10912,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "7",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "7"
     },
     {
         "job_id": "407156",
@@ -12129,11 +10949,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407162",
@@ -12156,7 +10972,7 @@
         "minute": "3",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "24.5",
@@ -12170,11 +10986,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407166",
@@ -12211,11 +11023,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407172",
@@ -12252,11 +11060,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "407175",
@@ -12279,7 +11083,7 @@
         "minute": "26",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "5.551",
@@ -12293,11 +11097,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407182",
@@ -12320,7 +11120,7 @@
         "minute": "28",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -12334,11 +11134,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407189",
@@ -12361,7 +11157,7 @@
         "minute": "30",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "6.24",
@@ -12375,11 +11171,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407195",
@@ -12402,7 +11194,7 @@
         "minute": "32",
         "dayofweek": "2",
         "dataset": "BipedalWalker",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "12.828",
@@ -12416,11 +11208,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407199",
@@ -12443,7 +11231,7 @@
         "minute": "35",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -12457,11 +11245,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407200",
@@ -12484,7 +11268,7 @@
         "minute": "35",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -12498,11 +11282,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407202",
@@ -12539,11 +11319,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407203",
@@ -12566,7 +11342,7 @@
         "minute": "36",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "6.24",
@@ -12580,11 +11356,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407212",
@@ -12621,11 +11393,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407215",
@@ -12662,11 +11430,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407217",
@@ -12703,11 +11467,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407218",
@@ -12730,7 +11490,7 @@
         "minute": "53",
         "dayofweek": "2",
         "dataset": "LSUN",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "94.0",
@@ -12744,11 +11504,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "4",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "4"
     },
     {
         "job_id": "407220",
@@ -12785,11 +11541,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407221",
@@ -12826,11 +11578,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407224",
@@ -12853,7 +11601,7 @@
         "minute": "4",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "50.5",
@@ -12867,11 +11615,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407226",
@@ -12894,7 +11638,7 @@
         "minute": "6",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "80.667",
@@ -12908,11 +11652,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407227",
@@ -12935,7 +11675,7 @@
         "minute": "9",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "44.0",
@@ -12949,11 +11689,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407229",
@@ -12990,11 +11726,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "0",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "0"
     },
     {
         "job_id": "407230",
@@ -13017,7 +11749,7 @@
         "minute": "12",
         "dayofweek": "2",
         "dataset": "ShapeNet",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "1",
         "gpu_util": "5.551",
@@ -13031,11 +11763,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "407233",
@@ -13072,11 +11800,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "407234",
@@ -13113,11 +11837,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407240",
@@ -13154,11 +11874,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "407243",
@@ -13181,7 +11897,7 @@
         "minute": "27",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -13195,11 +11911,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407244",
@@ -13222,7 +11934,7 @@
         "minute": "28",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "62.0",
@@ -13236,11 +11948,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407245",
@@ -13277,11 +11985,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407246",
@@ -13304,7 +12008,7 @@
         "minute": "28",
         "dayofweek": "2",
         "dataset": "MovieLens",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "9.836",
@@ -13318,11 +12022,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407247",
@@ -13345,7 +12045,7 @@
         "minute": "29",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "42.8",
@@ -13359,11 +12059,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407248",
@@ -13386,7 +12082,7 @@
         "minute": "30",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "48.0",
@@ -13400,11 +12096,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407250",
@@ -13427,7 +12119,7 @@
         "minute": "32",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "96.25",
@@ -13441,11 +12133,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407251",
@@ -13468,7 +12156,7 @@
         "minute": "33",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -13482,11 +12170,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407252",
@@ -13509,7 +12193,7 @@
         "minute": "33",
         "dayofweek": "2",
         "dataset": "BipedalWalker",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "128",
         "amp": "0",
         "gpu_util": "14.089",
@@ -13523,11 +12207,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "407253",
@@ -13564,11 +12244,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407254",
@@ -13591,7 +12267,7 @@
         "minute": "33",
         "dayofweek": "2",
         "dataset": "LSUN",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "57.778",
@@ -13605,11 +12281,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "11",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "11"
     },
     {
         "job_id": "407255",
@@ -13646,11 +12318,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407257",
@@ -13687,11 +12355,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407258",
@@ -13728,11 +12392,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407260",
@@ -13769,11 +12429,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407263",
@@ -13796,7 +12452,7 @@
         "minute": "35",
         "dayofweek": "2",
         "dataset": "LunarLander",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "64",
         "amp": "0",
         "gpu_util": "11.949",
@@ -13810,11 +12466,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "12",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "12"
     },
     {
         "job_id": "407266",
@@ -13837,7 +12489,7 @@
         "minute": "38",
         "dayofweek": "2",
         "dataset": "SQuAD",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "0",
         "gpu_util": "99.689",
@@ -13851,11 +12503,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407279",
@@ -13878,7 +12526,7 @@
         "minute": "46",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "64",
         "amp": "1",
         "gpu_util": "41.833",
@@ -13892,11 +12540,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407280",
@@ -13919,7 +12563,7 @@
         "minute": "47",
         "dayofweek": "2",
         "dataset": "SQuAD",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "99.593",
@@ -13933,11 +12577,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407281",
@@ -13974,11 +12614,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "14",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "14"
     },
     {
         "job_id": "407287",
@@ -14001,7 +12637,7 @@
         "minute": "53",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "VGG",
+        "model": "ResNet50",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -14015,11 +12651,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407288",
@@ -14042,7 +12674,7 @@
         "minute": "57",
         "dayofweek": "2",
         "dataset": "CIFAR-10",
-        "model": "ResNet50",
+        "model": "VGG",
         "batchsize": "32",
         "amp": "1",
         "gpu_util": "20.571",
@@ -14056,11 +12688,7 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     },
     {
         "job_id": "407289",
@@ -14097,10 +12725,6 @@
         "cross_rack_slowdown": "0.7",
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
-        "job_group_id": "5",
-        "delay_timers": [
-            1,
-            10
-        ]
+        "job_group_id": "5"
     }
 ]
