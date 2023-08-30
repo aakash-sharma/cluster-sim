@@ -37,7 +37,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 					Cluster.getInstance().getConfiguration().getmNwDelayWait();
 		}
 
-		System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + "to: "
+		System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + " to: "
 				+ String.valueOf(nwDelayWait));
 
 		if (delay_timers[4] != -1) {
@@ -47,7 +47,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 			rackDelayWait = Cluster.getInstance().getLeaseTime() *
 					Cluster.getInstance().getConfiguration().getmRackDelayWait();
 		}
-		System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + "to: "
+		System.out.println("Setting rack delay for job: " + String.valueOf(this.getJobId()) + " to: "
 				+ String.valueOf(rackDelayWait));
 	}
 
