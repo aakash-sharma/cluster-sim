@@ -37,12 +37,38 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 					Cluster.getInstance().getConfiguration().getmNwDelayWait();
 		}
 
+		System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + "to: "
+				+ String.valueOf(nwDelayWait));
+
 		if (delay_timers[4] != -1) {
 			rackDelayWait = Cluster.getInstance().getLeaseTime() * delay_timers[4];
 		}
 		else {
 			rackDelayWait = Cluster.getInstance().getLeaseTime() *
 					Cluster.getInstance().getConfiguration().getmRackDelayWait();
+		}
+		System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + "to: "
+				+ String.valueOf(rackDelayWait));
+	}
+
+	public void tuneDelayTimers(){
+		double remain_ratio = (double)getmTotalIterationsRemaining() / getmTotalExpectedIterations();
+		int num_dims = Simulation.getNumDims();
+
+		if (mSlowdownDims[num_dims-1] != -1) {
+			if (remain_ratio <= .3)
+			{
+				System.out.println("Reducing nw delay by 1");
+				//nwDelayWait -= 1;
+			}
+		}
+
+		if (mSlowdownDims[num_dims-2] != -1) {
+			if (remain_ratio <= .3)
+			{
+				System.out.println("Reducing rack delay to 0");
+				rackDelayWait = 0;
+			}
 		}
 	}
 
@@ -82,7 +108,8 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 	public void startIteration() {
 		super.startIteration();
-		mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
+		//mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
+		mGPUServiceForJob = (double)getmTotalIterationsRemaining() / getmTotalExpectedIterations();
 	}
 
 	public double getNwDelayWait(){
