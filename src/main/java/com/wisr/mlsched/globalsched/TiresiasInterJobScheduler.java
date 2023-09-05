@@ -11,7 +11,6 @@ import org.apache.commons.collections4.keyvalue.MultiKey;
 
 import com.wisr.mlsched.config.ClusterConfiguration;
 import com.wisr.mlsched.resources.GPU;
-import org.apache.commons.lang3.tuple.MutablePair;
 
 //import java.util.HashMap;
 
