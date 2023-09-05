@@ -65,9 +65,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			return allocatedGpus;
 		}
 
-		System.out.println("====== Dally Consolidated gpu allocation ======");
-		System.out.println("JobId: " + String.valueOf(job.getJobId()) + " GPU list: " + String.valueOf(gpuList.size())
-				+ " GPU demand: " + String.valueOf(gpuDemand));
+//		System.out.println("====== Dally Consolidated gpu allocation ======");
+//		System.out.println("JobId: " + String.valueOf(job.getJobId()) + " GPU list: " + String.valueOf(gpuList.size())
+//				+ " GPU demand: " + String.valueOf(gpuDemand));
 
 		Integer allocatedRack = -1;
 		Integer allocatedMachine = -1;

@@ -63,9 +63,9 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			return allocatedGpus;
 		}
 
-		System.out.println("====== Tiresias Consolidated gpu allocation ======");
-		System.out.println(gpuList.size());
-		System.out.println(gpuDemand);
+//		System.out.println("====== Tiresias Consolidated gpu allocation ======");
+//		System.out.println(gpuList.size());
+//		System.out.println(gpuDemand);
 
 		Integer allocatedRack = -1;
 		Integer allocatedMachine = -1;
