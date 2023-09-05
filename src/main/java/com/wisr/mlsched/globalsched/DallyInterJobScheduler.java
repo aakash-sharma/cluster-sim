@@ -4,25 +4,34 @@ import com.wisr.mlsched.Simulation;
 import com.wisr.mlsched.config.ClusterConfiguration;
 import com.wisr.mlsched.localsched.IntraJobScheduler;
 import com.wisr.mlsched.localsched.DallyIntraJobScheduler;
+import com.wisr.mlsched.localsched.DallyIntraJobScheduler;
+import com.wisr.mlsched.localsched.DallyIntraJobScheduler;
+import com.wisr.mlsched.resources.Cluster;
 import com.wisr.mlsched.resources.GPU;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.apache.commons.collections4.map.MultiKeyMap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 //import java.util.HashMap;
 
 public class DallyInterJobScheduler extends InterJobScheduler {
 
 	protected boolean mConsolidate;
+	private Vector<DallyIntraJobScheduler> mFgPriorityQ;
+	private Vector<DallyIntraJobScheduler> mBgPriorityQ;
+	private double mMinPriority;
+	private double mMaxPriority;
+	private int mGPUusage;
 
 	public DallyInterJobScheduler(ClusterConfiguration config){
 		super(config);
 		mConsolidate = config.getmConsolidate();
-
+		mFgPriorityQ = new Vector<DallyIntraJobScheduler>();
+		mBgPriorityQ = new Vector<DallyIntraJobScheduler>();
+		mMinPriority = Double.MAX_VALUE;
+		mMaxPriority = 0;
 	}
+
 	public DallyInterJobScheduler(){
 		mConsolidate = false;
 	}
@@ -35,6 +44,14 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		else {
 			perGPUResourceAllocator(gpu_set);
 		}
+	}
+
+	public Vector<DallyIntraJobScheduler> getFgPriorityQ(){
+		return mFgPriorityQ;
+	}
+
+	public Vector<DallyIntraJobScheduler> getBgPriorityQ() {
+		return mBgPriorityQ;
 	}
 
 	@Override
@@ -285,5 +302,165 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			}
 		}
 		return allocatedGpus;
+	}
+
+	public void removeJob(DallyIntraJobScheduler job) {
+		mGPUusage -= job.getCurrentParallelism();
+		System.out.println("Removing job: " + String.valueOf(job.getJobId()));
+		if (!mFgPriorityQ.remove(job)) {
+			if (!mBgPriorityQ.remove(job)){
+				System.out.println("Job not found in any Q!!!");
+				System.exit(-1);
+			}
+		}
+
+		if (job.getGPUServiceForJob() == mMinPriority || job.getGPUServiceForJob() == mMaxPriority) {
+			mMinPriority = Double.MAX_VALUE;
+			mMaxPriority = 0;
+
+			for (DallyIntraJobScheduler job2 : mFgPriorityQ) {
+				mMinPriority = Math.min(mMinPriority, job2.getGPUServiceForJob());
+				mMaxPriority = Math.max(mMaxPriority, job2.getGPUServiceForJob());
+			}
+			for (DallyIntraJobScheduler job2 : mBgPriorityQ) {
+				mMinPriority = Math.min(mMinPriority, job2.getGPUServiceForJob());
+				mMaxPriority = Math.max(mMaxPriority, job2.getGPUServiceForJob());
+			}
+
+		}
+	}
+
+	public boolean checkJobPreempted(DallyIntraJobScheduler job) {
+
+		mMinPriority = Math.min(mMinPriority, job.getGPUServiceForJob());
+		mMaxPriority = Math.max(mMaxPriority, job.getGPUServiceForJob());
+		double priority_gradient = (mMaxPriority - mMinPriority) / 2;
+
+		if (job.getGPUServiceForJob() <= mMinPriority + priority_gradient) {
+			if (job.getJobQ() == 1) {
+				if(!mBgPriorityQ.remove(job)) {
+					System.out.println("Job not found in BgQ!!! : " + String.valueOf(job.getJobId()));
+					System.exit(-1);
+				}
+				mFgPriorityQ.add(job);
+				job.setJobQ(0);
+				Collections.sort(mFgPriorityQ, new IntraJobSchedComparator());
+			}
+			return false;
+		}
+
+		if (job.getJobQ() == 0) {
+			if(!mFgPriorityQ.remove(job)) {
+				System.out.println("Job not found in FgQ!!! : " + String.valueOf(job.getJobId()));
+				System.exit(-1);
+			}
+			mBgPriorityQ.add(job);
+			job.setJobQ(1);
+			Collections.sort(mBgPriorityQ, new IntraJobSchedComparator());
+		}
+
+
+		if (Cluster.getInstance().getGPUsInCluster().size() > mGPUusage) {
+			return false;
+		}
+
+		mGPUusage -= job.getCurrentParallelism();
+		return true;
+	}
+
+	protected void multiGPUResourceAllocator(List<GPU> gpu_set) {
+		if(Cluster.getInstance().getRunningJobs().size() == 0) {
+			// Means no jobs are running, hence nothing to do
+			return;
+		}
+		List<GPU> gpuList = new ArrayList<GPU>();
+
+		for(GPU gpu : gpu_set) {
+			// Put this GPU up for auction by getting bids from jobs
+			if (gpu.isLeased()) {
+				// Already leased.
+				continue;
+			}
+			gpuList.add(gpu);
+		}
+
+		/*System.out.println("Printing FgQ");
+		for(DallyIntraJobScheduler job : mFgPriorityQ) {
+			System.out.println(job.getJobId());
+		}
+		System.out.println("Printing BgQ");
+		for(DallyIntraJobScheduler job : mBgPriorityQ) {
+			System.out.println(job.getJobId());
+		}*/
+
+		for(DallyIntraJobScheduler job : mFgPriorityQ) {
+
+			if (gpuList.isEmpty())
+				break;
+
+			if (!job.isWaitingForResources() || job.getMaxParallelism() > gpuList.size()) {
+				continue;
+			}
+
+			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, job);
+
+			if (gpuAllocation.isEmpty()){
+				continue;
+			}
+
+			System.out.println("Allocated GPUs to job");
+			for (GPU gpu: gpuAllocation){
+				System.out.println(gpu.getLocation().getGPUId() + " "  + gpu.getLocation().getDim2Id()
+						+ " " + gpu.getLocation().getDim1Id() + " " + gpu.getLocation().getSlotId() + " " +
+						gpu.getLocation().getMachineId() + " " + gpu.getLocation().getRackId() + "\n");
+			}
+
+			job.notifyResourceAssignment(gpuAllocation);
+
+			for (GPU gpu : gpuAllocation) {
+				gpu.assignGPU(Cluster.getInstance().getLeaseTime(), job);
+				mGPUusage += 1;
+				if (!gpuList.remove(gpu)) {
+					System.out.println("Unable to remove GPU from gpu list!");
+					System.exit(-1);
+				}
+			}
+		}
+
+		for (DallyIntraJobScheduler job : mBgPriorityQ) {
+
+			if (gpuList.isEmpty())
+				break;
+
+			if (!job.isWaitingForResources() || job.getMaxParallelism() > gpuList.size()) {
+				continue;
+			}
+
+			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, job);
+
+			if (gpuAllocation.isEmpty()) {
+				continue;
+			}
+
+			System.out.println("Allocated GPUs to job");
+			for (GPU gpu : gpuAllocation) {
+				System.out.println(gpu.getLocation().getGPUId() + " " + gpu.getLocation().getDim2Id()
+						+ " " + gpu.getLocation().getDim1Id() + " " + gpu.getLocation().getSlotId() + " " +
+						gpu.getLocation().getMachineId() + " " + gpu.getLocation().getRackId() + "\n");
+			}
+
+			job.notifyResourceAssignment(gpuAllocation);
+
+			for (GPU gpu : gpuAllocation) {
+				gpu.assignGPU(Cluster.getInstance().getLeaseTime(), job);
+				mGPUusage += 1;
+				if (!gpuList.remove(gpu)) {
+					System.out.println("Unable to remove GPU from gpu list!");
+					System.exit(-1);
+				}
+			}
+		}
+
+		startWaitingJobs();
 	}
 }

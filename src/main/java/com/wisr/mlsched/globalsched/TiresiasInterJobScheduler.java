@@ -340,16 +340,4 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 
 		startWaitingJobs();
 	}
-
-	protected class IntraJobSchedComparator implements Comparator<IntraJobScheduler> {
-
-		@Override
-		public int compare(IntraJobScheduler job1, IntraJobScheduler job2) {
-			int comp = Double.compare(job1.getJobStartTime(), job2.getJobStartTime());
-			if(comp != 0) {
-				return -1*comp;
-			}
-			return job1.getJobId() - job2.getJobId();
-		}
-	}
 }
