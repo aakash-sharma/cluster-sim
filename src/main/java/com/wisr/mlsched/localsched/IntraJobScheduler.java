@@ -35,7 +35,7 @@ import com.wisr.mlsched.resources.GPU;
 public abstract class IntraJobScheduler {
 	// List of Job configurations
 	private int mJobGroupId; // Unique identifier for job group to which this job belongs
-	private int mJobId; // Unique identifier for this job
+	protected int mJobId; // Unique identifier for this job
 	protected double mJobStartTime; // Job start time
 	protected long mTotalExpectedIterations; // Total number of iterations job is expected to run
 	protected double mTimePerIteration; // Amount of time for a single iteration of job on 1 GPU
@@ -50,24 +50,24 @@ public abstract class IntraJobScheduler {
 	private String mModelName; // Model name of the job
 	private String mAstraSimPath;
 	private String mAstraSimBinPath;
-	private int[] mAllocs;
-	private final double CHECKPOINTING_OVERHEAD_PER_GPU = 0.0; // 6 seconds overhead
+	protected int[] mAllocs;
+	protected final double CHECKPOINTING_OVERHEAD_PER_GPU = 60.0; // 6 seconds overhead
 	
 	// State management for job
-	private boolean mIsLeader; // Whether this job is the leader in it's job group
+	protected boolean mIsLeader; // Whether this job is the leader in it's job group
 	protected long mTotalIterationsRemaining; // Number of iterations of job remaining
 	protected Set<GPU> mCurrentIterationGPUs; // GPUs for current iteration
 	private Set<GPU> mNextIterationExpectedGPUs; // GPUs we expect from current iteration to be used for next iteration
 	protected Set<GPU> mNextIterationGPUs; // GPUs allocated for next iteration
-	private boolean mIsWaiting; // Represents if job is waiting for resources
+	protected boolean mIsWaiting; // Represents if job is waiting for resources
 	protected double oldRatio; // Old value of Ts/Ti
 	protected double themisTs; // Themis Ts
-	private double mTimeLastResourceAssignment; 
+	protected double mTimeLastResourceAssignment;
 	private static Logger sLog; // Instance of logger
-	private double mGpuTime;
-	private double mCommTime;
-	private double mCompTime;
-	private double queueDelay; // State to maintain with admission control
+	protected double mGpuTime;
+	protected double mCommTime;
+	protected double mCompTime;
+	protected double queueDelay; // State to maintain with admission control
 	private double mJobArrivalTime; // Arrival time of the job
 	private boolean mIsQueued; // Every job starts with getting queued
 	private Map<Set<GPU>, Double> mSlowdown;
@@ -77,11 +77,12 @@ public abstract class IntraJobScheduler {
 
 	public IntraJobScheduler(JSONObject config) {
 		initFromConfig(config);
-		mJobStartTime = Simulation.getSimulationTime();
+		//mJobStartTime = Simulation.getSimulationTime();
+		mJobStartTime = -1;
 		mJobArrivalTime = ConfigUtils.getJobStartTime(config);
 		sLog = Logger.getLogger(Cluster.class.getSimpleName());
 		sLog.setLevel(Simulation.getLogLevel());
-		sLog.info("Starting job " + Integer.toString(mJobId));
+		sLog.info("Arrived job " + Integer.toString(mJobId));
 		mCurrentIterationGPUs = new HashSet<GPU>();
 		mNextIterationExpectedGPUs = new HashSet<GPU>();
 		mNextIterationGPUs = new HashSet<GPU>();
@@ -97,13 +98,13 @@ public abstract class IntraJobScheduler {
 		mSlowdownDims = new double[Simulation.getNumDims()];
 		Arrays.fill(mSlowdownDims, -1);
 		mAllocs = new int[Simulation.getNumDims()];
-		JobStatistics.getInstance().recordJobStart(mJobId, Simulation.getSimulationTime(), mMaxParallelism);
 		List<GPU> availableResources = getResourcesAvailableInCluster();
 		if (!availableResources.isEmpty()) {
 			ClusterEventQueue.getInstance()
 					.enqueueEvent(new ResourceAvailableEvent(Simulation.getSimulationTime(), availableResources));
 		}
-		queueDelay = mJobStartTime - mJobArrivalTime;
+		//queueDelay = mJobStartTime - mJobArrivalTime;
+		queueDelay = 0;
 		mIsQueued = true;
 	}
 	
@@ -135,6 +136,18 @@ public abstract class IntraJobScheduler {
 		else {
 			this.mTotalIterationsRemaining = mTotalIterationsRemaining;
 		}
+	}
+
+	public void setJobStartTime(double time) {
+		if (mJobStartTime == -1) {
+			mJobStartTime = time;
+			queueDelay = mJobStartTime - mJobArrivalTime;
+			JobStatistics.getInstance().recordJobStart(mJobId, time, mMaxParallelism);
+		}
+	}
+
+	public double getJobStartTime() {
+		return mJobStartTime;
 	}
 	
 	public double getLastResourceAssignment() {
@@ -245,6 +258,9 @@ public abstract class IntraJobScheduler {
 			System.out.println("Free JVM memory: " + Runtime.getRuntime().freeMemory());
 			return;
 		}
+
+		// check for job priority and preempt
+
 		// Job has iterations left
 		List<GPU> expiredResources = new ArrayList<GPU>();
 		Iterator<GPU> currentGPUIterator = mCurrentIterationGPUs.iterator();
@@ -265,6 +281,8 @@ public abstract class IntraJobScheduler {
 		}
 
 		// check if this iteration can finish within the least lease end time
+
+		// instead of this, check if the job priority has changed
 		while (true) {
 			boolean converged = true;
 			double timeForIterations = mTimePerIteration * mIterGranularity /
@@ -1035,7 +1053,7 @@ public abstract class IntraJobScheduler {
 		return bids;
 	}
 
-	private List<GPU> relinquishAllResources() {
+	protected List<GPU> relinquishAllResources() {
 		List<GPU> gpus = Cluster.getInstance().getGPUsInCluster();
 		List<GPU> releasedResources = new ArrayList<GPU>();
 		Iterator<GPU> gpuIterator = gpus.iterator();

@@ -2,23 +2,35 @@ package com.wisr.mlsched.globalsched;
 
 import java.util.*;
 
+import com.wisr.mlsched.job.Bid;
 import com.wisr.mlsched.localsched.IntraJobScheduler;
+import com.wisr.mlsched.localsched.TiresiasIntraJobScheduler;
 import com.wisr.mlsched.resources.Cluster;
 import org.apache.commons.collections4.map.MultiKeyMap;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 
 import com.wisr.mlsched.config.ClusterConfiguration;
 import com.wisr.mlsched.resources.GPU;
+import org.apache.commons.lang3.tuple.MutablePair;
 
 //import java.util.HashMap;
 
 public class TiresiasInterJobScheduler extends InterJobScheduler {
 
 	protected boolean mConsolidate;
+	private Vector<TiresiasIntraJobScheduler> mFgPriorityQ;
+	private Vector<TiresiasIntraJobScheduler> mBgPriorityQ;
+	private double mMinPriority;
+	private double mMaxPriority;
+	private int mGPUusage;
 
 	public TiresiasInterJobScheduler(ClusterConfiguration config){
 		super(config);
+		mFgPriorityQ = new Vector<TiresiasIntraJobScheduler>();
+		mBgPriorityQ = new Vector<TiresiasIntraJobScheduler>();
 		mConsolidate = config.getmConsolidate();
+		mMinPriority = Double.MAX_VALUE;
+		mMaxPriority = 0;
 
 	}
 	public TiresiasInterJobScheduler(){
@@ -35,6 +47,13 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 		}
 	}
 
+	public Vector<TiresiasIntraJobScheduler> getFgPriorityQ(){
+		return mFgPriorityQ;
+	}
+
+	public Vector<TiresiasIntraJobScheduler> getBgPriorityQ(){
+		return mBgPriorityQ;
+	}
 	@Override
 	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, IntraJobScheduler job) {
 
@@ -159,6 +178,178 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			if (gpuDemand == 0) {
 				break;
 			}
+		}
+	}
+
+	public void removeJob(TiresiasIntraJobScheduler job) {
+		mGPUusage -= job.getCurrentParallelism();
+		System.out.println("Removing job: " + String.valueOf(job.getJobId()));
+		if (!mFgPriorityQ.remove(job)) {
+			if (!mBgPriorityQ.remove(job)){
+				System.out.println("Job not found in any Q!!!");
+				System.exit(-1);
+			}
+		}
+
+		if (job.getGPUServiceForJob() == mMinPriority || job.getGPUServiceForJob() == mMaxPriority) {
+			mMinPriority = Double.MAX_VALUE;
+			mMaxPriority = 0;
+
+			for (TiresiasIntraJobScheduler job2 : mFgPriorityQ) {
+				mMinPriority = Math.min(mMinPriority, job2.getGPUServiceForJob());
+				mMaxPriority = Math.max(mMaxPriority, job2.getGPUServiceForJob());
+			}
+			for (TiresiasIntraJobScheduler job2 : mBgPriorityQ) {
+				mMinPriority = Math.min(mMinPriority, job2.getGPUServiceForJob());
+				mMaxPriority = Math.max(mMaxPriority, job2.getGPUServiceForJob());
+			}
+
+		}
+	}
+
+	public boolean checkJobPreempted(TiresiasIntraJobScheduler job) {
+
+		mMinPriority = Math.min(mMinPriority, job.getGPUServiceForJob());
+		mMaxPriority = Math.max(mMaxPriority, job.getGPUServiceForJob());
+		double priority_gradient = (mMaxPriority - mMinPriority) / 2;
+
+		if (job.getGPUServiceForJob() <= mMinPriority + priority_gradient) {
+			if (job.getJobQ() == 1) {
+				if(!mBgPriorityQ.remove(job)) {
+					System.out.println("Job not found in BgQ!!! : " + String.valueOf(job.getJobId()));
+					System.exit(-1);
+				}
+				mFgPriorityQ.add(job);
+				job.setJobQ(0);
+				Collections.sort(mFgPriorityQ, new IntraJobSchedComparator());
+			}
+			return false;
+		}
+
+		if (job.getJobQ() == 0) {
+			if(!mFgPriorityQ.remove(job)) {
+				System.out.println("Job not found in FgQ!!! : " + String.valueOf(job.getJobId()));
+				System.exit(-1);
+			}
+			mBgPriorityQ.add(job);
+			job.setJobQ(1);
+			Collections.sort(mBgPriorityQ, new IntraJobSchedComparator());
+		}
+
+
+		if (Cluster.getInstance().getGPUsInCluster().size() > mGPUusage) {
+			return false;
+		}
+
+		mGPUusage -= job.getCurrentParallelism();
+		return true;
+	}
+
+	protected void multiGPUResourceAllocator(List<GPU> gpu_set) {
+		if(Cluster.getInstance().getRunningJobs().size() == 0) {
+			// Means no jobs are running, hence nothing to do
+			return;
+		}
+		List<GPU> gpuList = new ArrayList<GPU>();
+
+		for(GPU gpu : gpu_set) {
+			// Put this GPU up for auction by getting bids from jobs
+			if (gpu.isLeased()) {
+				// Already leased.
+				continue;
+			}
+			gpuList.add(gpu);
+		}
+
+		/*System.out.println("Printing FgQ");
+		for(TiresiasIntraJobScheduler job : mFgPriorityQ) {
+			System.out.println(job.getJobId());
+		}
+		System.out.println("Printing BgQ");
+		for(TiresiasIntraJobScheduler job : mBgPriorityQ) {
+			System.out.println(job.getJobId());
+		}*/
+
+		for(TiresiasIntraJobScheduler job : mFgPriorityQ) {
+
+			if (gpuList.isEmpty())
+				break;
+
+			if (!job.isWaitingForResources() || job.getMaxParallelism() > gpuList.size()) {
+				continue;
+			}
+
+			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, job);
+
+			if (gpuAllocation.isEmpty()){
+				continue;
+			}
+
+			System.out.println("Allocated GPUs to job");
+			for (GPU gpu: gpuAllocation){
+				System.out.println(gpu.getLocation().getGPUId() + " "  + gpu.getLocation().getDim2Id()
+						+ " " + gpu.getLocation().getDim1Id() + " " + gpu.getLocation().getSlotId() + " " +
+						gpu.getLocation().getMachineId() + " " + gpu.getLocation().getRackId() + "\n");
+			}
+
+			job.notifyResourceAssignment(gpuAllocation);
+
+			for (GPU gpu : gpuAllocation) {
+				gpu.assignGPU(Cluster.getInstance().getLeaseTime(), job);
+				mGPUusage += 1;
+				if (!gpuList.remove(gpu)) {
+					System.out.println("Unable to remove GPU from gpu list!");
+					System.exit(-1);
+				}
+			}
+		}
+
+		for (TiresiasIntraJobScheduler job : mBgPriorityQ) {
+
+			if (gpuList.isEmpty())
+				break;
+
+			if (!job.isWaitingForResources() || job.getMaxParallelism() > gpuList.size()) {
+				continue;
+			}
+
+			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, job);
+
+			if (gpuAllocation.isEmpty()) {
+				continue;
+			}
+
+			System.out.println("Allocated GPUs to job");
+			for (GPU gpu : gpuAllocation) {
+				System.out.println(gpu.getLocation().getGPUId() + " " + gpu.getLocation().getDim2Id()
+						+ " " + gpu.getLocation().getDim1Id() + " " + gpu.getLocation().getSlotId() + " " +
+						gpu.getLocation().getMachineId() + " " + gpu.getLocation().getRackId() + "\n");
+			}
+
+			job.notifyResourceAssignment(gpuAllocation);
+
+			for (GPU gpu : gpuAllocation) {
+				gpu.assignGPU(Cluster.getInstance().getLeaseTime(), job);
+				mGPUusage += 1;
+				if (!gpuList.remove(gpu)) {
+					System.out.println("Unable to remove GPU from gpu list!");
+					System.exit(-1);
+				}
+			}
+		}
+
+		startWaitingJobs();
+	}
+
+	protected class IntraJobSchedComparator implements Comparator<IntraJobScheduler> {
+
+		@Override
+		public int compare(IntraJobScheduler job1, IntraJobScheduler job2) {
+			int comp = Double.compare(job1.getJobStartTime(), job2.getJobStartTime());
+			if(comp != 0) {
+				return -1*comp;
+			}
+			return job1.getJobId() - job2.getJobId();
 		}
 	}
 }

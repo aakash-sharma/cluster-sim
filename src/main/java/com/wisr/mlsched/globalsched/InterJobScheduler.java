@@ -38,6 +38,7 @@ public abstract class InterJobScheduler {
 		List<IntraJobScheduler> jobs = Cluster.getInstance().getRunningJobs();
 		for(IntraJobScheduler job : jobs) {
 			if(job.isWaitingForResources() && job.hasResourcesForNextIteration()) {
+				job.setJobStartTime(Simulation.getSimulationTime());
 				ClusterEventQueue.getInstance().enqueueEvent(
 						new StartIterationEvent(Simulation.getSimulationTime(), job));
 				job.notifyResourceAvailable();
@@ -230,6 +231,6 @@ public abstract class InterJobScheduler {
 			}
 			return bid1.getJob().getJobId() - bid2.getJob().getJobId();
 		}
-		
+
 	}
 }
