@@ -192,29 +192,25 @@ public class ConfigUtils {
 			i += 1;
 		}
 
+		//AS: add sloty latency here
+
+		if (machines > 1) {
+			topo_per_dim[i] = "Ring";
+			unit_count[i] = machines;
+			link_ratio[i] = 1;
+			dim_type[i] = "P";
+			link_latency[i] = 5000;
+			link_bandwidth[i] = 200;
+			nic_latency[i] = 0;
+		}
 		if (racks > 1) {
-			topo_per_dim[i] = "Ring";
-			topo_per_dim[i+1] = "Switch";
-			unit_count[i] = machines;
-			unit_count[i+1] = racks;
-			link_ratio[i] = 2;
-			link_ratio[i+1] = 1;
-			dim_type[i] = "P";
-			dim_type[i+1] = "PP";
-			link_latency[i] = 500; // ns
-			link_latency[i+1] = 50000000; // ns
-			link_bandwidth[i] = 100;
-			link_bandwidth[i+1] = 10;
-			nic_latency[i] = 0;
-			nic_latency[i+1] = 1000000;
-		} else if (machines > 1) {
-			topo_per_dim[i] = "Ring";
-			unit_count[i] = machines;
-			link_ratio[i] = machines * 2;
-			dim_type[i] = "P";
-			link_latency[i] = 500;
-			link_bandwidth[i] = 100;
-			nic_latency[i] = 0;
+			topo_per_dim[i + 1] = "Switch";
+			unit_count[i + 1] = racks;
+			link_ratio[i + 1] = 1;
+			dim_type[i + 1] = "PP";
+			link_latency[i + 1] = 50000; // ns
+			link_bandwidth[i + 1] = 400;
+			nic_latency[i + 1] = 0;
 		}
 
 		//gpus = intra_node_units.remove(0);
