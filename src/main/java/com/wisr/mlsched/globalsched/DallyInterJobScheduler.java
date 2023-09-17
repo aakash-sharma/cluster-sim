@@ -44,7 +44,7 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		job = (DallyIntraJobScheduler) job;
 		int gpuDemand = job.getMaxParallelism() - job.getGPUsAvailableForNextIteration().size();
 
-		if (gpuDemand <= 0 || gpuList.size() < gpuDemand){
+		if (gpuDemand > gpuList.size()){
 			return allocatedGpus;
 		}
 

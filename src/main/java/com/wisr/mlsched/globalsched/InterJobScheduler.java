@@ -99,61 +99,15 @@ public abstract class InterJobScheduler {
 		List<Bid> bids = new ArrayList<Bid>();
 		List<IntraJobScheduler> jobs = Cluster.getInstance().getRunningJobs();
 
-		/*
 		for(IntraJobScheduler job : jobs) {
 
-			List<GPU> gpuAllocation = consolidatedGPUAllocation(gpuList, job);
-
-			if (gpuAllocation.isEmpty()){
-				continue;
-			}
-
-			System.out.println("Allocated GPUs to job");
-			for (GPU gpu: gpuAllocation){
-				System.out.println(gpu.getLocation().getGPUId() + " "  + gpu.getLocation().getDim2Id()
-						 + " " + gpu.getLocation().getDim1Id() + " " + gpu.getLocation().getSlotId() + " " +
-						  gpu.getLocation().getMachineId() + " " + gpu.getLocation().getRackId() + "\n");
-			}
-
-			List<Bid> bidsFromJob = job.prepareMultiBid(gpuAllocation);
-			if(bidsFromJob != null && !bidsFromJob.isEmpty()) {
-				bids.addAll(bidsFromJob);
-			}
-		}
-		if(bids.size() == 0) {
-			// No bids. All jobs must be running at full capacity
-			return;
-		}
-		Collections.sort(bids, new PerGPUBidComparator());
-
-		Bid bid = bids.get(0); // Select the winner
-		bid.getJob().notifyResourceAssignment(bid.getGPUList());
-
-		for (GPU gpu : bid.getGPUList())
-			gpu.assignGPU(Cluster.getInstance().getLeaseTime(), bid.getJob());
-
-		int gpusLeft = gpu_set.size() - bid.getGPUList().size();
-
-		for (int i = 1; i < bids.size(); i++) {
-
-			if (gpusLeft <= 0)
-				break;
-
-			boolean flag = false;
-			bid = bids.get(i); // Select the winner
-
-			for (GPU gpu : bid.getGPUList()) {
-				if (gpu.isLeased()){
-					flag = true;
-					break;
-				}
-			}
-
-		 */
-
-		for(IntraJobScheduler job : jobs) {
-
+			/*
 			if (job.getGPUsAvailableForNextIteration().size() >= job.getMaxParallelism()) {
+				// Already have enough GPUs. No need to bid
+				continue;
+			}*/
+
+			if (!job.getGPUsAvailableForNextIteration().isEmpty()) {
 				// Already have enough GPUs. No need to bid
 				continue;
 			}

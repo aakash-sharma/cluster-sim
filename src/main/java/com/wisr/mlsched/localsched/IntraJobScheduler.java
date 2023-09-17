@@ -182,6 +182,10 @@ public abstract class IntraJobScheduler {
 		this.mAstraSimBinPath = astra_sim_bin_path;
 	}
 
+	public String getModelName() {
+		return mModelName;
+	}
+
 	// Aakash: Call astra sim here
 	public void startIteration() {
 		//sLog.log(Level.INFO, "Starting iteration for job " + Integer.toString(mJobId));

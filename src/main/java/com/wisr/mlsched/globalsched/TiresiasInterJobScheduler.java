@@ -41,7 +41,7 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 		List<GPU> allocatedGpus = new ArrayList<GPU>();
 		int gpuDemand = job.getMaxParallelism() - job.getGPUsAvailableForNextIteration().size();
 
-		if (gpuDemand <= 0) {
+		if (gpuDemand > gpuList.size()) {
 			return allocatedGpus;
 		}
 
@@ -109,7 +109,7 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			gpusPerMachine *= Cluster.getInstance().getConfiguration().getGPUsDim2();
 		}
 
-		if (gpuDemand > gpusPerMachine) {
+		if (gpuDemand > gpusPerMachine || isConsolidate(job)) {
 			System.out.println(("GPUs per machine = " + String.valueOf(gpusPerMachine)));
 
 			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
@@ -130,7 +130,7 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 
 		double gpusPerRack = gpusPerMachine * Cluster.getInstance().getConfiguration().getMachinesPerRack();
 
-		if (gpuDemand > gpusPerRack) {
+		if (gpuDemand > gpusPerRack || !isConsolidate(job)) {
 			System.out.println(("GPUs per rack = " + String.valueOf(gpusPerRack)));
 
 			allocateGPU(allocatedGpus, gpuList, gpuDemand, -1, -1, -1,
@@ -138,6 +138,16 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 		}
 
 		return allocatedGpus;
+	}
+
+	boolean isConsolidate(IntraJobScheduler job) {
+		String model = job.getModelName();
+		if (model.equals("ResNet50") || model.equals("ResNet18") || model.equals("MobileNet_v3")) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	private void allocateGPU(List<GPU> allocatedGpus, List<GPU> gpuList, int gpuDemand, int allocRack, int allocMac, int allocSlot,
