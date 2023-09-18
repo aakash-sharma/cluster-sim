@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 
 
 import com.wisr.mlsched.Simulation;
@@ -92,7 +93,8 @@ public class ConfigUtils {
 	public static ClusterConfiguration getClusterConfig(Integer cluster_racks, Integer cluster_machines,
 														String cluster_policy, JSONObject config,
 														JSONObject networkConfig, String system_config_file,
-														String run_name, double nw_delay_wait, double rack_delay_wait) {
+														String nw_overhead_file,String run_name, double nw_delay_wait,
+														double rack_delay_wait) {
 		int racks = cluster_racks;
 		int machines = cluster_machines;
 		int slots = 1;
@@ -280,6 +282,24 @@ public class ConfigUtils {
 			e.printStackTrace();
 		}
 
+		HashMap<String, Double> rackOverheads = new HashMap<String, Double>();
+		HashMap<String, Double> nwOverheads = new HashMap<String, Double>();
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(nw_overhead_file));
+			while ((line = br.readLine()) != null)   //returns a Boolean value
+			{
+				String[] split_line = line.split(",");
+
+				rackOverheads.put(split_line[0], Double.parseDouble(split_line[1]));
+				nwOverheads.put(split_line[0], Double.parseDouble(split_line[2]));
+			}
+
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
 //		System.out.println(run_name);
 //		System.out.println(racks);
 //		System.out.println(machines);
@@ -292,8 +312,8 @@ public class ConfigUtils {
 				policy, lease_time,
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
 				topo_name, topo_per_dim, dim_type, link_ratio, link_latency, link_bandwidth, all_reduce_impl,
-				all_gather_impl, reduce_scatter_impl, all_to_all_impl, intra_dim_sched, inter_dim_sched, nw_delay_wait,
-				rack_delay_wait);
+				all_gather_impl, reduce_scatter_impl, all_to_all_impl, intra_dim_sched, inter_dim_sched, rackOverheads,
+				nwOverheads, nw_delay_wait,	rack_delay_wait);
 
 	}
 	

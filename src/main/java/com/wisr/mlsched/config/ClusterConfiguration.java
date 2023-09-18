@@ -1,5 +1,7 @@
 package com.wisr.mlsched.config;
 
+import java.util.HashMap;
+
 /**
  * Representation of the cluster's configuration
  */
@@ -32,6 +34,10 @@ public class ClusterConfiguration {
 	String mIntraDimSched;
 	String mInterDimSched;
 	private String mRunName;
+	private HashMap<String, Double> mRackOverheads;
+	private HashMap<String, Double> mNwOverheads;
+	private double mNwDelayWait;
+	private double mRackDelayWait;
 
 	public double getmNwDelayWait() {
 		return mNwDelayWait;
@@ -40,9 +46,6 @@ public class ClusterConfiguration {
 	public double getmRackDelayWait() {
 		return mRackDelayWait;
 	}
-
-	private double mNwDelayWait;
-	private double mRackDelayWait;
 
 
 	public ClusterConfiguration(int racks, int machines_per_rack, int slots_per_machine, int gpus_per_slot,
@@ -71,8 +74,8 @@ public class ClusterConfiguration {
 								String astra_sim_bin_path, String topo_name, String[] topo_per_dim, String[] dim_type,
 								float[] link_ratio, long[] link_latency, int[] link_bandwidth, String[] all_reduce_impl,
 								String[] all_gather_impl, String[] reduce_scatter_impl, String[] all_to_all_impl,
-								String intra_dim_sched,	String inter_dim_sched, double nw_delay_wait,
-								double rack_delay_wait) {
+								String intra_dim_sched, String inter_dim_sched, HashMap<String, Double> rackOverheads,
+								HashMap<String, Double> nwOverheads, double nw_delay_wait, double rack_delay_wait) {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
@@ -101,6 +104,8 @@ public class ClusterConfiguration {
 		mIntraDimSched = intra_dim_sched;
 		mInterDimSched = inter_dim_sched;
 		mRunName = run_name;
+		mRackOverheads = rackOverheads;
+		mNwOverheads = nwOverheads;
 		mNwDelayWait = nw_delay_wait;
 		mRackDelayWait = rack_delay_wait;
 	}
@@ -201,5 +206,21 @@ public class ClusterConfiguration {
 	}
 	public String getmInterDimSched(){
 		return mInterDimSched;
+	}
+
+	public HashMap<String, Double> getmRackOverheads() {
+		return mRackOverheads;
+	}
+
+	public void setmRackOverheads(HashMap<String, Double> mRackOverheads) {
+		this.mRackOverheads = mRackOverheads;
+	}
+
+	public HashMap<String, Double> getmNwOverheads() {
+		return mNwOverheads;
+	}
+
+	public void setmNwOverheads(HashMap<String, Double> mNwOverheads) {
+		this.mNwOverheads = mNwOverheads;
 	}
 }

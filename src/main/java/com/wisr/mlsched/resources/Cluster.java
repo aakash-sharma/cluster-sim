@@ -127,9 +127,10 @@ public class Cluster {
 
 	public static Cluster createCluster(Integer racks, Integer machines, String cluster_policy,
 										JSONObject config, JSONObject networkConfig, String system_config_file,
-										String run_name, double nw_delay_wait, double rack_delay_wait) {
+										String nw_overhead_file, String run_name, double nw_delay_wait,
+										double rack_delay_wait) {
 		ClusterConfiguration clusterConfig = ConfigUtils.getClusterConfig(racks, machines, cluster_policy,
-				config, networkConfig, system_config_file, run_name, nw_delay_wait, rack_delay_wait);
+				config, networkConfig, system_config_file, nw_overhead_file, run_name, nw_delay_wait, rack_delay_wait);
 		sInstance = new Cluster(clusterConfig);
 		return sInstance;
 	}

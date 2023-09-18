@@ -47,7 +47,7 @@ public abstract class IntraJobScheduler {
 	private double mCrossMachineSlowdown; // Slowdown due to network b/w GPUs across machines
 	private double mCrossRackSlowdown; // Slowdown due to network b/w GPUs across slots
 	private String mUserName; // User of the job
-	private String mModelName; // Model name of the job
+	protected String mModelName; // Model name of the job
 	private String mAstraSimPath;
 	private String mAstraSimBinPath;
 	private int[] mAllocs;
@@ -305,7 +305,7 @@ public abstract class IntraJobScheduler {
 			mCurrentIterationGPUs = new HashSet<GPU>();
 			mIsWaiting = true;
 			mTimeLastResourceAssignment = Simulation.getSimulationTime();
-			//tuneDelayTimers();
+			tuneDelayTimers();
 		} else {
 			ClusterEventQueue.getInstance().enqueueEvent(new StartIterationEvent(Simulation.getSimulationTime(), this));
 		}

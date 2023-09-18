@@ -52,6 +52,11 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 	}
 
 	public void tuneDelayTimers(){
+		double rack_overhead = Cluster.getInstance().getConfiguration().getmRackOverheads().get(mModelName);
+		System.out.println("Rack overhead of model " + mModelName + " = " + rack_overhead);
+		double nw_overhead = Cluster.getInstance().getConfiguration().getmNwOverheads().get(mModelName);
+		System.out.println("Nw overhead of model " + mModelName + " = " + nw_overhead);
+
 		double remain_ratio = (double)getmTotalIterationsRemaining() / getmTotalExpectedIterations();
 		int num_dims = Simulation.getNumDims();
 
@@ -59,7 +64,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 			if (remain_ratio <= .3)
 			{
 				System.out.println("Reducing nw delay by 1");
-				//nwDelayWait -= 1;
+				nwDelayWait -= 1;
 			}
 		}
 
