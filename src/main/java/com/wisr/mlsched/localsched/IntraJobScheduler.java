@@ -64,7 +64,7 @@ public abstract class IntraJobScheduler {
 	protected double themisTs; // Themis Ts
 	private double mTimeLastResourceAssignment; 
 	private static Logger sLog; // Instance of logger
-	private double mGpuTime;
+	protected double mGpuTime;
 	private double mCommTime;
 	private double mCompTime;
 	private double queueDelay; // State to maintain with admission control
@@ -72,6 +72,7 @@ public abstract class IntraJobScheduler {
 	private boolean mIsQueued; // Every job starts with getting queued
 	private Map<Set<GPU>, Double> mSlowdown;
 	protected double[] mSlowdownDims;
+	protected int mCurrSlwstDim;
 	//private Map<Vector<Integer>, Double> mSlowdown;
 	//private Map<Integer[], Double> mSlowdown;
 
@@ -95,6 +96,7 @@ public abstract class IntraJobScheduler {
 		mIsLeader = true; // By default, everyone is a leader unless told otherwise
 		mSlowdown = new HashMap<>();
 		mSlowdownDims = new double[Simulation.getNumDims()];
+		mCurrSlwstDim = 0;
 		Arrays.fill(mSlowdownDims, -1);
 		mAllocs = new int[Simulation.getNumDims()];
 		JobStatistics.getInstance().recordJobStart(mJobId, Simulation.getSimulationTime(), mMaxParallelism);
@@ -305,7 +307,6 @@ public abstract class IntraJobScheduler {
 			mCurrentIterationGPUs = new HashSet<GPU>();
 			mIsWaiting = true;
 			mTimeLastResourceAssignment = Simulation.getSimulationTime();
-			tuneDelayTimers();
 		} else {
 			ClusterEventQueue.getInstance().enqueueEvent(new StartIterationEvent(Simulation.getSimulationTime(), this));
 		}
@@ -785,7 +786,7 @@ public abstract class IntraJobScheduler {
 		System.out.println("Jobid: " + mJobId);
 		//System.out.println("Topo size = " + String.valueOf(topoSize));
 		int topoSize = Simulation.getNumDims();
-		int slowdownIdx = topoSize-1;
+		int mCurrSlwstDim = topoSize-1;
 		//boolean[] topoPerDimVec = new boolean[topoSize];
 		Integer [] dimVec = new Integer[topoSize];
 		Arrays.fill(dimVec, -1);
@@ -810,12 +811,13 @@ public abstract class IntraJobScheduler {
 			dimType[topoSize] = "PP";
 			allocs[topoSize] += 1;
 			mAllocs[topoSize] += 1;
+			mCurrSlwstDim = topoSize;
 			allocFlag = false;
 			if (num_gpus % rack_size != 0) {
 				dimVec[topoSize] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				mSlowdownDims[slowdownIdx] = slowdown;
+				mSlowdownDims[mCurrSlwstDim] = slowdown;
 				return slowdown;
 			}
 			else {
@@ -833,7 +835,7 @@ public abstract class IntraJobScheduler {
 			if (allocFlag) {
 				allocs[topoSize] += 1;
 				mAllocs[topoSize] += 1;
-				slowdownIdx = topoSize;
+				mCurrSlwstDim = topoSize;
 				allocFlag = false;
 			}
 			if (topoSize <= 0) {
@@ -844,7 +846,7 @@ public abstract class IntraJobScheduler {
 				dimVec[topoSize] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				mSlowdownDims[slowdownIdx] = slowdown;
+				mSlowdownDims[mCurrSlwstDim] = slowdown;
 				return slowdown;
 			}
 			else {
@@ -867,13 +869,13 @@ public abstract class IntraJobScheduler {
 				if (allocFlag) {
 					allocs[topoSize] += 1;
 					mAllocs[topoSize] += 1;
-					slowdownIdx = topoSize;
+					mCurrSlwstDim = topoSize;
 					allocFlag = false;
 				}
 				dimVec[topoSize] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				mSlowdownDims[slowdownIdx] = slowdown;
+				mSlowdownDims[mCurrSlwstDim] = slowdown;
 				return slowdown;
 			} else if (slot_size > 1) {
 				dimVec[topoSize] = slotMap.size();
@@ -895,13 +897,13 @@ public abstract class IntraJobScheduler {
 				if (allocFlag) {
 					allocs[topoSize] += 1;
 					mAllocs[topoSize] += 1;
-					slowdownIdx = topoSize;
+					mCurrSlwstDim = topoSize;
 					allocFlag = false;
 				}
 				dimVec[topoSize] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				mSlowdownDims[slowdownIdx] = slowdown;
+				mSlowdownDims[mCurrSlwstDim] = slowdown;
 				return slowdown;
 			} else if (dim1_size > 1){
 				dimVec[topoSize] = dim1Map.size();
@@ -924,12 +926,12 @@ public abstract class IntraJobScheduler {
 					allocs[topoSize] += 1;
 					mAllocs[topoSize] += 1;
 					allocFlag = false;
-					slowdownIdx = topoSize;
+					mCurrSlwstDim = topoSize;
 				}
 				dimVec[topoSize] = num_gpus;
 				slowdown = astra_sim(dimVec, dimType);
 				mSlowdown.put(gpus, slowdown);
-				mSlowdownDims[slowdownIdx] = slowdown;
+				mSlowdownDims[mCurrSlwstDim] = slowdown;
 				return slowdown;
 			} else if (dim2_size > 1) {
 				dimVec[topoSize] = dim2Map.size();
@@ -945,11 +947,11 @@ public abstract class IntraJobScheduler {
 		if (allocFlag) {
 			allocs[topoSize] += 1;
 			mAllocs[topoSize] += 1;
-			slowdownIdx = topoSize;
+			mCurrSlwstDim = topoSize;
 		}
 		slowdown = astra_sim(dimVec, dimType);
 		mSlowdown.put(gpus, slowdown);
-		mSlowdownDims[slowdownIdx] = slowdown;
+		mSlowdownDims[mCurrSlwstDim] = slowdown;
 		return slowdown;
 	}
 

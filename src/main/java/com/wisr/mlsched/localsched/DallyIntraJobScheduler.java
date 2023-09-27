@@ -15,6 +15,8 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 	private static Logger sLog; // Instance of logger
 	private double mGPUServiceForJob; // Measurement of GPU time made available to job
+	private double mWorkCompleted;
+	private double[] mNwSensitivity;
 	private double nwDelayWait;
 	private double rackDelayWait;
 
@@ -23,6 +25,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		sLog = Logger.getLogger(Cluster.class.getSimpleName());
 		sLog.setLevel(Simulation.getLogLevel());
 		mGPUServiceForJob = 0.0;
+		mNwSensitivity = new double[Simulation.getNumDims()];
 		setDelayTimers(config);
 	}
 
@@ -52,29 +55,12 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 	}
 
 	public void tuneDelayTimers(){
-		double rack_overhead = Cluster.getInstance().getConfiguration().getmRackOverheads().get(mModelName);
-		System.out.println("Rack overhead of model " + mModelName + " = " + rack_overhead);
-		double nw_overhead = Cluster.getInstance().getConfiguration().getmNwOverheads().get(mModelName);
-		System.out.println("Nw overhead of model " + mModelName + " = " + nw_overhead);
-
-		double remain_ratio = (double)getmTotalIterationsRemaining() / getmTotalExpectedIterations();
-		int num_dims = Simulation.getNumDims();
-
-		if (mSlowdownDims[num_dims-1] != -1) {
-			if (remain_ratio <= .3)
-			{
-				System.out.println("Reducing nw delay by 1");
-				nwDelayWait -= 1;
-			}
-		}
-
-		if (mSlowdownDims[num_dims-2] != -1) {
-			if (remain_ratio <= .3)
-			{
-				System.out.println("Reducing rack delay to 0");
-				rackDelayWait = 0;
-			}
-		}
+		/*if (mNwSensitivity[mCurrSlwstDim] > .9) {
+			rackDelayWait = 0;
+			nwDelayWait = 0;
+		}*/
+		System.out.println("Nw Sensitivity dim " + String.valueOf(mCurrSlwstDim) + " : " +
+				String.valueOf(mNwSensitivity[mCurrSlwstDim]));
 	}
 
 	@Override
@@ -104,9 +90,9 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		List<Bid> bidList = new ArrayList<Bid>();
 		// Added negative of GPUService since we want job with min value to win
 		double bidValue = mGPUServiceForJob;
-		sLog.info("JobGroup:" + Integer.toString(getJobGroupId())
+		/*sLog.info("JobGroup:" + Integer.toString(getJobGroupId())
 				+ " Job:" + Integer.toString(getJobId()) +
-				" Bid:" + Double.toString(bidValue));
+				" Bid:" + Double.toString(bidValue));*/
 		bidList.add(new Bid(offeredGPUs, -1*bidValue, this));
 		return bidList;
 	}
@@ -114,7 +100,18 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 	public void startIteration() {
 		super.startIteration();
 		//mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
-		mGPUServiceForJob = (double)getmTotalIterationsRemaining() / getmTotalExpectedIterations();
+		//mGPUServiceForJob = (double)getmTotalIterationsRemaining() / getmTotalExpectedIterations();
+	}
+
+	public void endIteration() {
+		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration/getJobSpeedup())
+				* mIterGranularity;
+		long itr_remain = getmTotalIterationsRemaining() - (mIterGranularity * mCurrentIterationGPUs.size()/mMaxParallelism);
+		mWorkCompleted = 1 - (double) itr_remain / mTotalExpectedIterations;
+		double ideal_jct = mTimePerIteration * mTotalExpectedIterations / mMaxParallelism;
+		mNwSensitivity[mCurrSlwstDim] = mWorkCompleted / (mGPUServiceForJob / ideal_jct);
+		tuneDelayTimers();
+		super.endIteration();
 	}
 
 	public double getNwDelayWait(){
