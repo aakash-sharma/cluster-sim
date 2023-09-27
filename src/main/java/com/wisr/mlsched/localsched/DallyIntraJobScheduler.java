@@ -59,8 +59,8 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 			rackDelayWait = 0;
 			nwDelayWait = 0;
 		}*/
-		System.out.println("Nw Sensitivity dim " + String.valueOf(mCurrSlwstDim) + " : " +
-				String.valueOf(mNwSensitivity[mCurrSlwstDim]));
+		System.out.println("Nw Sensitivity, Job id: " + String.valueOf(this.getJobId()) + " dim " +
+				String.valueOf(mCurrSlwstDim) + " : " +	String.valueOf(mNwSensitivity[mCurrSlwstDim]));
 	}
 
 	@Override
