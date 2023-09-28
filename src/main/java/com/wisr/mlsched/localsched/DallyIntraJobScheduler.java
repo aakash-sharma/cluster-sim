@@ -98,21 +98,20 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		return bidList;
 	}
 
-	public void startIteration() {
-		super.startIteration();
-		//mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
-		//mGPUServiceForJob = (double)getmTotalIterationsRemaining() / getmTotalExpectedIterations();
-	}
+//	public void startIteration() {
+//		super.startIteration();
+//		//mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
+//		//mGPUServiceForJob = (double)getmTotalIterationsRemaining() / getmTotalExpectedIterations();
+//	}
 
 	public void endIteration() {
-		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration/getJobSpeedup())
-				* mIterGranularity;
-		long itr_remain = getmTotalIterationsRemaining() - (mIterGranularity * mCurrentIterationGPUs.size()/mMaxParallelism);
-		mWorkCompleted = 1 - (double) itr_remain / mTotalExpectedIterations;
-		double ideal_jct = mTimePerIteration * mTotalExpectedIterations / mMaxParallelism;
-		mNwSensitivity[mCurrSlwstDim] = mWorkCompleted / (mGPUServiceForJob / ideal_jct);
-		tuneDelayTimers();
 		super.endIteration();
+		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration/getJobSpeedup()) * mIterGranularity;
+
+		mWorkCompleted = 1 - (double) getmTotalIterationsRemaining() / mTotalExpectedIterations;
+		double ideal_jct = mTimePerIteration * mTotalExpectedIterations / mMaxParallelism;
+		mNwSensitivity[mCurrSlwstDim] = mWorkCompleted / (mGpuTime / ideal_jct);
+		tuneDelayTimers();
 	}
 
 	public double getNwDelayWait(){

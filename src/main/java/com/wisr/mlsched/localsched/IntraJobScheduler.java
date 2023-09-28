@@ -205,9 +205,9 @@ public abstract class IntraJobScheduler {
 				new EndIterationEvent(Simulation.getSimulationTime() + (mTimePerIteration / getJobSpeedup() *
 						mIterGranularity), this));
 		// Aakash: augment this
-		mGpuTime += mTimePerIteration / getJobSpeedup() * mCurrentIterationGPUs.size() * mIterGranularity;
-		mCompTime += mTimePerIteration * mIterGranularity;
-		mCommTime = mGpuTime - mCompTime;
+//		mGpuTime += mTimePerIteration / getJobSpeedup() * mCurrentIterationGPUs.size() * mIterGranularity;
+//		mCompTime += mTimePerIteration * mIterGranularity;
+//		mCommTime = mGpuTime - mCompTime;
 		/*
 		Iterator<GPU> gpuIter = mCurrentIterationGPUs.iterator();
 		mNextIterationExpectedGPUs = new HashSet<GPU>();
@@ -221,6 +221,11 @@ public abstract class IntraJobScheduler {
 	}
 
 	public void endIteration() {
+
+		mGpuTime += mTimePerIteration / getJobSpeedup() * mIterGranularity / mCurrentIterationGPUs.size();
+		mCompTime += mTimePerIteration * mIterGranularity / mCurrentIterationGPUs.size();
+		mCommTime = mGpuTime - mCompTime;
+
 		long itr_remain = getmTotalIterationsRemaining();
 		setmTotalIterationsRemaining(itr_remain  - (mIterGranularity * mCurrentIterationGPUs.size()/mMaxParallelism));
 		if (itr_remain % 10000 == 0) {
