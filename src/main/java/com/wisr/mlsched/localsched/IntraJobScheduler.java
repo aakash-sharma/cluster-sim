@@ -786,7 +786,7 @@ public abstract class IntraJobScheduler {
 		System.out.println("Jobid: " + mJobId);
 		//System.out.println("Topo size = " + String.valueOf(topoSize));
 		int topoSize = Simulation.getNumDims();
-		int mCurrSlwstDim = topoSize-1;
+		mCurrSlwstDim = topoSize-1;
 		//boolean[] topoPerDimVec = new boolean[topoSize];
 		Integer [] dimVec = new Integer[topoSize];
 		Arrays.fill(dimVec, -1);
