@@ -208,8 +208,8 @@ public abstract class IntraJobScheduler {
 				+ " Score: " + Double.toString(getPlacementSlowdown(mCurrentIterationGPUs))
 				+ " Number_jobs_running: " + Integer.toString(Cluster.getInstance().getRunningJobs().size()));*/
 		ClusterEventQueue.getInstance().enqueueEvent(
-				new EndIterationEvent(Simulation.getSimulationTime() + (mTimePerIteration / getJobSpeedup() *
-						mIterGranularity), this));
+				new EndIterationEvent(Simulation.getSimulationTime() + (mTimePerIteration /
+						getPlacementSlowdown(mCurrentIterationGPUs) * mIterGranularity), this));
 		// Aakash: augment this
 //		mGpuTime += mTimePerIteration / getJobSpeedup() * mCurrentIterationGPUs.size() * mIterGranularity;
 //		mCompTime += mTimePerIteration * mIterGranularity;
@@ -228,17 +228,17 @@ public abstract class IntraJobScheduler {
 
 	public void endIteration() {
 
-		mGpuTime += mTimePerIteration / getJobSpeedup() * mIterGranularity;
-		mCompTime += mTimePerIteration / mCurrentIterationGPUs.size() * mIterGranularity;
+		mGpuTime += mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs) * mIterGranularity;
+		mCompTime += mTimePerIteration * mIterGranularity;
 		mCommTime = mGpuTime - mCompTime;
 
-		mGpuTimeItr = mTimePerIteration / getJobSpeedup() * mIterGranularity;
-		mCompTimeItr = mTimePerIteration / mCurrentIterationGPUs.size() * mIterGranularity;
+		mGpuTimeItr = mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs) * mIterGranularity;
+		mCompTimeItr = mTimePerIteration * mIterGranularity;
 		mCommTimeItr = mGpuTimeItr - mCompTimeItr;
 
 		if (mCommTimeItr < 0) {
 			System.out.println("negative comm time, gpu time: " + String.valueOf(mGpuTimeItr) + " comp time: " + String.valueOf(mCompTimeItr)
-			+ " job speedup: " + String.valueOf(getJobSpeedup()));
+			+ " job speedup: " + String.valueOf(getPlacementSlowdown(mCurrentIterationGPUs)));
 		}
 
 		long itr_remain = getmTotalIterationsRemaining();

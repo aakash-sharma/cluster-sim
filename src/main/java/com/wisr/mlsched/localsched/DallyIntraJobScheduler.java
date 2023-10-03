@@ -65,9 +65,9 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 			rackDelayWait = 0;
 			nwDelayWait = 0;
 		}*/
-		System.out.println("Nw Sensitivity, Job id: " + String.valueOf(this.getJobId()) + " model: " + mModelName
-						+ " dim " + String.valueOf(mCurrSlwstDim) + " : " +
-						String.valueOf(mNwSensitivity[mCurrSlwstDim]));
+//		System.out.println("Nw Sensitivity, Job id: " + String.valueOf(this.getJobId()) + " model: " + mModelName
+//						+ " dim " + String.valueOf(mCurrSlwstDim) + " : " +
+//						String.valueOf(mNwSensitivity[mCurrSlwstDim]));
 	}
 
 	@Override
@@ -112,16 +112,17 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 	public void endIteration() {
 		super.endIteration();
-		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration/getJobSpeedup()) * mIterGranularity;
+		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs))
+				* mIterGranularity;
 
 		mWorkCompleted = 1 - (double) getmTotalIterationsRemaining() / mTotalExpectedIterations;
 		double ideal_jct = mTimePerIteration * mTotalExpectedIterations;
 		mNwSensitivity[mCurrSlwstDim] = mWorkCompleted / (mGpuTime / ideal_jct);
 		mNwStall[mCurrSlwstDim] = mCommTimeItr / mGpuTimeItr;
 		mGPUServiceDim[mCurrSlwstDim] = mCurrentIterationGPUs.size() * (mTimePerIteration/getJobSpeedup()) * mIterGranularity;
-		System.out.println("work completed = " + String.valueOf(mWorkCompleted));
-		System.out.println("mGpuTime/ideal_jct = " + String.valueOf(mGpuTime/ideal_jct));
-		System.out.println("nw stall = " + String.valueOf(mNwStall[mCurrSlwstDim]));
+//		System.out.println("work completed = " + String.valueOf(mWorkCompleted));
+//		System.out.println("mGpuTime/ideal_jct = " + String.valueOf(mGpuTime/ideal_jct));
+//		System.out.println("nw stall = " + String.valueOf(mNwStall[mCurrSlwstDim]));
 		tuneDelayTimers();
 	}
 
