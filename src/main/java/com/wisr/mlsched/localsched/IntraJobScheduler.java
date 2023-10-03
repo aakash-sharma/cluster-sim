@@ -67,6 +67,9 @@ public abstract class IntraJobScheduler {
 	protected double mGpuTime;
 	private double mCommTime;
 	private double mCompTime;
+	protected double mGpuTimeItr;
+	protected double mCommTimeItr;
+	protected double mCompTimeItr;
 	private double queueDelay; // State to maintain with admission control
 	private double mJobArrivalTime; // Arrival time of the job
 	private boolean mIsQueued; // Every job starts with getting queued
@@ -194,6 +197,9 @@ public abstract class IntraJobScheduler {
 		mCurrentIterationGPUs = new HashSet<GPU>(mNextIterationGPUs);
 		mNextIterationGPUs = new HashSet<GPU>();
 		mIsWaiting = false;
+		mGpuTimeItr = 0;
+		mCommTimeItr = 0;
+		mCompTimeItr = 0;
 		assert(mCurrentIterationGPUs.size() > 0);
 		/*System.out.println("Placement Job " + Integer.toString(mJobId) + ":"
 				+ " Time: " + Double.toString(Simulation.getSimulationTime())
@@ -222,12 +228,21 @@ public abstract class IntraJobScheduler {
 
 	public void endIteration() {
 
-		mGpuTime += mTimePerIteration / getJobSpeedup() * mIterGranularity / mCurrentIterationGPUs.size();
-		mCompTime += mTimePerIteration * mIterGranularity / mCurrentIterationGPUs.size();
+		mGpuTime += mTimePerIteration / getJobSpeedup() * mIterGranularity;
+		mCompTime += mTimePerIteration / mCurrentIterationGPUs.size() * mIterGranularity;
 		mCommTime = mGpuTime - mCompTime;
 
+		mGpuTimeItr = mTimePerIteration / getJobSpeedup() * mIterGranularity;
+		mCompTimeItr = mTimePerIteration / mCurrentIterationGPUs.size() * mIterGranularity;
+		mCommTimeItr = mGpuTimeItr - mCompTimeItr;
+
+		if (mCommTimeItr < 0) {
+			System.out.println("negative comm time, gpu time: " + String.valueOf(mGpuTimeItr) + " comp time: " + String.valueOf(mCompTimeItr)
+			+ " job speedup: " + String.valueOf(getJobSpeedup()));
+		}
+
 		long itr_remain = getmTotalIterationsRemaining();
-		setmTotalIterationsRemaining(itr_remain  - (mIterGranularity * mCurrentIterationGPUs.size()/mMaxParallelism));
+		setmTotalIterationsRemaining(itr_remain  - (mIterGranularity * mCurrentIterationGPUs.size()));
 		if (itr_remain % 10000 == 0) {
 			sLog.log(Level.ALL, "End iteration for job " + Integer.toString(mJobId));
 			sLog.info("Iterations Remaining: " + Long.toString(itr_remain));
@@ -426,7 +441,7 @@ public abstract class IntraJobScheduler {
 			computeScale = 0.0199;
 		}
 
-		if (mModelName.equals("MobileNet_v3")) {
+		if (mModelName.equals("MobileNet_v3") || mModelName.equals("MobileNetV3")) {
 			computeScale = 0.00639;
 		}
 
@@ -503,6 +518,9 @@ public abstract class IntraJobScheduler {
 				if (topoPerDim[topoIdx].equals("Ring")) {
 					if (links % 2 != 0) {
 						links += 1;
+					}
+					if (links == 2) {
+						links = 4;
 					}
 				}
 
