@@ -14,12 +14,12 @@ import java.util.logging.Logger;
 public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 	private static Logger sLog; // Instance of logger
-	private double mGPUServiceForJob; // Measurement of GPU time made available to job
+	private double mGPUServiceForJob; // Measurement of GPU service made available to job
 	private double mWorkCompleted;
-	private double[] mNwSensitivity;
+	private double mNwSlowdown;
 	private double[] mNwStall;
-	private double[] mGPUServiceDim; // rename it
-	private double[] mIdealJctDim; // ideal jct per dim
+	private double[] mGpuTimeDim;
+	private double[] mIdealGpuTimeDim; // ideal time per dim
 	private double nwDelayWait;
 	private double rackDelayWait;
 
@@ -28,10 +28,10 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		sLog = Logger.getLogger(Cluster.class.getSimpleName());
 		sLog.setLevel(Simulation.getLogLevel());
 		mGPUServiceForJob = 0.0;
-		mNwSensitivity = new double[Simulation.getNumDims()];
+		mNwSlowdown = 0.0;
 		mNwStall = new double[Simulation.getNumDims()];
-		mGPUServiceDim = new double[Simulation.getNumDims()];
-		mIdealJctDim = new double[Simulation.getNumDims()];
+		mGpuTimeDim = new double[Simulation.getNumDims()];
+		mIdealGpuTimeDim = new double[Simulation.getNumDims()];
 		setDelayTimers(config);
 	}
 
@@ -61,13 +61,23 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 	}
 
 	public void tuneDelayTimers(){
-		/*if (mNwSensitivity[mCurrSlwstDim] > .9) {
+		System.out.println("Nw slowdown, Job id: " + String.valueOf(this.getJobId()) + " model: " + mModelName
+						+ " dim " + String.valueOf(mCurrSlwstDim) + " : " +
+						String.valueOf(mNwSlowdown));
+
+		if (mNwSlowdown > .9) {
 			rackDelayWait = 0;
 			nwDelayWait = 0;
-		}*/
-//		System.out.println("Nw Sensitivity, Job id: " + String.valueOf(this.getJobId()) + " model: " + mModelName
-//						+ " dim " + String.valueOf(mCurrSlwstDim) + " : " +
-//						String.valueOf(mNwSensitivity[mCurrSlwstDim]));
+		}
+
+		else if (mNwSlowdown > .5) {
+			rackDelayWait = 1;
+			nwDelayWait = 5;
+		}
+		else {
+			rackDelayWait = 5;
+			nwDelayWait = 10;
+		}
 	}
 
 	@Override
@@ -116,13 +126,14 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 				* mIterGranularity;
 
 		mWorkCompleted = 1 - (double) getmTotalIterationsRemaining() / mTotalExpectedIterations;
-		double ideal_jct = mTimePerIteration * mTotalExpectedIterations;
-		mNwSensitivity[mCurrSlwstDim] = mWorkCompleted / (mGpuTime / ideal_jct);
+		double ideal_jct = mTimePerIteration * mTotalExpectedIterations / mMaxParallelism;
+		mNwSlowdown = mWorkCompleted / (mGpuTime / ideal_jct);
 		mNwStall[mCurrSlwstDim] = mCommTimeItr / mGpuTimeItr;
-		mGPUServiceDim[mCurrSlwstDim] = mCurrentIterationGPUs.size() * (mTimePerIteration/getJobSpeedup()) * mIterGranularity;
-//		System.out.println("work completed = " + String.valueOf(mWorkCompleted));
-//		System.out.println("mGpuTime/ideal_jct = " + String.valueOf(mGpuTime/ideal_jct));
-//		System.out.println("nw stall = " + String.valueOf(mNwStall[mCurrSlwstDim]));
+		mGpuTimeDim[mCurrSlwstDim] +=  mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs) * mIterGranularity;
+		mIdealGpuTimeDim[mCurrSlwstDim] +=  mTimePerIteration * mIterGranularity;
+		System.out.println("work completed = " + String.valueOf(mWorkCompleted));
+		System.out.println("mGpuTime/ideal_jct = " + String.valueOf(mGpuTime/ideal_jct));
+		System.out.println("nw stall = " + String.valueOf(mNwStall[mCurrSlwstDim]));
 		tuneDelayTimers();
 	}
 

@@ -65,8 +65,8 @@ public abstract class IntraJobScheduler {
 	private double mTimeLastResourceAssignment; 
 	private static Logger sLog; // Instance of logger
 	protected double mGpuTime;
-	private double mCommTime;
-	private double mCompTime;
+	protected double mCommTime;
+	protected double mCompTime;
 	protected double mGpuTimeItr;
 	protected double mCommTimeItr;
 	protected double mCompTimeItr;
