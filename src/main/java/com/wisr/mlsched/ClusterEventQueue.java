@@ -6,6 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.wisr.mlsched.events.ClusterEvent;
+import com.wisr.mlsched.events.ResourceAvailableEvent;
+import com.wisr.mlsched.resources.Cluster;
 
 /**
  * Global event queue to manage cluster level events.
@@ -64,6 +66,13 @@ public class ClusterEventQueue {
 			//sLog.info("Processing event " + event.toString() + " at " + Double.toString(
 			//		event.getTimestamp()));
 			event.handleEvent();
+
+			if (mEventQueue.isEmpty() && !Cluster.getInstance().getRunningJobs().isEmpty()) {
+				ClusterEventQueue.getInstance()
+						.enqueueEvent(new ResourceAvailableEvent(Simulation.getSimulationTime() + 60,
+								Cluster.getInstance().getGPUsInCluster()));
+
+			}
 		}
 	}
 	
