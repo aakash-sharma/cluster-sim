@@ -124,19 +124,21 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			if (gpus >= gpuDemand) {
 				allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, -1, -1,
 						-1, -1);
+				return allocatedGpus;
 			}
-			return allocatedGpus;
 		}
 
-		double gpusPerRack = gpusPerMachine * Cluster.getInstance().getConfiguration().getMachinesPerRack();
+//		double gpusPerRack = gpusPerMachine * Cluster.getInstance().getConfiguration().getMachinesPerRack();
+//
+//		if (gpuDemand > gpusPerRack || !isConsolidate(job)) {
+//			System.out.println(("GPUs per rack = " + String.valueOf(gpusPerRack)));
+//
+//			allocateGPU(allocatedGpus, gpuList, gpuDemand, -1, -1, -1,
+//					-1, -1);
+//		}
 
-		if (gpuDemand > gpusPerRack || !isConsolidate(job)) {
-			System.out.println(("GPUs per rack = " + String.valueOf(gpusPerRack)));
-
-			allocateGPU(allocatedGpus, gpuList, gpuDemand, -1, -1, -1,
-					-1, -1);
-		}
-
+		allocateGPU(allocatedGpus, gpuList, gpuDemand, -1, -1, -1,
+				-1, -1);
 		return allocatedGpus;
 	}
 

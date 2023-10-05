@@ -227,7 +227,7 @@ public class JobStatistics {
 //		printAllocs();
 		makespan = printJobStats();
 		printContentions();
-		printFinishTimeFairness();
+		//printFinishTimeFairness();
 
 		XSSFSheet sheet1 = mWorkbook.createSheet("job-stats ");
 		XSSFSheet sheet2 = mWorkbook.createSheet("cluster-timeline-stats");
@@ -404,12 +404,16 @@ public class JobStatistics {
 		double jct = 0.0;
 
 		double queue_delay = 0.0;
-		double cum_queue_delay = 0.0;
+		double total_queue_delay = 0.0;
 
-		double total_time = 0.0;
 		double gpu_time = 0.0;
+		double total_gpu_time = 0.0;
+
 		double comp_time = 0.0;
+		double total_comp_time = 0.0;
+
 		double comm_time = 0.0;
+		double total_comm_time = 0.0;
 
 		double avg_gpu_contention = 0;
 
@@ -426,12 +430,20 @@ public class JobStatistics {
 			mSimResults.get(key).add(jct);
 
 			queue_delay = mJobStats.get(key).getQueueDelay();
-			cum_queue_delay += queue_delay;
+			total_queue_delay += queue_delay;
 			mSimResults.get(key).add(queue_delay);
 
 			gpu_time = mJobStats.get(key).getGpuTime();
 			mSimResults.get(key).add(gpu_time);
-			total_time += gpu_time;
+			total_gpu_time += gpu_time;
+
+			comp_time = mJobStats.get(key).getCompTime();
+			mSimResults.get(key).add(comp_time);
+			total_comp_time += comp_time;
+
+			comm_time = mJobStats.get(key).getCommTime();
+			mSimResults.get(key).add(comm_time);
+			total_comm_time += comm_time;
 
 			avg_gpu_contention = mJobStats.get(key).getAvgGPUcontention();
 			mSimResults.get(key).add(avg_gpu_contention);
@@ -453,11 +465,19 @@ public class JobStatistics {
 		}
 
 		double avg_jct = total_jct/mJobStats.keySet().size();
-		double avg_queue_delay = cum_queue_delay/mJobStats.keySet().size();
+		double avg_queue_delay = total_queue_delay/mJobStats.keySet().size();
+		double avg_gpu_time = total_gpu_time/mJobStats.keySet().size();
+		double avg_comp_time = total_comp_time/mJobStats.keySet().size();
+		double avg_comm_time = total_comm_time/mJobStats.keySet().size();
 
 		System.out.println("Average JCT: " + Double.toString(avg_jct));
 		System.out.println("Average queue delay: " + Double.toString(avg_queue_delay));
-		System.out.println("Total GPU Time: " + total_time);
+		System.out.println("Average GPU time: " + Double.toString(avg_gpu_time));
+		System.out.println("Average Compute time: " + Double.toString(avg_comp_time));
+		System.out.println("Average Communication time: " + Double.toString(avg_comm_time));
+		System.out.println("Total GPU Time: " + total_gpu_time);
+		System.out.println("Total Compute Time: " + total_comp_time);
+		System.out.println("Total Communication Time: " + total_comm_time);
 		System.out.println("Total dim2 allocs: " + mAllocs[0]);
 		System.out.println("Total dim1 allocs: " + mAllocs[1]);
 		System.out.println("Total slot allocs: " + mAllocs[2]);

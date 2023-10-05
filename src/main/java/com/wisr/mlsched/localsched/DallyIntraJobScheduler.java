@@ -69,7 +69,6 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 			rackDelayWait = 0;
 			nwDelayWait = 0;
 		}
-
 		else if (mNwSlowdown > .5) {
 			rackDelayWait = 1;
 			nwDelayWait = 5;
@@ -122,10 +121,11 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 	public void endIteration() {
 		super.endIteration();
-		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs))
-				* mIterGranularity;
+		//mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs))
+		//		* mIterGranularity;
 
 		mWorkCompleted = 1 - (double) getmTotalIterationsRemaining() / mTotalExpectedIterations;
+		mGPUServiceForJob = mWorkCompleted;
 		double ideal_jct = mTimePerIteration * mTotalExpectedIterations / mMaxParallelism;
 		mNwSlowdown = mWorkCompleted / (mGpuTime / ideal_jct);
 		mNwStall[mCurrSlwstDim] = mCommTimeItr / mGpuTimeItr;

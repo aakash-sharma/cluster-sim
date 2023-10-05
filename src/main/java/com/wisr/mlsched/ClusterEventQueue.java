@@ -68,6 +68,7 @@ public class ClusterEventQueue {
 			event.handleEvent();
 
 			if (mEventQueue.isEmpty() && !Cluster.getInstance().getRunningJobs().isEmpty()) {
+				System.out.println("Num jobs running: " + String.valueOf(Cluster.getInstance().getRunningJobs().size()));
 				ClusterEventQueue.getInstance()
 						.enqueueEvent(new ResourceAvailableEvent(Simulation.getSimulationTime() + 60,
 								Cluster.getInstance().getGPUsInCluster()));
