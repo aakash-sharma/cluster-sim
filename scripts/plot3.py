@@ -334,6 +334,6 @@ for path in sys.argv[1:]:
 schemes = "_".join(schemes)
 fig.tight_layout(pad=5.0)
 
-fig.savefig("results/2das/results-" + schemes + ".pdf", format="pdf") #, bbox_inches="tight")
+fig.savefig("results/results-" + schemes + ".pdf", format="pdf") #, bbox_inches="tight")
 #fig.savefig("results/results-delay_sched_sweep" + ".pdf", format="pdf", bbox_inches="tight")
 #fig.savefig("results/results-delay_sched_sweep-2" + ".pdf", format="pdf", bbox_inches="tight")
