@@ -4,6 +4,7 @@ import com.wisr.mlsched.Simulation;
 import com.wisr.mlsched.config.ClusterConfiguration;
 import com.wisr.mlsched.localsched.IntraJobScheduler;
 import com.wisr.mlsched.localsched.DallyIntraJobScheduler;
+import com.wisr.mlsched.resources.Cluster;
 import com.wisr.mlsched.resources.GPU;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.apache.commons.collections4.map.MultiKeyMap;
@@ -238,8 +239,25 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 		 */
 
+		double gpusPerMachine = 1;
+
+		if (Cluster.getInstance().getConfiguration().getSlotsPerMachine() > 1) {
+			gpusPerMachine *= Cluster.getInstance().getConfiguration().getSlotsPerMachine();
+		}
+		if (Cluster.getInstance().getConfiguration().getDim1PerSlot() > 1) {
+			gpusPerMachine *= Cluster.getInstance().getConfiguration().getDim1PerSlot();
+		}
+		if (Cluster.getInstance().getConfiguration().getDim2sPerDim1() > 1) {
+			gpusPerMachine *= Cluster.getInstance().getConfiguration().getDim2sPerDim1();
+		}
+		if (Cluster.getInstance().getConfiguration().getGPUsDim2() > 1) {
+			gpusPerMachine *= Cluster.getInstance().getConfiguration().getGPUsDim2();
+		}
+
 		double rack_delay_wait = ((DallyIntraJobScheduler) job).getRackDelayWait();
-		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= rack_delay_wait) {
+
+		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= rack_delay_wait ||
+				gpuDemand > gpusPerMachine) {
 			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
 				Integer rack = entry.getKey();
 				gpus = entry.getValue();
@@ -255,8 +273,11 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			}
 		}
 
+		double gpusPerRack = gpusPerMachine * Cluster.getInstance().getConfiguration().getMachinesPerRack();
 		double nw_delay_wait = ((DallyIntraJobScheduler) job).getNwDelayWait();
-		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= nw_delay_wait) {
+
+		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >= nw_delay_wait ||
+				gpuDemand > gpusPerRack) {
 			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
 		}
