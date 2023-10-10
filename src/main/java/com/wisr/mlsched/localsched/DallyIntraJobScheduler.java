@@ -106,9 +106,9 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		List<Bid> bidList = new ArrayList<Bid>();
 		// Added negative of GPUService since we want job with min value to win
 		double bidValue = mGPUServiceForJob;
-		/*sLog.info("JobGroup:" + Integer.toString(getJobGroupId())
+		sLog.info("JobGroup:" + Integer.toString(getJobGroupId())
 				+ " Job:" + Integer.toString(getJobId()) +
-				" Bid:" + Double.toString(bidValue));*/
+				" Bid:" + Double.toString(bidValue));
 		bidList.add(new Bid(offeredGPUs, -1*bidValue, this));
 		return bidList;
 	}
@@ -117,15 +117,26 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 //		super.startIteration();
 //		//mGPUServiceForJob += mCurrentIterationGPUs.size()*(mTimePerIteration/getJobSpeedup()) * mIterGranularity;
 //		//mGPUServiceForJob = (double)getmTotalIterationsRemaining() / getmTotalExpectedIterations();
+//		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration/getPlacementSlowdown(mCurrentIterationGPUs))
+//				* mIterGranularity;
 //	}
 
 	public void endIteration() {
+		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs))
+				* mIterGranularity;
 		super.endIteration();
-		//mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs))
-		//		* mIterGranularity;
+//		System.out.println("endIteration");
+//		System.out.println(mCurrentIterationGPUs.size());
+//		System.out.println(mTimePerIteration);
+//		System.out.println(getPlacementSlowdown(mCurrentIterationGPUs));
+//		System.out.println(mIterGranularity);
+//		System.out.println(mCurrentIterationGPUs.size() * (mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs))
+//				* mIterGranularity);
+
 
 		mWorkCompleted = 1 - (double) getmTotalIterationsRemaining() / mTotalExpectedIterations;
-		mGPUServiceForJob = mWorkCompleted;
+		//mGPUServiceForJob = mWorkCompleted;
+		//mGPUServiceForJob = 1;
 		double ideal_jct = mTimePerIteration * mTotalExpectedIterations / mMaxParallelism;
 		mNwSlowdown = mWorkCompleted / (mGpuTime / ideal_jct);
 		mNwStall[mCurrSlwstDim] = mCommTimeItr / mGpuTimeItr;
@@ -134,7 +145,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		//System.out.println("work completed = " + String.valueOf(mWorkCompleted));
 		//System.out.println("mGpuTime/ideal_jct = " + String.valueOf(mGpuTime/ideal_jct));
 		//System.out.println("nw stall = " + String.valueOf(mNwStall[mCurrSlwstDim]));
-		tuneDelayTimers();
+		//tuneDelayTimers();
 	}
 
 	public double getNwDelayWait(){

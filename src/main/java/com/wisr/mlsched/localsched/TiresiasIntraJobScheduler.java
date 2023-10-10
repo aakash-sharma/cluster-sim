@@ -57,10 +57,15 @@ public class TiresiasIntraJobScheduler extends IntraJobScheduler {
 		return bidList;
 	}
 
-	public void startIteration() {
-		super.startIteration();
-		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration/getPlacementSlowdown(mCurrentIterationGPUs))
-				* mIterGranularity;
-	}
+//	public void startIteration() {
+//		super.startIteration();
+//		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration/getPlacementSlowdown(mCurrentIterationGPUs))
+//				* mIterGranularity;
+//	}
 
+	public void endIteration() {
+		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs))
+				* mIterGranularity;
+		super.endIteration();
+	}
 }
