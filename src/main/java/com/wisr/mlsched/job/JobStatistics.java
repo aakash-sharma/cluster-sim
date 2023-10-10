@@ -478,9 +478,10 @@ public class JobStatistics {
 		System.out.println("Total GPU Time: " + total_gpu_time);
 		System.out.println("Total Compute Time: " + total_comp_time);
 		System.out.println("Total Communication Time: " + total_comm_time);
-		System.out.println("Total dim2 allocs: " + mAllocs[0]);
-		System.out.println("Total dim1 allocs: " + mAllocs[1]);
-		System.out.println("Total slot allocs: " + mAllocs[2]);
+		System.out.println("Total queue delay: " + total_queue_delay);
+		System.out.println("Total slot allocs: " + mAllocs[0]);
+		//System.out.println("Total dim1 allocs: " + mAllocs[1]);
+		//System.out.println("Total slot allocs: " + mAllocs[2]);
 		System.out.println("Total machine allocs: " + mAllocs[3]);
 		System.out.println("Total rack allocs: " + mAllocs[4]);
 		System.out.println("Total network allocs: " + mAllocs[5]);
