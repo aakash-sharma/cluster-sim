@@ -253,8 +253,8 @@ public abstract class IntraJobScheduler {
 		themisTs = getCurrentEstimate();
 		if (getmTotalIterationsRemaining() == 0) {
 			// Job is done
-			System.out.println("Job " + Integer.toString(mJobId) + " done");
-			sLog.info("Job " + Integer.toString(mJobId) + " done");
+			System.out.println("JobId: " + Integer.toString(mJobId) + " done");
+			//sLog.info("Job " + Integer.toString(mJobId) + " done");
 			List<GPU> relinquished_resources = relinquishAllResources();
 			// Make all relinquished resources available
 			ClusterEventQueue.getInstance()
@@ -266,9 +266,9 @@ public abstract class IntraJobScheduler {
 
 			System.out.println("Allocs: " + Arrays.toString(mAllocs));
 			System.out.println("slowdowns: " + Arrays.toString(mSlowdownDims));
-			System.out.println("Max JVM memory: " + Runtime.getRuntime().maxMemory());
-			System.out.println("Total JVM memory: " + Runtime.getRuntime().totalMemory());
-			System.out.println("Free JVM memory: " + Runtime.getRuntime().freeMemory());
+			//System.out.println("Max JVM memory: " + Runtime.getRuntime().maxMemory());
+			//System.out.println("Total JVM memory: " + Runtime.getRuntime().totalMemory());
+			//System.out.println("Free JVM memory: " + Runtime.getRuntime().freeMemory());
 			return;
 		}
 		// Job has iterations left

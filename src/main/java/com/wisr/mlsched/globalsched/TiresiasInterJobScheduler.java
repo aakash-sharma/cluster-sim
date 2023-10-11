@@ -46,8 +46,8 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 		}
 
 		System.out.println("====== Tiresias Consolidated gpu allocation ======");
-		System.out.println(gpuList.size());
-		System.out.println(gpuDemand);
+		System.out.println("JobId: " + String.valueOf(job.getJobId()) + " GPU list: " + String.valueOf(gpuList.size())
+				+ " GPU demand: " + String.valueOf(gpuDemand));
 
 		Integer allocatedRack = -1;
 		Integer allocatedMachine = -1;
@@ -142,6 +142,7 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 
 	boolean isConsolidate(IntraJobScheduler job) {
 		String model = job.getModelName();
+		//if (model.equals("ResNet50") || model.equals("ResNet18") || model.equals("MobileNetV3")) {
 		if (model.equals("ResNet50") || model.equals("ResNet18")) {
 			return false;
 		}

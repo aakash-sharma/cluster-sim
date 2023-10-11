@@ -98,8 +98,8 @@ public class GPU {
      * Mark this GPU as not belonging to any job.
      */
     public void markLeaseEnd() {
-    	sLog.info("Marking lease ended for GPU " + mGpuLocation.getPrettyString()
-    		+ " for job " + mJobUsingGPU.getJobId());
+    	/*sLog.info("Marking lease ended for GPU " + mGpuLocation.getPrettyString()
+    		+ " for job " + mJobUsingGPU.getJobId());*/
     	mLeaseStart = NOT_LEASED;
     	mLeaseDuration = NOT_LEASED;
     	mJobUsingGPU = null;
