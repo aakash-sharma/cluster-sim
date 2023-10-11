@@ -106,9 +106,9 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		List<Bid> bidList = new ArrayList<Bid>();
 		// Added negative of GPUService since we want job with min value to win
 		double bidValue = mGPUServiceForJob;
-		sLog.info("JobGroup:" + Integer.toString(getJobGroupId())
-				+ " Job:" + Integer.toString(getJobId()) +
-				" Bid:" + Double.toString(bidValue));
+//		sLog.info("JobGroup:" + Integer.toString(getJobGroupId())
+//				+ " Job:" + Integer.toString(getJobId()) +
+//				" Bid:" + Double.toString(bidValue));
 		bidList.add(new Bid(offeredGPUs, -1*bidValue, this));
 		return bidList;
 	}
@@ -136,7 +136,6 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 		mWorkCompleted = 1 - (double) getmTotalIterationsRemaining() / mTotalExpectedIterations;
 		//mGPUServiceForJob = mWorkCompleted;
-		//mGPUServiceForJob = 1;
 		double ideal_jct = mTimePerIteration * mTotalExpectedIterations / mMaxParallelism;
 		mNwSlowdown = mWorkCompleted / (mGpuTime / ideal_jct);
 		mNwStall[mCurrSlwstDim] = mCommTimeItr / mGpuTimeItr;
