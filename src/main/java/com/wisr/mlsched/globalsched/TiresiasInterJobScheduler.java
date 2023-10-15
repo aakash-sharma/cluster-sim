@@ -81,10 +81,11 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			gpus = (Integer) machineMap.get(key);
 
 			// Find the smallest consolidated slots available
-			if (gpus >= gpuDemand && gpus < minGPUAllocation) {
-				minGPUAllocation = gpus;
+			if (gpus >= gpuDemand) {
+				//minGPUAllocation = gpus;
 				allocatedRack = (Integer) key2;
 				allocatedMachine = (Integer) key3;
+				break;
 			}
 		}
 
@@ -109,15 +110,16 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 			gpusPerMachine *= Cluster.getInstance().getConfiguration().getGPUsDim2();
 		}
 
-		if (gpuDemand > gpusPerMachine || !shouldConsol(job)) {
+		if (minGPUAllocation > gpusPerMachine || !shouldConsol(job)) {
 			System.out.println(("GPUs per machine = " + String.valueOf(gpusPerMachine)));
 
 			for (Map.Entry<Integer, Integer> entry : rackMap.entrySet()) {
 				rack = entry.getKey();
 				gpus = entry.getValue();
-				if (gpus >= gpuDemand && gpus < minGPUAllocation) {
-					minGPUAllocation = gpus;
+				if (gpus >= gpuDemand) {
+					//minGPUAllocation = gpus;
 					allocatedRack = rack;
+					break;
 				}
 			}
 
@@ -130,6 +132,7 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 
 		double gpusPerRack = gpusPerMachine * Cluster.getInstance().getConfiguration().getMachinesPerRack();
 
+		System.out.println(("GPUs per rack = " + String.valueOf(gpusPerRack)));
 		if (gpuDemand > gpusPerRack || !shouldConsol(job)) {
 			System.out.println(("GPUs per rack = " + String.valueOf(gpusPerRack)));
 
