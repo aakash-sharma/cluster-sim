@@ -47,8 +47,8 @@ public class Simulation {
 		String nw_overhead_file = args[7];
 		String run_name = args[8];
 
-		double nw_delay_wait = 0;
-		double rack_delay_wait = 0;
+		double nw_delay_wait = 1;
+		double rack_delay_wait = 1;
 
 		if (args.length > 9) {
 			rack_delay_wait = Double.parseDouble(args[9]);
