@@ -9,13 +9,7 @@ import com.wisr.mlsched.resources.GPU;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 import org.apache.commons.collections4.map.MultiKeyMap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.LinkedList;
-import java.util.Queue;
-//import java.util.HashMap;
+import java.util.*;
 
 public class DallyInterJobScheduler extends InterJobScheduler {
 
@@ -24,6 +18,25 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 	private Map<Integer, Queue> mcDemandDelayMap;
 	private Map<Integer, Queue> rackDemandDelayMap;
 	private static final int MAX_Q = 10;
+	private static final int NUM_PAST_LEASE = 2;
+
+	class TimeDelayPair {
+		private double time;
+		private double value;
+
+		public TimeDelayPair(double time, double value) {
+			this.time = time;
+			this.value = value;
+		}
+
+		public double getTime() {
+			return time;
+		}
+
+		public double getValue() {
+			return value;
+		}
+	}
 
 	public DallyInterJobScheduler(ClusterConfiguration config){
 		super(config);
@@ -48,11 +61,13 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 	}
 	public double getMcDemandDelay(int demand) {
-		LinkedList<Double> list = (LinkedList<Double>) mcDemandDelayMap.get(demand);
+		LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(demand);
 		double sum = 0;
 		for (int i = 0; i < list.size(); i++) {
-			sum += list.get(i);
+			sum += list.get(i).value;
 		}
+
+		System.out.println("Total mc delay sum : " + String.valueOf(sum));
 
 		if (sum == 0) {
 			return 1;
@@ -62,12 +77,13 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 	}
 
 	public double getRackDemandDelay(int demand) {
-		LinkedList<Double> list = (LinkedList<Double>) rackDemandDelayMap.get(demand);
+		LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) rackDemandDelayMap.get(demand);
 		double sum = 0;
 		for (int i = 0; i < list.size(); i++) {
-			sum += list.get(i);
+			sum += list.get(i).value;
 		}
 
+		System.out.println("Total rack delay sum : " + String.valueOf(sum));
 		if (sum == 0) {
 			return 1;
 		}
@@ -75,6 +91,17 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		return sum/list.size();
 	}
 
+	public void setDemandDelay(LinkedList<TimeDelayPair> list, double delay){
+
+		list.add(new TimeDelayPair(Simulation.getSimulationTime(), delay));
+
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).time < Simulation.getSimulationTime() - (Cluster.getInstance().getLeaseTime() *
+					NUM_PAST_LEASE)) {
+				list.remove(i);
+			}
+		}
+	}
 
 	@Override
 	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, IntraJobScheduler job) {
@@ -92,10 +119,10 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 				+ " GPU demand: " + String.valueOf(gpuDemand));
 
 		if (!mcDemandDelayMap.containsKey(gpuDemand)) {
-			mcDemandDelayMap.put(gpuDemand, new LinkedList<Double>());
+			mcDemandDelayMap.put(gpuDemand, new LinkedList<TimeDelayPair>());
 		}
 		if (!rackDemandDelayMap.containsKey(gpuDemand)) {
-			rackDemandDelayMap.put(gpuDemand, new LinkedList<Double>());
+			rackDemandDelayMap.put(gpuDemand, new LinkedList<TimeDelayPair>());
 		}
 
 		double starvation_time = Simulation.getSimulationTime() - job.getLastResourceAssignment();
@@ -182,8 +209,10 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		if (gpus >= gpuDemand) {
-			LinkedList<Double> list = (LinkedList<Double>) mcDemandDelayMap.get(gpuDemand);
-			list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+			//LinkedList<Double> list = (LinkedList<Double>) mcDemandDelayMap.get(gpuDemand);
+			//list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+			LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(gpuDemand);
+			setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
 			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
 		}
@@ -208,8 +237,10 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		if (gpus >= gpuDemand){
-			LinkedList<Double> list = (LinkedList<Double>) mcDemandDelayMap.get(gpuDemand);
-			list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+			//LinkedList<Double> list = (LinkedList<Double>) mcDemandDelayMap.get(gpuDemand);
+			//list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+			LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(gpuDemand);
+			setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
 			//mcDemandDelayMap.put(gpuDemand, starvation_time/Cluster.getInstance().getLeaseTime());
 			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
@@ -233,8 +264,10 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		if (gpus >= gpuDemand){
-			LinkedList<Double> list = (LinkedList<Double>) mcDemandDelayMap.get(gpuDemand);
-			list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+			//LinkedList<Double> list = (LinkedList<Double>) mcDemandDelayMap.get(gpuDemand);
+			//list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+			LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(gpuDemand);
+			setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
 			//mcDemandDelayMap.put(gpuDemand, starvation_time/Cluster.getInstance().getLeaseTime());
 			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
@@ -256,8 +289,10 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		}
 
 		if (gpus >= gpuDemand){
-			LinkedList<Double> list = (LinkedList<Double>) mcDemandDelayMap.get(gpuDemand);
-			list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+			//LinkedList<Double> list = (LinkedList<Double>) mcDemandDelayMap.get(gpuDemand);
+			//list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+			LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(gpuDemand);
+			setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
 			//mcDemandDelayMap.put(gpuDemand, starvation_time/Cluster.getInstance().getLeaseTime());
 			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
@@ -293,8 +328,10 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			}
 
 			if (gpus >= gpuDemand) {
-				LinkedList<Double> list = (LinkedList<Double>) rackDemandDelayMap.get(gpuDemand);
-				list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+				//LinkedList<Double> list = (LinkedList<Double>) rackDemandDelayMap.get(gpuDemand);
+				//list.add(starvation_time/Cluster.getInstance().getLeaseTime());
+				LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) rackDemandDelayMap.get(gpuDemand);
+				setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
 				//rackDemandDelayMap.put(gpuDemand, starvation_time/Cluster.getInstance().getLeaseTime());
 				return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 						allocatedDim1, allocatedDim2);
