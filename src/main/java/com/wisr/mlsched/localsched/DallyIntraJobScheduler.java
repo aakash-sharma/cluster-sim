@@ -23,7 +23,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 	private double[] mIdealGpuTimeDim; // ideal time per dim
 	private double nwDelayWait;
 	private double rackDelayWait;
-	private boolean delayFlag;
+	private boolean tuneDelayFlag;
 
 	public DallyIntraJobScheduler(JSONObject config) {
 		super(config);
@@ -34,7 +34,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		mNwStall = new double[Simulation.getNumDims()];
 		mGpuTimeDim = new double[Simulation.getNumDims()];
 		mIdealGpuTimeDim = new double[Simulation.getNumDims()];
-		delayFlag = true;
+		tuneDelayFlag = true;
 		setDelayTimers(config);
 	}
 
@@ -43,7 +43,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 		if (delay_timers[5] != -1) {
 			nwDelayWait = delay_timers[5];
-			delayFlag = false;
+			tuneDelayFlag = false;
 		}
 		else {
 			nwDelayWait = Cluster.getInstance().getConfiguration().getmNwDelayWait();  // default 1
@@ -54,7 +54,7 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 		if (delay_timers[4] != -1) {
 			rackDelayWait = delay_timers[4];
-			delayFlag = false;
+			tuneDelayFlag = false;
 		}
 		else {
 			rackDelayWait = Cluster.getInstance().getConfiguration().getmRackDelayWait(); // default 1
@@ -64,95 +64,28 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 	}
 
 	public void tuneDelayTimers(int gpu_demand){
-		int delay = 0;
-
-		if (mWorkCompleted >= .75  || mCurrSlwstDim < 4) {
+		/*if (mWorkCompleted >= .75) {
 			return;
 		}
 
 		System.out.println("Nw slowdown, Job id: " + String.valueOf(this.getJobId()) + " model: " + mModelName
 				+ " dim " + String.valueOf(mCurrSlwstDim) + " : " +
-				String.valueOf(mNwSlowdown) + " Nw stall: " + String.valueOf(mNwStall[mCurrSlwstDim]));
+				String.valueOf(mNwSlowdown) + " Nw stall: " + String.valueOf(mNwStall[mCurrSlwstDim])); */
 
 		DallyInterJobScheduler sched = (DallyInterJobScheduler) Cluster.getInstance().getScheduler();
 
-		if (mCurrSlwstDim == 4) {
-			if (mNwStall[mCurrSlwstDim] <= .2) {
-				return;
-			}
-			rackDelayWait = Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand)));
+		if (mNwStall[4] > .2) {
+			//rackDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand))));
+			rackDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand))));
 			System.out.println("Setting rack delay for job: " + String.valueOf(this.getJobId()) + " to: "
 					+ String.valueOf(rackDelayWait));
 		}
-		if (mCurrSlwstDim == 4) {
-			if (mNwStall[mCurrSlwstDim] <= .2) {
-				return;
-			}
-			nwDelayWait = Math.max(1, Math.ceil(sched.getRackDemandDelay(gpu_demand)));
+		if (mNwStall[5] > .2) {
+			//nwDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getRackDemandDelay(gpu_demand))));
+			nwDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getRackDemandDelay(gpu_demand))));
 			System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + " to: "
 					+ String.valueOf(nwDelayWait));
 		}
-//		System.out.println("Setting rack delay for job: " + String.valueOf(this.getJobId()) + " to: "
-//					+ String.valueOf(rackDelayWait));
-//			System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + " to: "
-//					+ String.valueOf(nwDelayWait));
-//		if (sched.getMcDemandDelayMap().containsKey(gpu_demand)) {
-//			rackDelayWait = Math.ceil(sched.getMcDemandDelayMap().get(gpu_demand));
-//			System.out.println("Setting rack delay for job: " + String.valueOf(this.getJobId()) + " to: "
-//					+ String.valueOf(rackDelayWait));
-//		}
-//		if (sched.getRackDemandDelayMap().containsKey(gpu_demand)) {
-//			nwDelayWait = Math.ceil(sched.getRackDemandDelayMap().get(gpu_demand));
-//			System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + " to: "
-//					+ String.valueOf(nwDelayWait));
-//		}
-
-		/*if (mCurrSlwstDim == 4 && rackDelayWait > 0){
-			return;
-		}
-		if (mCurrSlwstDim == 5 && nwDelayWait > 0){
-			return;
-		}
-
-		if (mNwStall[mCurrSlwstDim] >= .8) {
-			delay = 5;
-		}
-		else if (mNwStall[mCurrSlwstDim] >= .5) {
-			delay = 2;
-		}*/
-		/*
-		else if (mNwStall[mCurrSlwstDim] >= .4) {
-			delay = 6;
-		}
-		else if (mNwStall[mCurrSlwstDim] >= .3) {
-			delay = 4;
-		}
-		else if (mNwStall[mCurrSlwstDim] >= .2) {
-			delay = 2;
-		}*/
-
-//		if (mCurrSlwstDim == 4) {
-//			/*if (mNwStall[mCurrSlwstDim] >= .8) {
-//				delay = 5;
-//			}
-//			else*/ if (mNwStall[mCurrSlwstDim] >= .5) {
-//				delay = 1;
-//			}
-//			rackDelayWait = delay;
-//			System.out.println("Setting rack delay for job: " + String.valueOf(this.getJobId()) + " to: "
-//					+ String.valueOf(rackDelayWait));
-//		}
-//		else {
-//			/*if (mNwStall[mCurrSlwstDim] >= .8) {
-//				delay = 10;
-//			}
-//			else */if (mNwStall[mCurrSlwstDim] >= .5) {
-//				delay = 5;
-//			}
-//			nwDelayWait = delay;
-//			System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + " to: "
-//					+ String.valueOf(nwDelayWait));
-//		}
 	}
 
 	@Override
@@ -224,9 +157,9 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		//System.out.println("mGpuTime/ideal_jct = " + String.valueOf(mGpuTime/ideal_jct));
 		//System.out.println("nw stall = " + String.valueOf(mNwStall[mCurrSlwstDim]));
 
-		if (delayFlag) {
-			tuneDelayTimers(demand);
-		}
+//		if (tuneDelayFlag) {
+//			tuneDelayTimers(demand);
+//		}
 	}
 
 	public double getNwDelayWait(){
@@ -243,5 +176,9 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 	public void setRackDelayWait(double time, int idx){
 		rackDelayWait = time;
+	}
+
+	public boolean isTuneDelayFlag() {
+		return tuneDelayFlag;
 	}
 }

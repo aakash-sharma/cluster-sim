@@ -18,7 +18,7 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 	private Map<Integer, Queue> mcDemandDelayMap;
 	private Map<Integer, Queue> rackDemandDelayMap;
 	private static final int MAX_Q = 10;
-	private static final int NUM_PAST_LEASE = 2;
+	private static final int NUM_PAST_LEASE = 12;
 
 	class TimeDelayPair {
 		private double time;
@@ -62,7 +62,7 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 	}
 	public double getMcDemandDelay(int demand) {
 		LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(demand);
-		double sum = 0;
+		double sum = 0, std_dev=0;
 		for (int i = 0; i < list.size(); i++) {
 			sum += list.get(i).value;
 		}
@@ -73,12 +73,17 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			return 1;
 		}
 
-		return sum/list.size();
+		double mean = sum/list.size();
+		for (int i = 0; i < list.size(); i++) {
+			std_dev += Math.pow(list.get(i).value - mean, 2);
+		}
+
+		return mean + Math.sqrt(std_dev/ list.size());
 	}
 
 	public double getRackDemandDelay(int demand) {
 		LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) rackDemandDelayMap.get(demand);
-		double sum = 0;
+		double sum = 0, std_dev = 0;
 		for (int i = 0; i < list.size(); i++) {
 			sum += list.get(i).value;
 		}
@@ -88,10 +93,21 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			return 1;
 		}
 
-		return sum/list.size();
+		double mean = sum/list.size();
+		for (int i = 0; i < list.size(); i++) {
+			std_dev += Math.pow(list.get(i).value - mean, 2);
+		}
+
+		return mean + Math.sqrt(std_dev/ list.size());
+
 	}
 
 	public void setDemandDelay(LinkedList<TimeDelayPair> list, double delay){
+
+		if (delay < 1) {
+			return;
+		}
+		System.out.println("Adding delay: " + String.valueOf(delay));
 
 		list.add(new TimeDelayPair(Simulation.getSimulationTime(), delay));
 
@@ -313,6 +329,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			gpusPerMachine *= Cluster.getInstance().getConfiguration().getGPUsDim2();
 		}
 
+		if (((DallyIntraJobScheduler) job).isTuneDelayFlag()) {
+			((DallyIntraJobScheduler) job).tuneDelayTimers(gpuDemand);
+		}
 		double rack_delay_wait = ((DallyIntraJobScheduler) job).getRackDelayWait();
 
 		if (starvation_time >= (Cluster.getInstance().getLeaseTime() * rack_delay_wait) ||
