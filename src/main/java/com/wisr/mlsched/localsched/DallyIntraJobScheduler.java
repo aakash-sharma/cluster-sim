@@ -74,18 +74,18 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 
 		DallyInterJobScheduler sched = (DallyInterJobScheduler) Cluster.getInstance().getScheduler();
 
-		if (mNwStall[4] > .2) {
+		//if (mNwStall[4] > .2) {
 			//rackDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand))));
-			rackDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand))));
+			rackDelayWait = Math.min(6, Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand))));
 			System.out.println("Setting rack delay for job: " + String.valueOf(this.getJobId()) + " to: "
 					+ String.valueOf(rackDelayWait));
-		}
-		if (mNwStall[5] > .2) {
+		//}
+		//if (mNwStall[5] > .2) {
 			//nwDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getRackDemandDelay(gpu_demand))));
-			nwDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getRackDemandDelay(gpu_demand))));
+			nwDelayWait = Math.min(12, Math.max(2, Math.ceil(sched.getRackDemandDelay(gpu_demand))));
 			System.out.println("Setting nw delay for job: " + String.valueOf(this.getJobId()) + " to: "
 					+ String.valueOf(nwDelayWait));
-		}
+		//}
 	}
 
 	@Override

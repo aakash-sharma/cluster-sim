@@ -62,9 +62,12 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 	}
 	public double getMcDemandDelay(int demand) {
 		LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(demand);
-		double sum = 0, std_dev=0;
+		double sum = 0, std_dev=0, max = 0;
 		for (int i = 0; i < list.size(); i++) {
 			sum += list.get(i).value;
+			if (list.get(i).value > max) {
+				max = list.get(i).value;
+			}
 		}
 
 		System.out.println("Total mc delay sum : " + String.valueOf(sum));
@@ -78,14 +81,19 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			std_dev += Math.pow(list.get(i).value - mean, 2);
 		}
 
-		return mean + Math.sqrt(std_dev/ list.size());
+		return mean + (2*Math.sqrt(std_dev/ list.size()));
+		//return mean - Math.sqrt(std_dev/ list.size());
+		//return max;
 	}
 
 	public double getRackDemandDelay(int demand) {
 		LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) rackDemandDelayMap.get(demand);
-		double sum = 0, std_dev = 0;
+		double sum = 0, std_dev = 0, max = 0;
 		for (int i = 0; i < list.size(); i++) {
 			sum += list.get(i).value;
+			if (list.get(i).value > max) {
+				max = list.get(i).value;
+			}
 		}
 
 		System.out.println("Total rack delay sum : " + String.valueOf(sum));
@@ -98,7 +106,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			std_dev += Math.pow(list.get(i).value - mean, 2);
 		}
 
-		return mean + Math.sqrt(std_dev/ list.size());
+		return mean + (2*Math.sqrt(std_dev/ list.size()));
+		//return mean - Math.sqrt(std_dev/ list.size());
+		//return max;
 
 	}
 
