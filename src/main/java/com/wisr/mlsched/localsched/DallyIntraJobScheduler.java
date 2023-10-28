@@ -75,8 +75,8 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 		DallyInterJobScheduler sched = (DallyInterJobScheduler) Cluster.getInstance().getScheduler();
 
 		//if (mNwStall[4] > .2) {
-			//rackDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand))));
-			rackDelayWait = Math.min(6, Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand))));
+			rackDelayWait = Math.min(10, Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand))));
+			//rackDelayWait = Math.min(6, Math.max(1, Math.ceil(sched.getMcDemandDelay(gpu_demand))));
 			System.out.println("Setting rack delay for job: " + String.valueOf(this.getJobId()) + " to: "
 					+ String.valueOf(rackDelayWait));
 		//}
@@ -131,9 +131,9 @@ public class DallyIntraJobScheduler extends IntraJobScheduler {
 //	}
 
 	public void endIteration() {
-		mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs))
-				* mIterGranularity;
-		int demand = mCurrentIterationGPUs.size();
+		//mGPUServiceForJob += mCurrentIterationGPUs.size() * (mTimePerIteration / getPlacementSlowdown(mCurrentIterationGPUs))
+		//		* mIterGranularity;
+		//int demand = mCurrentIterationGPUs.size();
 		super.endIteration();
 //		System.out.println("endIteration");
 //		System.out.println(mCurrentIterationGPUs.size());
