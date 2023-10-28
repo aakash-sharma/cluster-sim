@@ -3,6 +3,8 @@ package com.wisr.mlsched.job;
 import java.io.IOException;
 import java.util.*;
 import java.io.File;
+
+import com.wisr.mlsched.resources.GPU;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -148,7 +150,22 @@ public class JobStatistics {
 	public void recordJobStatistics() {
 		mFairnessIndices.add(new FairnessIndex(Simulation.getSimulationTime(), computeJainFairness()));
 		mLossValues.add(new LossValue(Simulation.getSimulationTime(), computeCumulativeLoss()));
-		mContention.add(new ContentionValue(Simulation.getSimulationTime(), computeCurrentContention(), mAllocs));
+
+		double used_gpus = 0, cluster_util = 0;
+		List<GPU> gpus = Cluster.getInstance().getGPUsInCluster();
+		Iterator<GPU> gpuIterator = gpus.iterator();
+		while (gpuIterator.hasNext()) {
+			GPU gpu = gpuIterator.next();
+			if (gpu.getJob() != null) {
+				used_gpus += 1;
+			}
+		}
+
+		cluster_util = used_gpus / Cluster.getInstance().getGPUsInCluster().size();
+
+		mContention.add(new ContentionValue(Simulation.getSimulationTime(), computeCurrentContention(), mAllocs,
+				Cluster.getInstance().getRunningJobs().size(), cluster_util));
+
 		System.out.println("Adding contention at time: " + String.valueOf(Simulation.getSimulationTime()));
 		System.out.println("Size of contentions: " + String.valueOf(mContention.size()));
 		if(ClusterEventQueue.getInstance().getNumberEvents() > 0) {
@@ -236,7 +253,7 @@ public class JobStatistics {
 		int rowid = 0;
 		int cellid = 0;
 		Cell cell;
-		String[] headers = {"JobId", "JCT", "Queue-delay", "%Queue-delay", "GPU-time", "%GPU-time", "Comp-time",
+		String[] headers = {"JobId", "Start-time", "End-time", "JCT", "Queue-delay", "%Queue-delay", "GPU-time", "%GPU-time", "Comp-time",
 				"%Comp-Time", "Comm-time", "%Comm-time", "Avg-GPU-contention",
 				"dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc", "makespan"};
 		row = sheet1.createRow(rowid++);
@@ -260,6 +277,12 @@ public class JobStatistics {
 			cellid = 0;
 			cell = row.createCell(cellid++);
 			cell.setCellValue(key);
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getStartTime());
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getEndTime());
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getJobTime());
@@ -309,8 +332,9 @@ public class JobStatistics {
 
 		rowid = 0;
 		cellid = 0;
-		String[] cluster_headers = {"Timestamp", "Contention", "dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc",
-				"rackAlloc", "nwAlloc"};
+		String[] cluster_headers = {"Timestamp", "Contention", "NumRunningJobs", "ClusterUtil", "dim2Alloc",
+				"dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc"};
+
 		row = sheet2.createRow(rowid++);
 
 		for (String str : cluster_headers) {
@@ -324,7 +348,11 @@ public class JobStatistics {
 			cell.setCellValue(val.mTimestamp);
 			cell = row.createCell(1);
 			cell.setCellValue(val.mContention);
-			int i = 2;
+			cell = row.createCell(2);
+			cell.setCellValue(val.mRunningJobs);
+			cell = row.createCell(3);
+			cell.setCellValue(val.mClusterUtil);
+			int i = 4;
 			for (int alloc: val.mAllocs){
 				cell = row.createCell(i);
 				cell.setCellValue(alloc);
@@ -759,8 +787,10 @@ public class JobStatistics {
 		private double mTimestamp;
 		private double mContention;
 		private int[] mAllocs;
+		private int mRunningJobs;
+		private double mClusterUtil;
 
-		public ContentionValue(double timestamp, double contention, int [] allocs) {
+		public ContentionValue(double timestamp, double contention, int [] allocs, int runningJobs, double clusterUtil) {
 			mTimestamp = timestamp;
 			mContention = contention;
 			mAllocs = new int[6];
@@ -770,6 +800,8 @@ public class JobStatistics {
 			mAllocs[3] = allocs[3];
 			mAllocs[4] = allocs[4];
 			mAllocs[5] = allocs[5];
+			mRunningJobs = runningJobs;
+			mClusterUtil = clusterUtil;
 		}
 		
 		public double getTimestamp() {
