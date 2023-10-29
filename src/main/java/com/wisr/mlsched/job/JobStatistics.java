@@ -164,7 +164,8 @@ public class JobStatistics {
 		cluster_util = used_gpus / Cluster.getInstance().getGPUsInCluster().size();
 
 		mContention.add(new ContentionValue(Simulation.getSimulationTime(), computeCurrentContention(), mAllocs,
-				Cluster.getInstance().getRunningJobs().size(), cluster_util));
+				Cluster.getInstance().getRunningJobs().size(), Cluster.getInstance().getActiveJobs().size(),
+				cluster_util));
 
 		System.out.println("Adding contention at time: " + String.valueOf(Simulation.getSimulationTime()));
 		System.out.println("Size of contentions: " + String.valueOf(mContention.size()));
@@ -332,8 +333,8 @@ public class JobStatistics {
 
 		rowid = 0;
 		cellid = 0;
-		String[] cluster_headers = {"Timestamp", "Contention", "NumRunningJobs", "ClusterUtil", "dim2Alloc",
-				"dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc"};
+		String[] cluster_headers = {"Timestamp", "Contention", "NumRunningJobs", "NumActiveJobs", "ClusterUtil",
+				"dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc"};
 
 		row = sheet2.createRow(rowid++);
 
@@ -351,8 +352,10 @@ public class JobStatistics {
 			cell = row.createCell(2);
 			cell.setCellValue(val.mRunningJobs);
 			cell = row.createCell(3);
+			cell.setCellValue(val.mActiveJobs);
+			cell = row.createCell(4);
 			cell.setCellValue(val.mClusterUtil);
-			int i = 4;
+			int i = 5;
 			for (int alloc: val.mAllocs){
 				cell = row.createCell(i);
 				cell.setCellValue(alloc);
@@ -788,9 +791,11 @@ public class JobStatistics {
 		private double mContention;
 		private int[] mAllocs;
 		private int mRunningJobs;
+		private int mActiveJobs;
 		private double mClusterUtil;
 
-		public ContentionValue(double timestamp, double contention, int [] allocs, int runningJobs, double clusterUtil) {
+		public ContentionValue(double timestamp, double contention, int [] allocs, int runningJobs, int activeJobs,
+							   double clusterUtil) {
 			mTimestamp = timestamp;
 			mContention = contention;
 			mAllocs = new int[6];
@@ -802,6 +807,7 @@ public class JobStatistics {
 			mAllocs[5] = allocs[5];
 			mRunningJobs = runningJobs;
 			mClusterUtil = clusterUtil;
+			mActiveJobs = activeJobs;
 		}
 		
 		public double getTimestamp() {

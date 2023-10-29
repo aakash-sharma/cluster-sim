@@ -112,7 +112,7 @@ public abstract class InterJobScheduler {
 				continue;
 			}
 
-			List<Bid> bidsFromJob = job.prepareMultiBid(null);
+			List<Bid> bidsFromJob = job.prepareMultiBid(gpu_set);
 			if (bidsFromJob != null && !bidsFromJob.isEmpty()) {
 				bids.addAll(bidsFromJob);
 			}
@@ -158,10 +158,34 @@ public abstract class InterJobScheduler {
 			}
 		}
 		startWaitingJobs();
+		System.out.println("Total running jobs: " + String.valueOf(Cluster.getInstance().getRunningJobs().size()));
+		System.out.println("Total active jobs: " + String.valueOf(Cluster.getInstance().getActiveJobs().size()));
 	}
 
 	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, IntraJobScheduler job){
 		return null;
+	}
+
+	protected void allocateGPU(List<GPU> allocatedGpus, List<GPU> gpuList, int gpuDemand, int allocRack, int allocMac, int allocSlot,
+							 int allocDim1, int allocDim2) {
+		for (GPU gpu: gpuList) {
+			Integer rack = gpu.getLocation().getRackId();
+			Integer machine = gpu.getLocation().getMachineId();
+			Integer slot = gpu.getLocation().getSlotId();
+			Integer dim1 = gpu.getLocation().getDim1Id();
+			Integer dim2 = gpu.getLocation().getDim2Id();
+
+			if ((rack == allocRack || allocRack == -1) && (machine == allocMac || allocMac == -1) &&
+					(slot == allocSlot || allocSlot == -1 )	&& (dim1 == allocDim1 || allocDim1 == -1)
+					&& (dim2 == allocDim2 || allocDim2 == -1)) {
+				allocatedGpus.add(gpu);
+				gpuDemand -= 1;
+			}
+
+			if (gpuDemand == 0) {
+				break;
+			}
+		}
 	}
 
 	//protected abstract List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, int gpuDemand);

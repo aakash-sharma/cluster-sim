@@ -22,6 +22,7 @@ public class Cluster {
 
 	private List<GPU> mGpusInCluster; // List of GPUs belong to cluster
 	private List<IntraJobScheduler> mRunningJobs; // List of running jobs in cluster
+	private List<IntraJobScheduler> mActiveJobs; // List of active jobs in cluster
 	private InterJobScheduler mScheduler; // Instance of inter-job scheduler
 	private String mPolicy; // Policy of Cluster
 	private int mIterGranularity; // Number of iterations to be scheduled policy
@@ -48,6 +49,7 @@ public class Cluster {
 		// Create GPUs based on configuration
 		mGpusInCluster = new ArrayList<GPU>();
 		mRunningJobs = new ArrayList<IntraJobScheduler>();
+		mActiveJobs = new ArrayList<IntraJobScheduler>();
 		mConfig = config;
 		mPolicy = config.getPolicy();
 		mLeaseTime = config.getLeaseTime();
@@ -230,29 +232,16 @@ public class Cluster {
 		return mConfig;
 	}
 
+	public List<IntraJobScheduler> getActiveJobs() {
+		return mActiveJobs;
+	}
 
-/*	private void initHeterogenousCluster() {
-		System.out.println("Initialzing heterogenous cluster");
-		for (int rack_id = 0; rack_id < mConfig.getRacks(); rack_id++) {
-			// 6 m/c with 4 GPUs per machine
-			for (int mc = 0; mc < 6; mc++) {
-				for(int slot=0;slot<2;slot++) {
-					for(int gpu=0;gpu<2;gpu++) {
-						mGpusInCluster.add(new GPU(new GPULocation(gpu, slot, mc, rack_id)));
-					}
-				}
-			}
-			// 3 m/c with 2 GPUs per machine
-			for (int mc = 6; mc < 9; mc++) {
-				for(int gpu=0;gpu<2;gpu++) {
-					mGpusInCluster.add(new GPU(new GPULocation(gpu, 0, mc, rack_id)));
-				}
-			}
-			// 2 m/c with 1 GPU per machine
-			for (int mc = 9; mc < 11; mc++) {
-				mGpusInCluster.add(new GPU(new GPULocation(0, 0, mc, rack_id)));
-			}
-		}
+	public void addActiveJob(IntraJobScheduler job) {
+		mActiveJobs.add(job);
+	}
 
-	} */
+	public void removeActiveJob(IntraJobScheduler job) {
+		mActiveJobs.remove(job);
+	}
+
 }

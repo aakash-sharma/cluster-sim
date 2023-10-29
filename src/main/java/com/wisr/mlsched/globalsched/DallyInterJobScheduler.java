@@ -239,8 +239,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			//list.add(starvation_time/Cluster.getInstance().getLeaseTime());
 			LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(gpuDemand);
 			setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
-			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
+			return allocatedGpus;
 		}
 
 		for (Object o : dim1Map.keySet()) {
@@ -268,8 +269,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(gpuDemand);
 			setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
 			//mcDemandDelayMap.put(gpuDemand, starvation_time/Cluster.getInstance().getLeaseTime());
-			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
+			return allocatedGpus;
 		}
 
 		for (Object o : slotMap.keySet()) {
@@ -295,8 +297,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(gpuDemand);
 			setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
 			//mcDemandDelayMap.put(gpuDemand, starvation_time/Cluster.getInstance().getLeaseTime());
-			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
+			return allocatedGpus;
 		}
 
 		for (Object o : machineMap.keySet()) {
@@ -320,8 +323,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) mcDemandDelayMap.get(gpuDemand);
 			setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
 			//mcDemandDelayMap.put(gpuDemand, starvation_time/Cluster.getInstance().getLeaseTime());
-			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
+			return allocatedGpus;
 		}
 
 		double gpusPerMachine = 1;
@@ -362,8 +366,9 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 				LinkedList<TimeDelayPair> list = (LinkedList<TimeDelayPair>) rackDemandDelayMap.get(gpuDemand);
 				setDemandDelay(list, starvation_time/Cluster.getInstance().getLeaseTime());
 				//rackDemandDelayMap.put(gpuDemand, starvation_time/Cluster.getInstance().getLeaseTime());
-				return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
-						allocatedDim1, allocatedDim2);
+				allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+				 		allocatedDim1, allocatedDim2);
+				return allocatedGpus;
 			}
 		}
 
@@ -373,14 +378,15 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 		if (Simulation.getSimulationTime() - job.getLastResourceAssignment() >=
 				(Cluster.getInstance().getLeaseTime() * nw_delay_wait) ||
 				gpuDemand > gpusPerRack) {
-			return allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
+			allocateGPU(allocatedGpus, gpuList, gpuDemand, allocatedRack, allocatedMachine, allocatedSlot,
 					allocatedDim1, allocatedDim2);
+			return allocatedGpus;
 		}
 
 		return allocatedGpus;
 	}
 
-	private List<GPU> allocateGPU(List<GPU> allocatedGpus, List<GPU> gpuList, int gpuDemand, int allocRack, int allocMac, int allocSlot,
+	/*private List<GPU> allocateGPU(List<GPU> allocatedGpus, List<GPU> gpuList, int gpuDemand, int allocRack, int allocMac, int allocSlot,
 								  int allocDim1, int allocDim2) {
 		for (GPU gpu: gpuList) {
 			Integer rack = gpu.getLocation().getRackId();
@@ -401,5 +407,5 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 			}
 		}
 		return allocatedGpus;
-	}
+	}*/
 }
