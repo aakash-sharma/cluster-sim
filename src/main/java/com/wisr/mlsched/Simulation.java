@@ -49,6 +49,7 @@ public class Simulation {
 
 		double rack_delay_wait = 1;
 		double nw_delay_wait = 2;
+		int delay_hist = 0;
 
 		if (args.length > 9) {
 			rack_delay_wait = Double.parseDouble(args[9]);
@@ -56,8 +57,11 @@ public class Simulation {
 		if (args.length > 10) {
 			nw_delay_wait = Double.parseDouble(args[10]);
 		}
+		if (args.length > 11) {
+			delay_hist = Integer.parseInt(args[11]);
+		}
 		Cluster.createCluster(racks, machines, cluster_policy, clusterConfig, networkConfig, system_config_file,
-				nw_overhead_file, run_name, nw_delay_wait, rack_delay_wait);
+				nw_overhead_file, run_name, nw_delay_wait, rack_delay_wait, delay_hist);
 
 		ClusterEventQueue eventQueue = ClusterEventQueue.getInstance();
 

@@ -94,7 +94,7 @@ public class ConfigUtils {
 														String cluster_policy, JSONObject config,
 														JSONObject networkConfig, String system_config_file,
 														String nw_overhead_file,String run_name, double nw_delay_wait,
-														double rack_delay_wait) {
+														double rack_delay_wait, int delay_hist) {
 		int racks = cluster_racks;
 		int machines = cluster_machines;
 		int slots = 1;
@@ -313,7 +313,7 @@ public class ConfigUtils {
 				fairness_threshold, epsilon, shouldUseConfig, consolidate, astra_sim_path, astra_sim_bin_path,
 				topo_name, topo_per_dim, dim_type, link_ratio, link_latency, link_bandwidth, all_reduce_impl,
 				all_gather_impl, reduce_scatter_impl, all_to_all_impl, intra_dim_sched, inter_dim_sched, rackOverheads,
-				nwOverheads, nw_delay_wait,	rack_delay_wait);
+				nwOverheads, nw_delay_wait,	rack_delay_wait, delay_hist);
 
 	}
 	

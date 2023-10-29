@@ -38,6 +38,7 @@ public class ClusterConfiguration {
 	private HashMap<String, Double> mNwOverheads;
 	private double mNwDelayWait;
 	private double mRackDelayWait;
+	private int mDelayHist;
 
 	public double getmNwDelayWait() {
 		return mNwDelayWait;
@@ -70,12 +71,13 @@ public class ClusterConfiguration {
 	public ClusterConfiguration(String run_name, int racks, int machines_per_rack, int slots_per_machine,
 								int dim1_slot, int dim2_dim1, int gpus_dim2, int iter_granularity, String policy,
 								double lease, double fairness_threshold, double epsilon, boolean useConfig,
-								boolean consolidate, String astra_sim_path,
-								String astra_sim_bin_path, String topo_name, String[] topo_per_dim, String[] dim_type,
-								float[] link_ratio, long[] link_latency, int[] link_bandwidth, String[] all_reduce_impl,
-								String[] all_gather_impl, String[] reduce_scatter_impl, String[] all_to_all_impl,
-								String intra_dim_sched, String inter_dim_sched, HashMap<String, Double> rackOverheads,
-								HashMap<String, Double> nwOverheads, double nw_delay_wait, double rack_delay_wait) {
+								boolean consolidate, String astra_sim_path, String astra_sim_bin_path, String topo_name,
+								String[] topo_per_dim, String[] dim_type, float[] link_ratio, long[] link_latency,
+								int[] link_bandwidth, String[] all_reduce_impl, String[] all_gather_impl,
+								String[] reduce_scatter_impl, String[] all_to_all_impl, String intra_dim_sched,
+								String inter_dim_sched, HashMap<String, Double> rackOverheads,
+								HashMap<String, Double> nwOverheads, double nw_delay_wait, double rack_delay_wait,
+								int delay_hist) {
 		mRacks = racks;
 		mMachinesPerRack = machines_per_rack;
 		mSlotsPerMachine = slots_per_machine;
@@ -108,6 +110,7 @@ public class ClusterConfiguration {
 		mNwOverheads = nwOverheads;
 		mNwDelayWait = nw_delay_wait;
 		mRackDelayWait = rack_delay_wait;
+		mDelayHist = delay_hist;
 	}
 
 	public boolean getUseConfig() {
@@ -222,5 +225,9 @@ public class ClusterConfiguration {
 
 	public void setmNwOverheads(HashMap<String, Double> mNwOverheads) {
 		this.mNwOverheads = mNwOverheads;
+	}
+
+	public int getDelayHist() {
+		return mDelayHist;
 	}
 }

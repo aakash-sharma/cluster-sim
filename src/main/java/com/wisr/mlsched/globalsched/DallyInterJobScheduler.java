@@ -17,8 +17,6 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 
 	private Map<Integer, Queue> mcDemandDelayMap;
 	private Map<Integer, Queue> rackDemandDelayMap;
-	private static final int MAX_Q = 10;
-	private static final int NUM_PAST_LEASE = 12;
 
 	class TimeDelayPair {
 		private double time;
@@ -114,6 +112,7 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 
 	public void setDemandDelay(LinkedList<TimeDelayPair> list, double delay){
 
+		int DELAY_HIST = Cluster.getInstance().getConfiguration().getDelayHist();
 		if (delay < 1) {
 			return;
 		}
@@ -123,7 +122,7 @@ public class DallyInterJobScheduler extends InterJobScheduler {
 
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).time < Simulation.getSimulationTime() - (Cluster.getInstance().getLeaseTime() *
-					NUM_PAST_LEASE)) {
+					DELAY_HIST)) {
 				list.remove(i);
 			}
 		}
