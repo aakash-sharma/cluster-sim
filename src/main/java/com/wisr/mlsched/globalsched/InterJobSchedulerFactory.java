@@ -16,7 +16,7 @@ public class InterJobSchedulerFactory {
 			case "Themis":
 				return new ThemisInterJobScheduler();
 			case "Gandiva":
-				return new GandivaInterJobScheduler();
+				return new GandivaInterJobScheduler(config);
 			case "SLAQ":
 				return new SLAQInterJobScheduler();
 			case "Tiresias":
