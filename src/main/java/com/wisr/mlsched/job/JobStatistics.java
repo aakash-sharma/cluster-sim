@@ -275,11 +275,11 @@ public class JobStatistics {
 			cell.setCellValue(str);
 		}
 
-		int total_jct = 0;
+		double total_jct = 0;
 		int total_gpu = 0;
-		int total_compute = 0;
-		int total_queueing = 0;
-		int total_comm = 0;
+		double total_compute = 0;
+		double total_queueing = 0;
+		double total_comm = 0;
 		int total_jobs = mJobStats.size();
 
 		for(Integer key : mJobStats.keySet()) {
