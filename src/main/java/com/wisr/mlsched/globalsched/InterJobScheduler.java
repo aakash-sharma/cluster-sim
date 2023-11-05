@@ -1,10 +1,6 @@
 package com.wisr.mlsched.globalsched;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import com.wisr.mlsched.ClusterEventQueue;
 import com.wisr.mlsched.Simulation;
@@ -101,12 +97,6 @@ public abstract class InterJobScheduler {
 
 		for(IntraJobScheduler job : jobs) {
 
-			/*
-			if (job.getGPUsAvailableForNextIteration().size() >= job.getMaxParallelism()) {
-				// Already have enough GPUs. No need to bid
-				continue;
-			}*/
-
 			if (!job.getGPUsAvailableForNextIteration().isEmpty()) {
 				// Already have enough GPUs. No need to bid
 				continue;
@@ -124,6 +114,9 @@ public abstract class InterJobScheduler {
 		}
 
 		Collections.sort(bids, new PerGPUBidComparator());
+
+		System.out.println("Total running jobs: " + String.valueOf(Cluster.getInstance().getRunningJobs().size()));
+		System.out.println("Total active jobs: " + String.valueOf(Cluster.getInstance().getActiveJobs().size()));
 
 		for (int i = 0; i < bids.size(); i++) {
 
@@ -156,10 +149,28 @@ public abstract class InterJobScheduler {
 					System.exit(-1);
 				}
 			}
+			System.out.println("Inside Total running jobs: " + String.valueOf(Cluster.getInstance().getRunningJobs().size()));
+			System.out.println("Inside Total active jobs: " + String.valueOf(Cluster.getInstance().getActiveJobs().size()));
 		}
 		startWaitingJobs();
-		System.out.println("Total running jobs: " + String.valueOf(Cluster.getInstance().getRunningJobs().size()));
-		System.out.println("Total active jobs: " + String.valueOf(Cluster.getInstance().getActiveJobs().size()));
+		System.out.println("Outside Total running jobs: " + String.valueOf(Cluster.getInstance().getRunningJobs().size()));
+		System.out.println("Outside Total active jobs: " + String.valueOf(Cluster.getInstance().getActiveJobs().size()));
+		print_util();
+	}
+
+	void print_util() {
+		double used_gpus = 0, cluster_util = 0;
+		List<GPU> gpus = Cluster.getInstance().getGPUsInCluster();
+		Iterator<GPU> gpuIterator = gpus.iterator();
+		while (gpuIterator.hasNext()) {
+			GPU gpu = gpuIterator.next();
+			if (gpu.getJob() != null && gpu.isLeased()) {
+				used_gpus += 1;
+			}
+		}
+		cluster_util = used_gpus / Cluster.getInstance().getGPUsInCluster().size();
+
+		System.out.println("Cluster util: " + String.valueOf(cluster_util));
 	}
 
 	protected List<GPU> consolidatedGPUAllocation(List<GPU> gpuList, IntraJobScheduler job){

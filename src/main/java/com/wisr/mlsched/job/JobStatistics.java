@@ -156,22 +156,23 @@ public class JobStatistics {
 		Iterator<GPU> gpuIterator = gpus.iterator();
 		while (gpuIterator.hasNext()) {
 			GPU gpu = gpuIterator.next();
-			if (gpu.getJob() != null) {
+			if (gpu.getJob() != null && gpu.isLeased()) {
 				used_gpus += 1;
 			}
 		}
 
-		cluster_util = used_gpus / Cluster.getInstance().getGPUsInCluster().size();
+		cluster_util = used_gpus / (double) Cluster.getInstance().getGPUsInCluster().size();
 
 		mContention.add(new ContentionValue(Simulation.getSimulationTime(), computeCurrentContention(), mAllocs,
 				Cluster.getInstance().getRunningJobs().size(), Cluster.getInstance().getActiveJobs().size(),
 				cluster_util));
 
 		System.out.println("Adding contention at time: " + String.valueOf(Simulation.getSimulationTime()));
-		System.out.println("Size of contentions: " + String.valueOf(mContention.size()));
+		System.out.println("contention: " + String.valueOf(computeCurrentContention()));
 		if(ClusterEventQueue.getInstance().getNumberEvents() > 0) {
 			ClusterEventQueue.getInstance().enqueueEvent(new 
-					JobStatisticEvent(Simulation.getSimulationTime() + Cluster.getInstance().getLeaseTime()));
+					JobStatisticEvent(Simulation.getSimulationTime() + Cluster.getInstance().getLeaseTime()
+					* 0.1));
 		}
 	}
 	
@@ -184,7 +185,17 @@ public class JobStatistics {
 		int num_gpus = Cluster.getInstance().getGPUsInCluster().size();
 		return (double)cumulativeReq*1.0/num_gpus;
 	}
-	
+
+	private double computeJobClusterUtil() {
+		HashSet<IntraJobScheduler> jobs = (HashSet<IntraJobScheduler>) Cluster.getInstance().getActiveJobs();
+		long cumulativeReq = 0;
+		for(IntraJobScheduler job : jobs) {
+			cumulativeReq += job.getMaxParallelism();
+		}
+		int num_gpus = Cluster.getInstance().getGPUsInCluster().size();
+		return (double)cumulativeReq*1.0/num_gpus;
+	}
+
 	private double computeCumulativeLoss() {
 		List<IntraJobScheduler> jobs = Cluster.getInstance().getRunningJobs();
 		double loss = 0.0;
@@ -806,8 +817,8 @@ public class JobStatistics {
 			mAllocs[4] = allocs[4];
 			mAllocs[5] = allocs[5];
 			mRunningJobs = runningJobs;
-			mClusterUtil = clusterUtil;
 			mActiveJobs = activeJobs;
+			mClusterUtil = clusterUtil;
 		}
 		
 		public double getTimestamp() {

@@ -1,7 +1,6 @@
 package com.wisr.mlsched.resources;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 import com.wisr.mlsched.Simulation;
@@ -22,7 +21,7 @@ public class Cluster {
 
 	private List<GPU> mGpusInCluster; // List of GPUs belong to cluster
 	private List<IntraJobScheduler> mRunningJobs; // List of running jobs in cluster
-	private List<IntraJobScheduler> mActiveJobs; // List of active jobs in cluster
+	private Set<IntraJobScheduler> mActiveJobs; // List of active jobs in cluster
 	private InterJobScheduler mScheduler; // Instance of inter-job scheduler
 	private String mPolicy; // Policy of Cluster
 	private int mIterGranularity; // Number of iterations to be scheduled policy
@@ -49,7 +48,7 @@ public class Cluster {
 		// Create GPUs based on configuration
 		mGpusInCluster = new ArrayList<GPU>();
 		mRunningJobs = new ArrayList<IntraJobScheduler>();
-		mActiveJobs = new ArrayList<IntraJobScheduler>();
+		mActiveJobs = new HashSet<IntraJobScheduler>();
 		mConfig = config;
 		mPolicy = config.getPolicy();
 		mLeaseTime = config.getLeaseTime();
@@ -176,6 +175,7 @@ public class Cluster {
 	public void removeJob(IntraJobScheduler job) {
 		sLog.info("Removing job " + Integer.toString(job.getJobId()) + " from cluster");
 		mRunningJobs.remove(job);
+		removeActiveJob(job);
 		JobGroupManager.getInstance().untrackJob(job);
 	}
 
@@ -233,7 +233,7 @@ public class Cluster {
 		return mConfig;
 	}
 
-	public List<IntraJobScheduler> getActiveJobs() {
+	public Set<IntraJobScheduler> getActiveJobs() {
 		return mActiveJobs;
 	}
 

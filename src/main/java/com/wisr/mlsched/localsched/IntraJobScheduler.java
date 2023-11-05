@@ -51,7 +51,7 @@ public abstract class IntraJobScheduler {
 	private String mAstraSimPath;
 	private String mAstraSimBinPath;
 	protected int[] mAllocs;
-	private final double CHECKPOINTING_OVERHEAD_PER_GPU = 0.0; // 6 seconds overhead
+	private final double CHECKPOINTING_OVERHEAD_PER_GPU = 1; // 6 seconds overhead
 	
 	// State management for job
 	protected boolean mIsLeader; // Whether this job is the leader in it's job group
@@ -202,6 +202,7 @@ public abstract class IntraJobScheduler {
 		mCommTimeItr = 0;
 		mCompTimeItr = 0;
 		assert(mCurrentIterationGPUs.size() > 0);
+		Cluster.getInstance().addActiveJob(this);
 		/*System.out.println("Placement Job " + Integer.toString(mJobId) + ":"
 				+ " Time: " + Double.toString(Simulation.getSimulationTime())
 				+ " Iteration remaining: " + Long.toString(mTotalIterationsRemaining)
@@ -257,6 +258,7 @@ public abstract class IntraJobScheduler {
 			System.out.println("JobId: " + Integer.toString(mJobId) + " done");
 			//sLog.info("Job " + Integer.toString(mJobId) + " done");
 			List<GPU> relinquished_resources = relinquishAllResources();
+			//print_util();
 			// Make all relinquished resources available
 			ClusterEventQueue.getInstance()
 					.enqueueEvent(new ResourceAvailableEvent(Simulation.getSimulationTime()
@@ -267,7 +269,6 @@ public abstract class IntraJobScheduler {
 
 			System.out.println("Allocs: " + Arrays.toString(mAllocs));
 			System.out.println("slowdowns: " + Arrays.toString(mSlowdownDims));
-			Cluster.getInstance().removeActiveJob(this);
 			//System.out.println("Max JVM memory: " + Runtime.getRuntime().maxMemory());
 			//System.out.println("Total JVM memory: " + Runtime.getRuntime().totalMemory());
 			//System.out.println("Free JVM memory: " + Runtime.getRuntime().freeMemory());
@@ -320,6 +321,7 @@ public abstract class IntraJobScheduler {
 		}
 
 		if(!expiredResources.isEmpty()) {
+			//print_util();
 			ClusterEventQueue.getInstance()
 			.enqueueEvent(new ResourceAvailableEvent(Simulation.getSimulationTime() +
 					CHECKPOINTING_OVERHEAD_PER_GPU*mCurrentIterationGPUs.size(), expiredResources));
@@ -365,14 +367,13 @@ public abstract class IntraJobScheduler {
 
 	public void notifyResourceAssignment(List<GPU> assignment) {
 		//sLog.info("Job " + Integer.toString(mJobId) + " got resources");
-		//System.out.println("Job " + Integer.toString(mJobId) + " got resources " + assignment);
+		System.out.println("Job " + Integer.toString(mJobId) + " got resources " + String.valueOf(assignment.size()));
 		mNextIterationGPUs.addAll(assignment);
 		//themisTs = getEstimateAfterAllocation();
 	}
 	
 	public void notifyResourceAvailable() {
 		mIsWaiting = false;
-		Cluster.getInstance().addActiveJob(this);
 
 		if (mJobStartTime == -1) {
 			mJobStartTime = Simulation.getSimulationTime();
@@ -460,6 +461,10 @@ public abstract class IntraJobScheduler {
 
 		if (mModelName.equals("VGG")) {
 			computeScale = 0.01549;
+		}
+
+		if (mModelName.equals("BERT")) {
+			computeScale = .0001121;
 		}
 
 		JSONObject jsonObject = new JSONObject();
@@ -1101,5 +1106,20 @@ public abstract class IntraJobScheduler {
 	private double random( double min, double max ) {
 	  double diff = max - min;
 	  return min + Math.random( ) * diff;
+	}
+
+	void print_util() {
+		double used_gpus = 0, cluster_util = 0;
+		List<GPU> gpus = Cluster.getInstance().getGPUsInCluster();
+		Iterator<GPU> gpuIterator = gpus.iterator();
+		while (gpuIterator.hasNext()) {
+			GPU gpu = gpuIterator.next();
+			if (gpu.getJob() != null && gpu.isLeased()) {
+				used_gpus += 1;
+			}
+		}
+		cluster_util = used_gpus / Cluster.getInstance().getGPUsInCluster().size();
+
+		System.out.println("Cluster util: " + String.valueOf(cluster_util));
 	}
 }

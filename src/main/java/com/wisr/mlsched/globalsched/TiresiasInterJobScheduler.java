@@ -146,7 +146,7 @@ public class TiresiasInterJobScheduler extends InterJobScheduler {
 	boolean shouldConsol(IntraJobScheduler job) {
 		String model = job.getModelName();
 		//if (model.equals("ResNet50") || model.equals("ResNet18") || model.equals("MobileNetV3")) {
-		if (model.equals("ResNet50") || model.equals("ResNet18")) {
+		if (model.equals("ResNet50") || model.equals("ResNet18") || model.equals("BERT")) {
 			return false;
 		}
 		else {
