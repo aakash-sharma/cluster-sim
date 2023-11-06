@@ -276,7 +276,7 @@ public class JobStatistics {
 		}
 
 		double total_jct = 0;
-		int total_gpu = 0;
+		double total_gpu = 0;
 		double total_compute = 0;
 		double total_queueing = 0;
 		double total_comm = 0;
@@ -377,8 +377,8 @@ public class JobStatistics {
 		rowid = 0;
 		cellid = 0;
 		int col = 0;
-		cluster_headers = new String[]{"Makespan", "Total_JCT", "Total_GPU", "Total_compute", "Total_queueing",
-				"Total_comm", "Avg_JCT", "Avg_compute", "Avg_queueing", "Avg_comm"};
+		cluster_headers = new String[]{"Makespan", "Total_JCT", "Total_queueing", "Total_GPU", "Total_compute",
+				"Total_comm", "Avg_JCT", "Avg_queueing", "Avg_GPU", "Avg_compute", "Avg_comm"};
 		row = sheet3.createRow(rowid++);
 
 		for (String str : cluster_headers) {
@@ -395,13 +395,13 @@ public class JobStatistics {
 		cell.setCellValue(total_jct);
 
 		cell = row.createCell(col++);
+		cell.setCellValue(total_queueing);
+
+		cell = row.createCell(col++);
 		cell.setCellValue(total_gpu);
 
 		cell = row.createCell(col++);
 		cell.setCellValue(total_compute);
-
-		cell = row.createCell(col++);
-		cell.setCellValue(total_queueing);
 
 		cell = row.createCell(col++);
 		cell.setCellValue(total_comm);
@@ -410,10 +410,13 @@ public class JobStatistics {
 		cell.setCellValue(total_jct/total_jobs);
 
 		cell = row.createCell(col++);
-		cell.setCellValue(total_compute/total_jobs);
+		cell.setCellValue(total_queueing/total_jobs);
 
 		cell = row.createCell(col++);
-		cell.setCellValue(total_queueing/total_jobs);
+		cell.setCellValue(total_gpu/total_jobs);
+
+		cell = row.createCell(col++);
+		cell.setCellValue(total_compute/total_jobs);
 
 		cell = row.createCell(col++);
 		cell.setCellValue(total_comm/total_jobs);
