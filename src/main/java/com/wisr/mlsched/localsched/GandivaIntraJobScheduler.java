@@ -106,7 +106,8 @@ public class GandivaIntraJobScheduler extends IntraJobScheduler {
 							+ relinquished_resources.size(), relinquished_resources));
 			Cluster.getInstance().removeJob(this);
 			JobStatistics.getInstance().recordJobEnd(mJobId, Simulation.getSimulationTime(), mJobStartTime,
-					getIdealEstimate(), mIsLeader, mGpuTime, mCompTime, mCommTime, mMaxParallelism, queueDelay, mAllocs);
+					getIdealEstimate(), mIsLeader, mGpuTime, mCompTime, mCommTime, mMaxParallelism, queueDelay, mAllocs
+					, mJobArrivalTime);
 
 			System.out.println("Allocs: " + Arrays.toString(mAllocs));
 			System.out.println("slowdowns: " + Arrays.toString(mSlowdownDims));

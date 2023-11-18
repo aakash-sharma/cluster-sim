@@ -12,6 +12,12 @@ public class EndIterationEvent extends ClusterEvent {
 		super(timestamp);
 		mJob = job;
 		setPriority(ClusterEvent.EventType.END_ITERATION);
+
+		if (timestamp == -1) {
+			System.out.println("negative timestamp in end iteration");
+			System.out.println("jobid: " + String.valueOf(job.getJobId()));
+		}
+
 	}
 
 	@Override

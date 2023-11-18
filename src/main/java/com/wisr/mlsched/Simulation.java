@@ -70,7 +70,7 @@ public class Simulation {
 		for(Object object : workloadConfig) {
 			JSONObject config = (JSONObject) object;
 			eventQueue.enqueueEvent(new JobArrivalEvent
-					(ConfigUtils.getJobStartTime(config), config));
+					(ConfigUtils.getJobArrivalTime(config), config));
 		}
 		
 		try {

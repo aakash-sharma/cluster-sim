@@ -71,7 +71,7 @@ public abstract class IntraJobScheduler {
 	protected double mCommTimeItr;
 	protected double mCompTimeItr;
 	protected double queueDelay; // State to maintain with admission control
-	private double mJobArrivalTime; // Arrival time of the job
+	protected double mJobArrivalTime; // Arrival time of the job
 	private boolean mIsQueued; // Every job starts with getting queued
 	private Map<Set<GPU>, Double> mSlowdown;
 	protected double[] mSlowdownDims;
@@ -82,7 +82,7 @@ public abstract class IntraJobScheduler {
 	public IntraJobScheduler(JSONObject config) {
 		initFromConfig(config);
 		mJobStartTime = -1;
-		mJobArrivalTime = ConfigUtils.getJobStartTime(config);
+		mJobArrivalTime = ConfigUtils.getJobArrivalTime(config);
 		sLog = Logger.getLogger(Cluster.class.getSimpleName());
 		sLog.setLevel(Simulation.getLogLevel());
 		sLog.info("Starting job " + Integer.toString(mJobId));
@@ -265,7 +265,8 @@ public abstract class IntraJobScheduler {
 							+ CHECKPOINTING_OVERHEAD_PER_GPU*relinquished_resources.size(), relinquished_resources));
 			Cluster.getInstance().removeJob(this);
 			JobStatistics.getInstance().recordJobEnd(mJobId, Simulation.getSimulationTime(), mJobStartTime,
-					getIdealEstimate(), mIsLeader, mGpuTime, mCompTime, mCommTime, mMaxParallelism, queueDelay, mAllocs);
+					getIdealEstimate(), mIsLeader, mGpuTime, mCompTime, mCommTime, mMaxParallelism, queueDelay, mAllocs
+					, mJobArrivalTime);
 
 			System.out.println("Allocs: " + Arrays.toString(mAllocs));
 			System.out.println("slowdowns: " + Arrays.toString(mSlowdownDims));

@@ -349,6 +349,10 @@ public class ConfigUtils {
 				(workload_config, "start_time"));
 	}
 
+	public static double getJobArrivalTime(JSONObject workload_config) {
+		return Double.parseDouble(getAttributeValue
+				(workload_config, "arrival_time"));
+	}
 	public static double[] getJobDelayTimes(JSONObject workload_config) {
 		double delay_timers [] = new double[Simulation.getNumDims()];
 		Arrays.fill(delay_timers, -1);
