@@ -51,7 +51,7 @@ public abstract class IntraJobScheduler {
 	private String mAstraSimPath;
 	private String mAstraSimBinPath;
 	protected int[] mAllocs;
-	private final double CHECKPOINTING_OVERHEAD_PER_GPU = 1; // 6 seconds overhead
+	protected double CHECKPOINTING_OVERHEAD_PER_GPU = 1; // 6 seconds overhead
 	
 	// State management for job
 	protected boolean mIsLeader; // Whether this job is the leader in it's job group

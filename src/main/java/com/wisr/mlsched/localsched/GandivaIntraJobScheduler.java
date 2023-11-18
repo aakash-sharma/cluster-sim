@@ -30,6 +30,7 @@ public class GandivaIntraJobScheduler extends IntraJobScheduler {
 		super(config);
 		sLog = Logger.getLogger(Cluster.class.getSimpleName());
 		sLog.setLevel(Simulation.getLogLevel());
+		CHECKPOINTING_OVERHEAD_PER_GPU = 0;
 		mSwap = false;
 		nwSlowdown = new HashMap<Integer, Double>();
 		rackSlowdown = new HashMap<Integer, Double>();
