@@ -65,6 +65,9 @@ public class JobStatistics {
 	 * @param timestamp
 	 */
 	public void recordJobStart(int jobid, double timestamp, int gpu_demand) {
+		if (jobid == 432133) {
+			System.out.println("mJobStartTime = " + String.valueOf(timestamp));
+		}
 		mJobStats.put(jobid, new SingleJobStat(timestamp));
 		if(mGPUContention.get(timestamp) == null) {
 			mGPUContention.put(timestamp, 0);
@@ -84,7 +87,7 @@ public class JobStatistics {
 	 */
 	public void recordJobEnd(int jobid, double timestamp, double start_time, double ideal_running_time,
 			boolean isLeader, double gpu_time, double comp_time, double comm_time, int gpu_demand,
-							 double queue_delay, int [] allocs) {
+							 double queue_delay, int [] allocs, double job_arrival_time) {
 		if(mGPUContention.get(timestamp) == null) {
 			mGPUContention.put(timestamp, 0);
 		}
@@ -98,6 +101,7 @@ public class JobStatistics {
 		mJobStats.get(jobid).setStartTime(start_time);
 		mJobStats.get(jobid).setEndTime(timestamp);
 		mJobStats.get(jobid).setGpuTime(gpu_time);
+		mJobStats.get(jobid).setArrivalTime(job_arrival_time);
 		mJobStats.get(jobid).setCompTime(comp_time);
 		mJobStats.get(jobid).setCommTime(comm_time);
 		mJobStats.get(jobid).setQueueDelay(queue_delay);
@@ -265,9 +269,10 @@ public class JobStatistics {
 		int rowid = 0;
 		int cellid = 0;
 		Cell cell;
-		String[] headers = {"JobId", "Start-time", "End-time", "JCT", "Queue-delay", "%Queue-delay", "GPU-time", "%GPU-time", "Comp-time",
-				"%Comp-Time", "Comm-time", "%Comm-time", "Avg-GPU-contention",
-				"dim2Alloc", "dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc", "makespan"};
+		String[] headers = {"JobId", "Start-time", "End-time", "Running-time", "Queue-delay", "%Queue-delay", "GPU-time",
+				"%GPU-time", "Comp-time", "%Comp-Time", "Comm-time", "%Comm-time", "Avg-GPU-contention", "dim2Alloc",
+				"dim1Alloc", "slotAlloc", "machineAlloc", "rackAlloc", "nwAlloc", "makespan", "Arrival-time"};
+
 		row = sheet1.createRow(rowid++);
 
 		for (String str : headers) {
@@ -276,6 +281,7 @@ public class JobStatistics {
 		}
 
 		double total_jct = 0;
+		double total_running_time = 0;
 		double total_gpu = 0;
 		double total_compute = 0;
 		double total_queueing = 0;
@@ -340,6 +346,9 @@ public class JobStatistics {
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(makespan);
+
+			cell = row.createCell(cellid++);
+			cell.setCellValue(mJobStats.get(key).getArrivalTime());
 		}
 
 		rowid = 0;
@@ -448,6 +457,9 @@ public class JobStatistics {
 		double total_jct = 0.0;
 		double jct = 0.0;
 
+		double total_running_time = 0.0;
+		double running_time = 0.0;
+
 		double queue_delay = 0.0;
 		double total_queue_delay = 0.0;
 
@@ -470,9 +482,9 @@ public class JobStatistics {
 
 		for(Integer key : mJobStats.keySet()) {
 
-			jct = mJobStats.get(key).getJobTime();
-			total_jct += jct;
-			mSimResults.get(key).add(jct);
+			running_time = mJobStats.get(key).getJobTime();
+			total_running_time += running_time;
+			mSimResults.get(key).add(running_time);
 
 			queue_delay = mJobStats.get(key).getQueueDelay();
 			total_queue_delay += queue_delay;
@@ -499,7 +511,12 @@ public class JobStatistics {
 				mSimResults.get(key).add(Double.valueOf(val));
 			}
 
-			double start_time = mJobStats.get(key).getStartTime();
+			jct = mJobStats.get(key).getJobTime();
+			total_jct += jct;
+			mSimResults.get(key).add(jct);
+
+			//double start_time = mJobStats.get(key).getStartTime();
+			double start_time = mJobStats.get(key).getArrivalTime();
 			double end_time = mJobStats.get(key).getEndTime();
 			if(start_time < earliest_start_time) {
 				earliest_start_time = start_time;
@@ -510,12 +527,14 @@ public class JobStatistics {
 		}
 
 		double avg_jct = total_jct/mJobStats.keySet().size();
+		double avg_running_time = total_running_time/mJobStats.keySet().size();
 		double avg_queue_delay = total_queue_delay/mJobStats.keySet().size();
 		double avg_gpu_time = total_gpu_time/mJobStats.keySet().size();
 		double avg_comp_time = total_comp_time/mJobStats.keySet().size();
 		double avg_comm_time = total_comm_time/mJobStats.keySet().size();
 
 		System.out.println("Average JCT: " + Double.toString(avg_jct));
+		System.out.println("Average running time: " + Double.toString(avg_running_time));
 		System.out.println("Average queue delay: " + Double.toString(avg_queue_delay));
 		System.out.println("Average GPU time: " + Double.toString(avg_gpu_time));
 		System.out.println("Average Compute time: " + Double.toString(avg_comp_time));
@@ -683,6 +702,7 @@ public class JobStatistics {
 	private class SingleJobStat {
 		private double mStartTime;
 		private double mEndTime;
+		private double mArrivalTime;
 		private double mGpuTime;
 		private double mCompTime;
 		private double mCommTime;
@@ -695,6 +715,7 @@ public class JobStatistics {
 			mGpuTime = 0;
 			mCommTime = 0;
 			mCompTime = 0;
+			mArrivalTime = 0;
 			mAllocs = new int[6];
 		}
 
@@ -704,6 +725,10 @@ public class JobStatistics {
 		
 		public void setEndTime(double end_time) {
 			mEndTime = end_time;
+		}
+
+		public void setArrivalTime(double arrival_time) {
+			mArrivalTime = arrival_time;
 		}
 
 		public void setQueueDelay(double queue_delay) {	mQueueDelay = queue_delay; }
@@ -744,6 +769,10 @@ public class JobStatistics {
 			return mEndTime;
 		}
 
+		public double getArrivalTime() {
+			return mArrivalTime;
+		}
+
 		public void setAllocs(int[] allocs) {
 			mAllocs = allocs;
 		}
@@ -761,6 +790,12 @@ public class JobStatistics {
 				return -1; // invalid request
 			}
 			return mEndTime - mStartTime;
+		}
+		public double getJCT() {
+			if(mEndTime == -1) { // not set
+				return -1; // invalid request
+			}
+			return mEndTime - mArrivalTime;
 		}
 	}
 	
