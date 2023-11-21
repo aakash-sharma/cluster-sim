@@ -35,7 +35,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "399455",
@@ -73,7 +73,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "399469",
@@ -111,7 +111,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "402744",
@@ -149,7 +149,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "402781",
@@ -187,7 +187,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "403140",
@@ -225,7 +225,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "403287",
@@ -263,7 +263,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "404408",
@@ -301,7 +301,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "404412",
@@ -339,7 +339,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "404438",
@@ -377,7 +377,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "405016",
@@ -415,7 +415,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "405266",
@@ -453,7 +453,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "9",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "405274",
@@ -491,7 +491,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "9",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "405275",
@@ -529,7 +529,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "405600",
@@ -567,7 +567,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "0",
-        "arrival_time": "1632773"
+        "arrival_time": "1858676"
     },
     {
         "job_id": "406228",
@@ -605,7 +605,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406232",
@@ -643,7 +643,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406247",
@@ -681,7 +681,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406353",
@@ -719,7 +719,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "1506414"
+        "arrival_time": "1835277"
     },
     {
         "job_id": "406391",
@@ -757,7 +757,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "1810951"
+        "arrival_time": "1359954"
     },
     {
         "job_id": "406493",
@@ -795,7 +795,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "1824182"
+        "arrival_time": "1446092"
     },
     {
         "job_id": "406594",
@@ -833,7 +833,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406595",
@@ -871,7 +871,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406659",
@@ -909,7 +909,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406692",
@@ -947,7 +947,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406771",
@@ -985,7 +985,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406811",
@@ -1023,7 +1023,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406844",
@@ -1061,7 +1061,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406846",
@@ -1099,7 +1099,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406906",
@@ -1137,7 +1137,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406938",
@@ -1175,7 +1175,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "406939",
@@ -1213,7 +1213,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407009",
@@ -1251,7 +1251,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407025",
@@ -1289,7 +1289,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407062",
@@ -1327,7 +1327,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407086",
@@ -1365,7 +1365,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407115",
@@ -1403,7 +1403,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407116",
@@ -1441,7 +1441,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407140",
@@ -1479,7 +1479,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "7",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407229",
@@ -1517,7 +1517,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "0",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407250",
@@ -1555,7 +1555,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407266",
@@ -1593,7 +1593,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "1402619"
+        "arrival_time": "1799230"
     },
     {
         "job_id": "407280",
@@ -1631,7 +1631,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407289",
@@ -1669,7 +1669,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "1707033"
+        "arrival_time": "1797671"
     },
     {
         "job_id": "407334",
@@ -1707,7 +1707,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407385",
@@ -1745,7 +1745,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407412",
@@ -1783,7 +1783,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407437",
@@ -1821,7 +1821,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407438",
@@ -1859,7 +1859,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407439",
@@ -1897,7 +1897,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407445",
@@ -1935,7 +1935,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407451",
@@ -1973,7 +1973,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407458",
@@ -2011,7 +2011,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407594",
@@ -2049,7 +2049,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407599",
@@ -2087,7 +2087,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407600",
@@ -2125,7 +2125,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407610",
@@ -2163,7 +2163,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407620",
@@ -2201,7 +2201,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407720",
@@ -2239,7 +2239,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407738",
@@ -2277,7 +2277,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407740",
@@ -2315,7 +2315,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407806",
@@ -2353,7 +2353,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "0",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407935",
@@ -2391,7 +2391,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407971",
@@ -2429,7 +2429,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "407979",
@@ -2467,7 +2467,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1617528"
+        "arrival_time": "1345620"
     },
     {
         "job_id": "407981",
@@ -2505,7 +2505,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1386870"
+        "arrival_time": "1722061"
     },
     {
         "job_id": "407983",
@@ -2543,7 +2543,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1673550"
+        "arrival_time": "1375269"
     },
     {
         "job_id": "408003",
@@ -2581,7 +2581,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1472311"
+        "arrival_time": "1888948"
     },
     {
         "job_id": "408021",
@@ -2619,7 +2619,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408026",
@@ -2657,7 +2657,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408033",
@@ -2695,7 +2695,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1799076"
+        "arrival_time": "1640766"
     },
     {
         "job_id": "408034",
@@ -2733,7 +2733,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1713771"
+        "arrival_time": "2083401"
     },
     {
         "job_id": "408035",
@@ -2771,7 +2771,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1877956"
+        "arrival_time": "2156724"
     },
     {
         "job_id": "408038",
@@ -2809,7 +2809,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1770162"
+        "arrival_time": "1783345"
     },
     {
         "job_id": "408109",
@@ -2847,7 +2847,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408119",
@@ -2885,7 +2885,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "2031804"
+        "arrival_time": "1907006"
     },
     {
         "job_id": "408157",
@@ -2923,7 +2923,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408168",
@@ -2961,7 +2961,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "2094119"
+        "arrival_time": "2099720"
     },
     {
         "job_id": "408169",
@@ -2999,7 +2999,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1562225"
+        "arrival_time": "1767953"
     },
     {
         "job_id": "408171",
@@ -3037,7 +3037,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1792834"
+        "arrival_time": "1959536"
     },
     {
         "job_id": "408172",
@@ -3075,7 +3075,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1908890"
+        "arrival_time": "2042928"
     },
     {
         "job_id": "408173",
@@ -3113,7 +3113,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1628971"
+        "arrival_time": "2099767"
     },
     {
         "job_id": "408174",
@@ -3151,7 +3151,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1907426"
+        "arrival_time": "2038346"
     },
     {
         "job_id": "408175",
@@ -3189,7 +3189,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1966141"
+        "arrival_time": "1703694"
     },
     {
         "job_id": "408176",
@@ -3227,7 +3227,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1841727"
+        "arrival_time": "1748718"
     },
     {
         "job_id": "408179",
@@ -3265,7 +3265,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "2183037"
+        "arrival_time": "2162310"
     },
     {
         "job_id": "408180",
@@ -3303,7 +3303,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1700031"
+        "arrival_time": "1750385"
     },
     {
         "job_id": "408181",
@@ -3341,7 +3341,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1742511"
+        "arrival_time": "2016858"
     },
     {
         "job_id": "408182",
@@ -3379,7 +3379,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1731544"
+        "arrival_time": "1658719"
     },
     {
         "job_id": "408183",
@@ -3417,7 +3417,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1663689"
+        "arrival_time": "1684068"
     },
     {
         "job_id": "408184",
@@ -3455,7 +3455,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1675677"
+        "arrival_time": "1859408"
     },
     {
         "job_id": "408194",
@@ -3493,7 +3493,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "1965790"
+        "arrival_time": "1950532"
     },
     {
         "job_id": "408196",
@@ -3531,7 +3531,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "2212437"
+        "arrival_time": "1981923"
     },
     {
         "job_id": "408197",
@@ -3569,7 +3569,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "2159901"
+        "arrival_time": "1844777"
     },
     {
         "job_id": "408198",
@@ -3607,7 +3607,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "2141364"
+        "arrival_time": "1910216"
     },
     {
         "job_id": "408233",
@@ -3645,7 +3645,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408241",
@@ -3683,7 +3683,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "2103741"
+        "arrival_time": "2310436"
     },
     {
         "job_id": "408243",
@@ -3721,7 +3721,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "2211593"
+        "arrival_time": "1737733"
     },
     {
         "job_id": "408245",
@@ -3759,7 +3759,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1772450"
+        "arrival_time": "1761160"
     },
     {
         "job_id": "408247",
@@ -3797,7 +3797,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1730865"
+        "arrival_time": "2093066"
     },
     {
         "job_id": "408250",
@@ -3835,7 +3835,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "1953562"
+        "arrival_time": "1951927"
     },
     {
         "job_id": "408269",
@@ -3873,7 +3873,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408314",
@@ -3911,7 +3911,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408316",
@@ -3949,7 +3949,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408318",
@@ -3987,7 +3987,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408323",
@@ -4025,7 +4025,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408324",
@@ -4063,7 +4063,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408383",
@@ -4101,7 +4101,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408497",
@@ -4139,7 +4139,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408579",
@@ -4177,7 +4177,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408584",
@@ -4215,7 +4215,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408586",
@@ -4253,7 +4253,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408589",
@@ -4291,7 +4291,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408611",
@@ -4329,7 +4329,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "1745088"
+        "arrival_time": "2029071"
     },
     {
         "job_id": "408824",
@@ -4367,7 +4367,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "1789387"
+        "arrival_time": "2113483"
     },
     {
         "job_id": "408872",
@@ -4405,7 +4405,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408873",
@@ -4443,7 +4443,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "408908",
@@ -4481,7 +4481,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "409033",
@@ -4519,7 +4519,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "409050",
@@ -4557,7 +4557,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "409116",
@@ -4595,7 +4595,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "409163",
@@ -4633,7 +4633,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "414532",
@@ -4671,7 +4671,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "414533",
@@ -4709,7 +4709,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "414544",
@@ -4747,7 +4747,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "414545",
@@ -4785,7 +4785,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "414550",
@@ -4823,7 +4823,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "416577",
@@ -4861,7 +4861,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3155725"
+        "arrival_time": "2880395"
     },
     {
         "job_id": "425888",
@@ -4899,7 +4899,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "426134",
@@ -4937,7 +4937,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "426427",
@@ -4975,7 +4975,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "427724",
@@ -5013,7 +5013,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "428058",
@@ -5051,7 +5051,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "2890116"
+        "arrival_time": "3391523"
     },
     {
         "job_id": "428323",
@@ -5089,7 +5089,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3237606"
+        "arrival_time": "3017319"
     },
     {
         "job_id": "428870",
@@ -5127,7 +5127,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3223590"
+        "arrival_time": "3393247"
     },
     {
         "job_id": "429040",
@@ -5165,7 +5165,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3068971"
+        "arrival_time": "3211925"
     },
     {
         "job_id": "430098",
@@ -5203,7 +5203,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3255385"
+        "arrival_time": "2972612"
     },
     {
         "job_id": "430143",
@@ -5241,7 +5241,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "430153",
@@ -5279,7 +5279,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "430154",
@@ -5317,7 +5317,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "430982",
@@ -5355,7 +5355,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3416551"
+        "arrival_time": "3348837"
     },
     {
         "job_id": "430984",
@@ -5393,7 +5393,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3088541"
+        "arrival_time": "3429340"
     },
     {
         "job_id": "431955",
@@ -5431,7 +5431,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "431965",
@@ -5469,7 +5469,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3409322"
+        "arrival_time": "3334810"
     },
     {
         "job_id": "432133",
@@ -5507,7 +5507,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "432135",
@@ -5545,7 +5545,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "432322",
@@ -5583,7 +5583,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "432345",
@@ -5621,7 +5621,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "432397",
@@ -5659,7 +5659,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "432405",
@@ -5697,7 +5697,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "432408",
@@ -5735,7 +5735,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "432425",
@@ -5773,7 +5773,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3355177"
+        "arrival_time": "3210526"
     },
     {
         "job_id": "432438",
@@ -5811,7 +5811,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "432492",
@@ -5849,7 +5849,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3611540"
+        "arrival_time": "3172951"
     },
     {
         "job_id": "432706",
@@ -5887,7 +5887,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3283736"
+        "arrival_time": "3093587"
     },
     {
         "job_id": "432707",
@@ -5925,7 +5925,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3419757"
+        "arrival_time": "3572887"
     },
     {
         "job_id": "432708",
@@ -5963,7 +5963,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3567243"
+        "arrival_time": "3505074"
     },
     {
         "job_id": "432709",
@@ -6001,7 +6001,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3213818"
+        "arrival_time": "3591419"
     },
     {
         "job_id": "432710",
@@ -6039,7 +6039,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3489274"
+        "arrival_time": "3536627"
     },
     {
         "job_id": "432711",
@@ -6077,7 +6077,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3507002"
+        "arrival_time": "3371818"
     },
     {
         "job_id": "432712",
@@ -6115,7 +6115,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3223248"
+        "arrival_time": "3117242"
     },
     {
         "job_id": "432713",
@@ -6153,7 +6153,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3607361"
+        "arrival_time": "3270600"
     },
     {
         "job_id": "432832",
@@ -6191,7 +6191,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433218",
@@ -6229,7 +6229,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433246",
@@ -6267,7 +6267,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433276",
@@ -6305,7 +6305,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433336",
@@ -6343,7 +6343,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433344",
@@ -6381,7 +6381,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3430413"
+        "arrival_time": "3583146"
     },
     {
         "job_id": "433348",
@@ -6419,7 +6419,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3385673"
+        "arrival_time": "3184928"
     },
     {
         "job_id": "433350",
@@ -6457,7 +6457,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3505642"
+        "arrival_time": "3343924"
     },
     {
         "job_id": "433353",
@@ -6495,7 +6495,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3596437"
+        "arrival_time": "3655199"
     },
     {
         "job_id": "433354",
@@ -6533,7 +6533,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3540904"
+        "arrival_time": "3257461"
     },
     {
         "job_id": "433355",
@@ -6571,7 +6571,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3361676"
+        "arrival_time": "3141661"
     },
     {
         "job_id": "433356",
@@ -6609,7 +6609,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3503186"
+        "arrival_time": "3582499"
     },
     {
         "job_id": "433357",
@@ -6647,7 +6647,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3456425"
+        "arrival_time": "3407320"
     },
     {
         "job_id": "433358",
@@ -6685,7 +6685,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3678097"
+        "arrival_time": "3160703"
     },
     {
         "job_id": "433359",
@@ -6723,7 +6723,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3572521"
+        "arrival_time": "3401726"
     },
     {
         "job_id": "433364",
@@ -6761,7 +6761,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3556589"
+        "arrival_time": "3261747"
     },
     {
         "job_id": "433365",
@@ -6799,7 +6799,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3404009"
+        "arrival_time": "3324076"
     },
     {
         "job_id": "433366",
@@ -6837,7 +6837,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3723549"
+        "arrival_time": "3570430"
     },
     {
         "job_id": "433367",
@@ -6875,7 +6875,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3256462"
+        "arrival_time": "3729490"
     },
     {
         "job_id": "433368",
@@ -6913,7 +6913,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3673968"
+        "arrival_time": "3768864"
     },
     {
         "job_id": "433369",
@@ -6951,7 +6951,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3319093"
+        "arrival_time": "3272813"
     },
     {
         "job_id": "433370",
@@ -6989,7 +6989,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3371477"
+        "arrival_time": "3759702"
     },
     {
         "job_id": "433379",
@@ -7027,7 +7027,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3511631"
+        "arrival_time": "3336045"
     },
     {
         "job_id": "433384",
@@ -7065,7 +7065,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3482840"
+        "arrival_time": "3323095"
     },
     {
         "job_id": "433387",
@@ -7103,7 +7103,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3464382"
+        "arrival_time": "3219889"
     },
     {
         "job_id": "433429",
@@ -7141,7 +7141,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433431",
@@ -7179,7 +7179,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433446",
@@ -7217,7 +7217,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3413354"
+        "arrival_time": "3603265"
     },
     {
         "job_id": "433457",
@@ -7255,7 +7255,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3361048"
+        "arrival_time": "3754198"
     },
     {
         "job_id": "433462",
@@ -7293,7 +7293,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3615779"
+        "arrival_time": "3657842"
     },
     {
         "job_id": "433463",
@@ -7331,7 +7331,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3840034"
+        "arrival_time": "3762059"
     },
     {
         "job_id": "433469",
@@ -7369,7 +7369,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3791486"
+        "arrival_time": "3543588"
     },
     {
         "job_id": "433490",
@@ -7407,7 +7407,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433519",
@@ -7445,7 +7445,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433528",
@@ -7483,7 +7483,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433531",
@@ -7521,7 +7521,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3508276"
+        "arrival_time": "3771789"
     },
     {
         "job_id": "433541",
@@ -7559,7 +7559,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3823522"
+        "arrival_time": "3612889"
     },
     {
         "job_id": "433542",
@@ -7597,7 +7597,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3743924"
+        "arrival_time": "3799632"
     },
     {
         "job_id": "433545",
@@ -7635,7 +7635,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3302367"
+        "arrival_time": "3841143"
     },
     {
         "job_id": "433546",
@@ -7673,7 +7673,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3779701"
+        "arrival_time": "3626255"
     },
     {
         "job_id": "433614",
@@ -7711,7 +7711,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "7",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433678",
@@ -7749,7 +7749,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3298642"
+        "arrival_time": "3395845"
     },
     {
         "job_id": "433690",
@@ -7787,7 +7787,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3730412"
+        "arrival_time": "3488097"
     },
     {
         "job_id": "433716",
@@ -7825,7 +7825,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433717",
@@ -7863,7 +7863,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433718",
@@ -7901,7 +7901,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433727",
@@ -7939,7 +7939,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3754121"
+        "arrival_time": "3824771"
     },
     {
         "job_id": "433734",
@@ -7977,7 +7977,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3486431"
+        "arrival_time": "3521729"
     },
     {
         "job_id": "433740",
@@ -8015,7 +8015,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3774285"
+        "arrival_time": "3891206"
     },
     {
         "job_id": "433775",
@@ -8053,7 +8053,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433796",
@@ -8091,7 +8091,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433797",
@@ -8129,7 +8129,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433816",
@@ -8167,7 +8167,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433866",
@@ -8205,7 +8205,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "7",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433921",
@@ -8243,7 +8243,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433932",
@@ -8281,7 +8281,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "433983",
@@ -8319,7 +8319,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "7",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434040",
@@ -8357,7 +8357,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3463880"
+        "arrival_time": "3956515"
     },
     {
         "job_id": "434082",
@@ -8395,7 +8395,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434137",
@@ -8433,7 +8433,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434202",
@@ -8471,7 +8471,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434344",
@@ -8509,7 +8509,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434345",
@@ -8547,7 +8547,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434364",
@@ -8585,7 +8585,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434367",
@@ -8623,7 +8623,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434378",
@@ -8661,7 +8661,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434412",
@@ -8699,7 +8699,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3601586"
+        "arrival_time": "3714321"
     },
     {
         "job_id": "434501",
@@ -8737,7 +8737,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434506",
@@ -8775,7 +8775,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434533",
@@ -8813,7 +8813,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434562",
@@ -8851,7 +8851,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434563",
@@ -8889,7 +8889,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3395589"
+        "arrival_time": "3866186"
     },
     {
         "job_id": "434568",
@@ -8927,7 +8927,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434575",
@@ -8965,7 +8965,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434592",
@@ -9003,7 +9003,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434619",
@@ -9041,7 +9041,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434627",
@@ -9079,7 +9079,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3736320"
+        "arrival_time": "3736457"
     },
     {
         "job_id": "434638",
@@ -9117,7 +9117,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3805494"
+        "arrival_time": "3475216"
     },
     {
         "job_id": "434643",
@@ -9155,7 +9155,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434673",
@@ -9193,7 +9193,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434675",
@@ -9231,7 +9231,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434746",
@@ -9269,7 +9269,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "9",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434756",
@@ -9307,7 +9307,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434790",
@@ -9345,7 +9345,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434801",
@@ -9383,7 +9383,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3674525"
+        "arrival_time": "3595330"
     },
     {
         "job_id": "434829",
@@ -9421,7 +9421,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3557743"
+        "arrival_time": "3768572"
     },
     {
         "job_id": "434850",
@@ -9459,7 +9459,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "434853",
@@ -9497,7 +9497,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "435177",
@@ -9535,7 +9535,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "9",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "435232",
@@ -9573,7 +9573,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "435305",
@@ -9611,7 +9611,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "435324",
@@ -9649,7 +9649,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "435824",
@@ -9687,7 +9687,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3669220"
+        "arrival_time": "3732632"
     },
     {
         "job_id": "435830",
@@ -9725,7 +9725,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3824794"
+        "arrival_time": "4036210"
     },
     {
         "job_id": "435832",
@@ -9763,7 +9763,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3459829"
+        "arrival_time": "3861013"
     },
     {
         "job_id": "436106",
@@ -9801,7 +9801,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "436116",
@@ -9839,7 +9839,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3704078"
+        "arrival_time": "3795741"
     },
     {
         "job_id": "437362",
@@ -9877,7 +9877,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3474264"
+        "arrival_time": "3775190"
     },
     {
         "job_id": "437375",
@@ -9915,7 +9915,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3904652"
+        "arrival_time": "3574430"
     },
     {
         "job_id": "437406",
@@ -9953,7 +9953,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3699423"
+        "arrival_time": "3601453"
     },
     {
         "job_id": "437408",
@@ -9991,7 +9991,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3859633"
+        "arrival_time": "3930813"
     },
     {
         "job_id": "437409",
@@ -10029,7 +10029,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3804730"
+        "arrival_time": "3984477"
     },
     {
         "job_id": "437411",
@@ -10067,7 +10067,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3872862"
+        "arrival_time": "4012115"
     },
     {
         "job_id": "437412",
@@ -10105,7 +10105,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3957439"
+        "arrival_time": "4132312"
     },
     {
         "job_id": "437413",
@@ -10143,7 +10143,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4087902"
+        "arrival_time": "4015062"
     },
     {
         "job_id": "437414",
@@ -10181,7 +10181,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4127782"
+        "arrival_time": "3666227"
     },
     {
         "job_id": "437415",
@@ -10219,7 +10219,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3722843"
+        "arrival_time": "3686709"
     },
     {
         "job_id": "437416",
@@ -10257,7 +10257,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3820508"
+        "arrival_time": "3785787"
     },
     {
         "job_id": "437417",
@@ -10295,7 +10295,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3847333"
+        "arrival_time": "3797852"
     },
     {
         "job_id": "437418",
@@ -10333,7 +10333,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3951935"
+        "arrival_time": "3599783"
     },
     {
         "job_id": "437419",
@@ -10371,7 +10371,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3606312"
+        "arrival_time": "4041800"
     },
     {
         "job_id": "437480",
@@ -10409,7 +10409,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3837985"
+        "arrival_time": "3854996"
     },
     {
         "job_id": "437487",
@@ -10447,7 +10447,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "4082093"
+        "arrival_time": "3815879"
     },
     {
         "job_id": "437543",
@@ -10485,7 +10485,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "3725420"
+        "arrival_time": "4164479"
     },
     {
         "job_id": "437619",
@@ -10523,7 +10523,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "9",
-        "arrival_time": "3884140"
+        "arrival_time": "4005234"
     },
     {
         "job_id": "437655",
@@ -10561,7 +10561,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "3854453"
+        "arrival_time": "3769730"
     },
     {
         "job_id": "437661",
@@ -10599,7 +10599,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3985131"
+        "arrival_time": "4125983"
     },
     {
         "job_id": "437665",
@@ -10637,7 +10637,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3968685"
+        "arrival_time": "3990501"
     },
     {
         "job_id": "437666",
@@ -10675,7 +10675,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3649624"
+        "arrival_time": "4070123"
     },
     {
         "job_id": "437669",
@@ -10713,7 +10713,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3978724"
+        "arrival_time": "3699118"
     },
     {
         "job_id": "437670",
@@ -10751,7 +10751,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3664585"
+        "arrival_time": "3840920"
     },
     {
         "job_id": "437675",
@@ -10789,7 +10789,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3951993"
+        "arrival_time": "3754431"
     },
     {
         "job_id": "437678",
@@ -10827,7 +10827,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4082613"
+        "arrival_time": "4020515"
     },
     {
         "job_id": "437689",
@@ -10865,7 +10865,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3715381"
+        "arrival_time": "3752618"
     },
     {
         "job_id": "437698",
@@ -10903,7 +10903,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3946410"
+        "arrival_time": "4308161"
     },
     {
         "job_id": "437700",
@@ -10941,7 +10941,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3945335"
+        "arrival_time": "4127658"
     },
     {
         "job_id": "437703",
@@ -10979,7 +10979,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4058724"
+        "arrival_time": "4019282"
     },
     {
         "job_id": "437707",
@@ -11017,7 +11017,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4251067"
+        "arrival_time": "4122280"
     },
     {
         "job_id": "437712",
@@ -11055,7 +11055,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4132554"
+        "arrival_time": "3861874"
     },
     {
         "job_id": "437713",
@@ -11093,7 +11093,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4293837"
+        "arrival_time": "3903862"
     },
     {
         "job_id": "437717",
@@ -11131,7 +11131,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4107748"
+        "arrival_time": "3765820"
     },
     {
         "job_id": "437720",
@@ -11169,7 +11169,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3931115"
+        "arrival_time": "4252459"
     },
     {
         "job_id": "437723",
@@ -11207,7 +11207,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4160582"
+        "arrival_time": "4057611"
     },
     {
         "job_id": "437736",
@@ -11245,7 +11245,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "9",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "437967",
@@ -11283,7 +11283,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4359217"
+        "arrival_time": "4217385"
     },
     {
         "job_id": "437970",
@@ -11321,7 +11321,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4058961"
+        "arrival_time": "3881278"
     },
     {
         "job_id": "437974",
@@ -11359,7 +11359,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4380462"
+        "arrival_time": "3998390"
     },
     {
         "job_id": "437979",
@@ -11397,7 +11397,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "437987",
@@ -11435,7 +11435,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4193965"
+        "arrival_time": "3890146"
     },
     {
         "job_id": "438034",
@@ -11473,7 +11473,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "438037",
@@ -11511,7 +11511,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "438039",
@@ -11549,7 +11549,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "438040",
@@ -11587,7 +11587,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "438048",
@@ -11625,7 +11625,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "438081",
@@ -11663,7 +11663,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4065047"
+        "arrival_time": "4133088"
     },
     {
         "job_id": "438083",
@@ -11701,7 +11701,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4372000"
+        "arrival_time": "3832900"
     },
     {
         "job_id": "438086",
@@ -11739,7 +11739,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "438088",
@@ -11777,7 +11777,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4159605"
+        "arrival_time": "4243849"
     },
     {
         "job_id": "438096",
@@ -11815,7 +11815,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4270927"
+        "arrival_time": "3984596"
     },
     {
         "job_id": "438098",
@@ -11853,7 +11853,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "3965186"
+        "arrival_time": "4392203"
     },
     {
         "job_id": "438157",
@@ -11891,7 +11891,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4330753"
+        "arrival_time": "4459835"
     },
     {
         "job_id": "438273",
@@ -11929,7 +11929,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3992034"
+        "arrival_time": "4239996"
     },
     {
         "job_id": "438382",
@@ -11967,7 +11967,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4103933"
+        "arrival_time": "3935748"
     },
     {
         "job_id": "438464",
@@ -12005,7 +12005,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "438486",
@@ -12043,7 +12043,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": "4213823"
+        "arrival_time": "4461731"
     },
     {
         "job_id": "438491",
@@ -12081,7 +12081,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": "4403075"
+        "arrival_time": "4458557"
     },
     {
         "job_id": "438642",
@@ -12119,7 +12119,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": "4466770"
+        "arrival_time": "4373405"
     },
     {
         "job_id": "438808",
@@ -12157,7 +12157,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "439453",
@@ -12195,7 +12195,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": "4268579"
+        "arrival_time": "3918970"
     },
     {
         "job_id": "439602",
@@ -12233,7 +12233,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4123782"
+        "arrival_time": "4301118"
     },
     {
         "job_id": "439630",
@@ -12271,7 +12271,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "439639",
@@ -12309,7 +12309,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "439894",
@@ -12347,7 +12347,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "4259014"
+        "arrival_time": "4116360"
     },
     {
         "job_id": "439918",
@@ -12385,7 +12385,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "4268820"
+        "arrival_time": "4139181"
     },
     {
         "job_id": "439932",
@@ -12423,7 +12423,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4545235"
+        "arrival_time": "4473638"
     },
     {
         "job_id": "439934",
@@ -12461,7 +12461,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4405246"
+        "arrival_time": "4178606"
     },
     {
         "job_id": "440113",
@@ -12499,7 +12499,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "440355",
@@ -12537,7 +12537,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4108026"
+        "arrival_time": "4415846"
     },
     {
         "job_id": "440528",
@@ -12575,7 +12575,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "9",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "441032",
@@ -12613,7 +12613,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "441410",
@@ -12651,7 +12651,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "441504",
@@ -12689,7 +12689,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4397716"
+        "arrival_time": "4014030"
     },
     {
         "job_id": "441505",
@@ -12727,7 +12727,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4410533"
+        "arrival_time": "4056957"
     },
     {
         "job_id": "441605",
@@ -12765,7 +12765,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "3974849"
+        "arrival_time": "4205249"
     },
     {
         "job_id": "442258",
@@ -12803,7 +12803,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "4548514"
+        "arrival_time": "4463279"
     },
     {
         "job_id": "442266",
@@ -12841,7 +12841,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "4111721"
+        "arrival_time": "4569613"
     },
     {
         "job_id": "446164",
@@ -12879,7 +12879,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4468221"
+        "arrival_time": "4016935"
     },
     {
         "job_id": "446181",
@@ -12917,7 +12917,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4387960"
+        "arrival_time": "4203370"
     },
     {
         "job_id": "446228",
@@ -12955,7 +12955,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "4073579"
+        "arrival_time": "4482080"
     },
     {
         "job_id": "446231",
@@ -12993,7 +12993,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4145851"
+        "arrival_time": "4641695"
     },
     {
         "job_id": "446437",
@@ -13031,7 +13031,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "446697",
@@ -13069,7 +13069,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "4581402"
+        "arrival_time": "4393863"
     },
     {
         "job_id": "447724",
@@ -13107,7 +13107,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "447765",
@@ -13145,7 +13145,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4346574"
+        "arrival_time": "4303253"
     },
     {
         "job_id": "447895",
@@ -13183,7 +13183,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "448268",
@@ -13221,7 +13221,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4535354"
+        "arrival_time": "4554497"
     },
     {
         "job_id": "448315",
@@ -13259,7 +13259,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "448364",
@@ -13297,7 +13297,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4111697"
+        "arrival_time": "4490990"
     },
     {
         "job_id": "448750",
@@ -13335,7 +13335,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4413950"
+        "arrival_time": "4538762"
     },
     {
         "job_id": "448791",
@@ -13373,7 +13373,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4642508"
+        "arrival_time": "4343401"
     },
     {
         "job_id": "448955",
@@ -13411,7 +13411,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "4223408"
+        "arrival_time": "4561879"
     },
     {
         "job_id": "448976",
@@ -13449,7 +13449,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4420097"
+        "arrival_time": "4192703"
     },
     {
         "job_id": "448987",
@@ -13487,7 +13487,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4519280"
+        "arrival_time": "4418400"
     },
     {
         "job_id": "448998",
@@ -13525,7 +13525,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4176644"
+        "arrival_time": "4427950"
     },
     {
         "job_id": "448999",
@@ -13563,7 +13563,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4455076"
+        "arrival_time": "4602671"
     },
     {
         "job_id": "449084",
@@ -13601,7 +13601,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4530688"
+        "arrival_time": "4171910"
     },
     {
         "job_id": "449086",
@@ -13639,7 +13639,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4254006"
+        "arrival_time": "4526702"
     },
     {
         "job_id": "449242",
@@ -13677,7 +13677,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4559938"
+        "arrival_time": "4505582"
     },
     {
         "job_id": "449269",
@@ -13715,7 +13715,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4322315"
+        "arrival_time": "4219106"
     },
     {
         "job_id": "449271",
@@ -13753,7 +13753,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4535619"
+        "arrival_time": "4170851"
     },
     {
         "job_id": "449399",
@@ -13791,7 +13791,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4705583"
+        "arrival_time": "4208266"
     },
     {
         "job_id": "449812",
@@ -13829,7 +13829,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "449921",
@@ -13867,7 +13867,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4311293"
+        "arrival_time": "4636164"
     },
     {
         "job_id": "450317",
@@ -13905,7 +13905,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "450922",
@@ -13943,7 +13943,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "451902",
@@ -13981,7 +13981,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "4548391"
+        "arrival_time": "4767562"
     },
     {
         "job_id": "453633",
@@ -14019,7 +14019,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4959290"
+        "arrival_time": "4809475"
     },
     {
         "job_id": "456113",
@@ -14057,7 +14057,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4684256"
+        "arrival_time": "4692455"
     },
     {
         "job_id": "464933",
@@ -14095,7 +14095,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "469197",
@@ -14133,7 +14133,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "7",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "469630",
@@ -14171,7 +14171,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "469913",
@@ -14209,7 +14209,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "474924",
@@ -14247,7 +14247,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "0",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "474928",
@@ -14285,7 +14285,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "0",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "475107",
@@ -14323,7 +14323,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "475810",
@@ -14361,7 +14361,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "475830",
@@ -14399,7 +14399,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4666895"
+        "arrival_time": "4856302"
     },
     {
         "job_id": "486818",
@@ -14437,7 +14437,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "0",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "512308",
@@ -14475,7 +14475,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "513162",
@@ -14513,7 +14513,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4676407"
+        "arrival_time": "4571305"
     },
     {
         "job_id": "513163",
@@ -14551,7 +14551,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4766299"
+        "arrival_time": "4929992"
     },
     {
         "job_id": "513193",
@@ -14589,7 +14589,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "513326",
@@ -14627,7 +14627,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "516236",
@@ -14665,7 +14665,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4876849"
+        "arrival_time": "4446742"
     },
     {
         "job_id": "529992",
@@ -14703,7 +14703,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "532051",
@@ -14741,7 +14741,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": "4930712"
+        "arrival_time": "4675485"
     },
     {
         "job_id": "532054",
@@ -14779,7 +14779,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": "4588787"
+        "arrival_time": "4645378"
     },
     {
         "job_id": "535203",
@@ -14817,7 +14817,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4631270"
+        "arrival_time": "4435466"
     },
     {
         "job_id": "535204",
@@ -14855,7 +14855,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4819074"
+        "arrival_time": "5068236"
     },
     {
         "job_id": "535242",
@@ -14893,7 +14893,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4550379"
+        "arrival_time": "4921682"
     },
     {
         "job_id": "535291",
@@ -14931,7 +14931,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4746606"
+        "arrival_time": "4502229"
     },
     {
         "job_id": "535292",
@@ -14969,7 +14969,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "4864773"
+        "arrival_time": "4696086"
     },
     {
         "job_id": "535345",
@@ -15007,7 +15007,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "535502",
@@ -15045,7 +15045,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "0",
-        "arrival_time": "5060583"
+        "arrival_time": "4706087"
     },
     {
         "job_id": "535552",
@@ -15083,7 +15083,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "5067695"
+        "arrival_time": "5043097"
     },
     {
         "job_id": "535593",
@@ -15121,7 +15121,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "2",
-        "arrival_time": "4860805"
+        "arrival_time": "4782448"
     },
     {
         "job_id": "535693",
@@ -15159,7 +15159,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "535799",
@@ -15197,7 +15197,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "535983",
@@ -15235,7 +15235,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "5010062"
+        "arrival_time": "4878617"
     },
     {
         "job_id": "536056",
@@ -15273,7 +15273,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "536164",
@@ -15311,7 +15311,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4904960"
+        "arrival_time": "4911849"
     },
     {
         "job_id": "536165",
@@ -15349,7 +15349,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4584623"
+        "arrival_time": "4635718"
     },
     {
         "job_id": "536368",
@@ -15387,7 +15387,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "536831",
@@ -15425,7 +15425,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "4692522"
+        "arrival_time": "4908548"
     },
     {
         "job_id": "536892",
@@ -15463,7 +15463,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "536897",
@@ -15501,7 +15501,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "537459",
@@ -15539,7 +15539,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "537652",
@@ -15577,7 +15577,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "0",
-        "arrival_time": "4952625"
+        "arrival_time": "5059571"
     },
     {
         "job_id": "537654",
@@ -15615,7 +15615,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "0",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "537664",
@@ -15653,7 +15653,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "540267",
@@ -15691,7 +15691,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "543207",
@@ -15729,7 +15729,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "543209",
@@ -15767,7 +15767,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "12",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "543485",
@@ -15805,7 +15805,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "5213010"
+        "arrival_time": "5064265"
     },
     {
         "job_id": "558117",
@@ -15843,7 +15843,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "562337",
@@ -15881,7 +15881,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "5066405"
+        "arrival_time": "5153324"
     },
     {
         "job_id": "566724",
@@ -15919,7 +15919,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "5134240"
+        "arrival_time": "4732364"
     },
     {
         "job_id": "566912",
@@ -15957,7 +15957,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "575206",
@@ -15995,7 +15995,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "4683083"
+        "arrival_time": "4980552"
     },
     {
         "job_id": "575467",
@@ -16033,7 +16033,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "14",
-        "arrival_time": "4704242"
+        "arrival_time": "4934548"
     },
     {
         "job_id": "575887",
@@ -16071,7 +16071,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": "4847402"
+        "arrival_time": "4990732"
     },
     {
         "job_id": "577605",
@@ -16109,7 +16109,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "5086814"
+        "arrival_time": "4892184"
     },
     {
         "job_id": "580354",
@@ -16147,7 +16147,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "4764641"
+        "arrival_time": "4848009"
     },
     {
         "job_id": "581626",
@@ -16185,7 +16185,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "5326558"
+        "arrival_time": "4987829"
     },
     {
         "job_id": "584453",
@@ -16223,7 +16223,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "587363",
@@ -16261,7 +16261,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "588467",
@@ -16299,7 +16299,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "590563",
@@ -16337,7 +16337,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": "4880935"
+        "arrival_time": "4851656"
     },
     {
         "job_id": "598122",
@@ -16375,7 +16375,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "601009",
@@ -16413,7 +16413,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": "5067658"
+        "arrival_time": "5353876"
     },
     {
         "job_id": "601304",
@@ -16451,7 +16451,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": "4900901"
+        "arrival_time": "4866734"
     },
     {
         "job_id": "601313",
@@ -16489,7 +16489,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": "4867920"
+        "arrival_time": "5178948"
     },
     {
         "job_id": "602204",
@@ -16527,7 +16527,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": "5166855"
+        "arrival_time": "4962253"
     },
     {
         "job_id": "602435",
@@ -16565,7 +16565,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": "5053173"
+        "arrival_time": "5266250"
     },
     {
         "job_id": "605522",
@@ -16603,7 +16603,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "4925972"
+        "arrival_time": "4915170"
     },
     {
         "job_id": "606494",
@@ -16641,7 +16641,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "607106",
@@ -16679,7 +16679,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": "5171027"
+        "arrival_time": "4942388"
     },
     {
         "job_id": "617697",
@@ -16717,7 +16717,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": "4783897"
+        "arrival_time": "4871635"
     },
     {
         "job_id": "628443",
@@ -16755,7 +16755,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5000239"
+        "arrival_time": "4994187"
     },
     {
         "job_id": "628454",
@@ -16793,7 +16793,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5236953"
+        "arrival_time": "5125101"
     },
     {
         "job_id": "628448",
@@ -16831,7 +16831,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4926743"
+        "arrival_time": "5237944"
     },
     {
         "job_id": "628461",
@@ -16869,7 +16869,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5054797"
+        "arrival_time": "5108059"
     },
     {
         "job_id": "628465",
@@ -16907,7 +16907,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5207851"
+        "arrival_time": "5423483"
     },
     {
         "job_id": "628469",
@@ -16945,7 +16945,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5139446"
+        "arrival_time": "5153495"
     },
     {
         "job_id": "628485",
@@ -16983,7 +16983,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5407997"
+        "arrival_time": "5299835"
     },
     {
         "job_id": "628472",
@@ -17021,7 +17021,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4844037"
+        "arrival_time": "5223023"
     },
     {
         "job_id": "628611",
@@ -17059,7 +17059,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5078480"
+        "arrival_time": "5420482"
     },
     {
         "job_id": "628616",
@@ -17097,7 +17097,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4914922"
+        "arrival_time": "5182153"
     },
     {
         "job_id": "628617",
@@ -17135,7 +17135,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5049925"
+        "arrival_time": "5286266"
     },
     {
         "job_id": "628619",
@@ -17173,7 +17173,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4989179"
+        "arrival_time": "4948053"
     },
     {
         "job_id": "628620",
@@ -17211,7 +17211,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5323159"
+        "arrival_time": "5355192"
     },
     {
         "job_id": "628624",
@@ -17249,7 +17249,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5071644"
+        "arrival_time": "5389577"
     },
     {
         "job_id": "628626",
@@ -17287,7 +17287,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5173542"
+        "arrival_time": "5219334"
     },
     {
         "job_id": "628632",
@@ -17325,7 +17325,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5079949"
+        "arrival_time": "5469357"
     },
     {
         "job_id": "628641",
@@ -17363,7 +17363,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4955816"
+        "arrival_time": "4954556"
     },
     {
         "job_id": "628647",
@@ -17401,7 +17401,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5357852"
+        "arrival_time": "5387714"
     },
     {
         "job_id": "628785",
@@ -17439,7 +17439,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "4940306"
+        "arrival_time": "5227380"
     },
     {
         "job_id": "628786",
@@ -17477,7 +17477,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5515148"
+        "arrival_time": "5310046"
     },
     {
         "job_id": "628788",
@@ -17515,7 +17515,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5018380"
+        "arrival_time": "5243322"
     },
     {
         "job_id": "628789",
@@ -17553,7 +17553,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5299148"
+        "arrival_time": "5244587"
     },
     {
         "job_id": "628796",
@@ -17591,7 +17591,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5035313"
+        "arrival_time": "5507014"
     },
     {
         "job_id": "632295",
@@ -17629,7 +17629,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5321511"
+        "arrival_time": "5568052"
     },
     {
         "job_id": "632534",
@@ -17667,7 +17667,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5475159"
+        "arrival_time": "5575055"
     },
     {
         "job_id": "632562",
@@ -17705,7 +17705,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5568184"
+        "arrival_time": "5324366"
     },
     {
         "job_id": "632654",
@@ -17743,7 +17743,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5414047"
+        "arrival_time": "5304748"
     },
     {
         "job_id": "632738",
@@ -17781,7 +17781,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5472687"
+        "arrival_time": "5198149"
     },
     {
         "job_id": "633399",
@@ -17819,7 +17819,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "2",
-        "arrival_time": "5503803"
+        "arrival_time": "5194575"
     },
     {
         "job_id": "633583",
@@ -17857,7 +17857,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "2",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "633705",
@@ -17895,7 +17895,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "2",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "633824",
@@ -17933,7 +17933,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": "5610076"
+        "arrival_time": "5206957"
     },
     {
         "job_id": "633882",
@@ -17971,7 +17971,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "634013",
@@ -18009,7 +18009,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": "5443340"
+        "arrival_time": "5558761"
     },
     {
         "job_id": "639824",
@@ -18047,7 +18047,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5266707"
+        "arrival_time": "5424208"
     },
     {
         "job_id": "640350",
@@ -18085,7 +18085,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "645959",
@@ -18123,7 +18123,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5194155"
+        "arrival_time": "5261912"
     },
     {
         "job_id": "646710",
@@ -18161,7 +18161,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5697885"
+        "arrival_time": "5688989"
     },
     {
         "job_id": "646828",
@@ -18199,7 +18199,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "11",
-        "arrival_time": "5383802"
+        "arrival_time": "5751663"
     },
     {
         "job_id": "668746",
@@ -18237,7 +18237,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "670822",
@@ -18275,7 +18275,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "677064",
@@ -18313,7 +18313,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "679223",
@@ -18351,7 +18351,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "679486",
@@ -18389,7 +18389,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "686917",
@@ -18427,7 +18427,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "4",
-        "arrival_time": "5720924"
+        "arrival_time": "5374992"
     },
     {
         "job_id": "722823",
@@ -18465,7 +18465,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "6",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "746559",
@@ -18503,7 +18503,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "3",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "748615",
@@ -18541,7 +18541,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "750612",
@@ -18579,7 +18579,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "751515",
@@ -18617,7 +18617,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "1",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "753367",
@@ -18655,7 +18655,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "753662",
@@ -18693,7 +18693,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "6",
-        "arrival_time": "5452603"
+        "arrival_time": "5494148"
     },
     {
         "job_id": "758435",
@@ -18731,7 +18731,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "758562",
@@ -18769,7 +18769,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "759758",
@@ -18807,7 +18807,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "6",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "761847",
@@ -18845,7 +18845,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "5185598"
+        "arrival_time": "5257571"
     },
     {
         "job_id": "762172",
@@ -18883,7 +18883,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "762968",
@@ -18921,7 +18921,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "5",
-        "arrival_time": "5288747"
+        "arrival_time": "5185021"
     },
     {
         "job_id": "764323",
@@ -18959,7 +18959,7 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "10",
-        "arrival_time": 0
+        "arrival_time": "0"
     },
     {
         "job_id": "767095",
@@ -18997,6 +18997,6 @@
         "cross_slot_slowdown": "0.6",
         "loss_function_type": "sublinear",
         "job_group_id": "8",
-        "arrival_time": "5559967"
+        "arrival_time": "5651093"
     }
 ]
