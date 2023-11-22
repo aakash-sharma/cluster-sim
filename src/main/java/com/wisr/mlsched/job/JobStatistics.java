@@ -304,7 +304,7 @@ public class JobStatistics {
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getJobTime());
-			total_jct += mJobStats.get(key).getJobTime();
+			total_jct += mJobStats.get(key).getJCT();
 
 			cell = row.createCell(cellid++);
 			cell.setCellValue(mJobStats.get(key).getQueueDelay());
@@ -511,7 +511,7 @@ public class JobStatistics {
 				mSimResults.get(key).add(Double.valueOf(val));
 			}
 
-			jct = mJobStats.get(key).getJobTime();
+			jct = mJobStats.get(key).getJCT();
 			total_jct += jct;
 			mSimResults.get(key).add(jct);
 
